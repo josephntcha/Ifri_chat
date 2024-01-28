@@ -115,7 +115,6 @@ class ChatBox extends Component
             ->take($this->paginate_var)
             ->get();
 
-
         return $this->loadedMessages;
     }
 

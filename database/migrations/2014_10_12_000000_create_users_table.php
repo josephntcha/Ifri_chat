@@ -15,6 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('matricule');
+            $table->enum('promotion',['2015','2016','2017','2018'])->nullable();
+            $table->enum('isAdmin',['true','false'])->default('false');
+            $table->string('description')->nullable();
+            $table->string('poste')->nullable();
+            $table->string('cv')->nullable();
+            $table->string('filiere')->nullable();
+            $table->string('langage')->nullable();
+            $table->string('expérience')->nullable();
+            $table->string('entreprise')->nullable();
+            $table->string('besoin_emploi')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -10,23 +10,6 @@ class Users extends Component
 {
 
 
-    // public function message($userId)
-    // {
-
-
-    //         $createdConversation= Conversation::updateOrCreate(['sender_id'=>auth()->id(),'receiver_id'=>$userId]);
-
-    //         return redirect()->route('chat',['query'=>$createdConversation->id]);
-
-    // }
-
-    // public function render()
-    // {
-
-    //     return view('livewire.users',['users'=>User::all()]);
-    // }
-
-
     public function message($userId)
     {
 
@@ -36,12 +19,13 @@ class Users extends Component
 
       # Check if conversation already exists
       $existingConversation = Conversation::where(function ($query) use ($authenticatedUserId, $userId) {
-                $query->where('sender_id', $authenticatedUserId)
+
+                    $query->where('sender_id', $authenticatedUserId)
                     ->where('receiver_id', $userId);
                 })
-            ->orWhere(function ($query) use ($authenticatedUserId, $userId) {
+               ->orWhere(function ($query) use ($authenticatedUserId, $userId) {
                 $query->where('sender_id', $userId)
-                    ->where('receiver_id', $authenticatedUserId);
+               ->where('receiver_id', $authenticatedUserId);
             })->first();
         
       if ($existingConversation) {
@@ -58,7 +42,6 @@ class Users extends Component
         return redirect()->route('chat', ['query' => $createdConversation->id]);
         
     }
-
 
     public function render()
     {
