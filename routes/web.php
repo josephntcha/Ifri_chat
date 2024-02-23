@@ -45,12 +45,21 @@ Route::middleware('auth')->group(function(){
 Route::get('/admin', [App\Http\Controllers\AdminController::class,'admin'])->name('admin');
 Route::get('/admin_promotion/{promotion}', [App\Http\Controllers\AdminController::class,'Promotion'])->name('message_to_promotion')->middleware('auth');
 Route::post('/admin_send_message_promotion/{promotion}', [App\Http\Controllers\AdminController::class,'SendMessagePromotion'])->name('send_message_to_promotion')->middleware('auth');
-Route::get('/statisque_promotion/{promotion}', [App\Http\Controllers\AdminController::class,'Statistique'])->name('statistique_to_promotion')->middleware('auth');
+Route::get('/statisque_promotion/{promotion}', [App\Http\Controllers\AdminController::class,'Statistique'])->name('statisque_promotion');
+Route::get('/statisque_promotion_filiere/{promotion}/{filiere}', [App\Http\Controllers\AdminController::class,'StatistiqueFiliere'])->name('statisque_promotion_filiere');
 Route::get('/reponse_admin/{user}', [App\Http\Controllers\AdminController::class,'reponseAdmin'])->name('reponse_ifri')->middleware('auth');
-Route::get('/statisque_promotion/{promotion}', [App\Http\Controllers\AdminController::class,'Statistique'])->name('statistique_to_promotion');
+Route::post('/ajout_etudiant', [App\Http\Controllers\AdminController::class,'AjoutEtudiant'])->name('ajout_etudiant');
 
 Route::get('/friends', [ConversationMessageController::class, 'friends'])->name('conversation.friend');
 Route::get('/message_for_me/{user}', [ConversationMessageController::class, 'MessageForMe'])->name('message_for_me');
+
+//route pour l'ajout d'une promotion /ajout-de-promotion
+Route::post('/ajout-de-promotion', [App\Http\Controllers\AdminController::class,'AjoutPromotion']);
+//route pour l'ajout d'une filière
+Route::post('/ajout-de-filiere', [App\Http\Controllers\AdminController::class,'AjoutFiliere']);
+Route::post('/modifier-filiere/{id}', [App\Http\Controllers\AdminController::class,'ModifierFiliere']);
+Route::delete('/supprimer-filiere/{id}', [App\Http\Controllers\AdminController::class,'SupprimerFiliere']);
+
 
 
 });
@@ -62,11 +71,17 @@ Route::get('/message_for_me/{user}', [ConversationMessageController::class, 'Mes
 
  Route::middleware('auth')->group(function(){
     Route::get('/message_ifri', [ConversationMessageController::class, 'ShowIfri'])->name('message_ifri');
-    Route::post('/send_message_to_ifri/{user}', [ConversationMessageController::class, 'MessageIfri'])->name('send_message_to_ifri');
+   // Route::post('/send_message_to_ifri/{user}', [ConversationMessageController::class, 'MessageIfri'])->name('send_message_to_ifri');
     Route::get('/profile_compte/{user}', [ConversationMessageController::class, 'profile'])->name('profile_compte');
     Route::post('/send_message_to_ifri/{user}', [ConversationMessageController::class, 'MessageIfri'])->name('send_message_to_ifri');
     Route::post('/send_message_to_student/{user}', [ConversationMessageController::class, 'MessageAnswer'])->name('send_message_to_student');
     Route::get('/message_for_me/{user}', [ConversationMessageController::class, 'MessageForMe'])->name('message_for_me');
+    Route::get('/action', [ConversationMessageController::class, 'Action'])->name('action');
+    Route::get('/get-etu-promotion/{promotion}', [ConversationMessageController::class, 'DataPromotion'])->name('get-etu-promotion');
+    Route::get('/get-etu-promotion-filiere/{promotion}/{filiere}', [ConversationMessageController::class, 'DataPromotionFiliere']);
+
+    Route::get('/get-filieres/{promotion}', [ConversationMessageController::class, 'Promotion'])->name('action');
+    Route::get('/get-users/{promotion}/{filiere}', [ConversationMessageController::class, 'ListePromoFiliere']);
 
     });
 

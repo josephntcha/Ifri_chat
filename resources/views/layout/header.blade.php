@@ -33,8 +33,10 @@
 
                 <!-- BEGIN: Horizontal Menu -->
                 <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark " id="m_aside_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
-              
 
+                {{-- <button class="bg-primary btn btn-success btn-sm mt-md-3" data-toggle="modal"data-target="#m_modal_5"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter une Filière</button> --}}
+              
+        
                 <!-- END: Horizontal Menu -->
 
                 <!-- BEGIN: Topbar -->
@@ -44,7 +46,7 @@
                             <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
                              m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
-                                    <span class="m-nav__link-icon"><i class="flaticon-search-1"></i></span>
+                                    <span class="m-nav__link-icon"><i class="flaticon-search-1"></i> </span>
                                 </a>
                                 <div class="m-dropdown__wrapper">
                                     <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
@@ -285,4 +287,6 @@
             </div>
         </div>
     </div>
+
 </header>
+

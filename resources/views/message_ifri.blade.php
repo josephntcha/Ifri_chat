@@ -27,12 +27,21 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->from->name }}</td>
-                                <td>{{ $item->from->promotion }}</td>
-                                <td class="truncate-text">{{ \Illuminate\Support\Str::limit($item->content, 50) }}</td>
+                                <td>{{ $item->from->promotion->annee}}</td>
+                                <td class="truncate-text">{{ \Illuminate\Support\Str::limit($item->content, 25) }}</td>
                                 {{-- <td>{{ $item->content }}</td> --}}
                                 <td>{{ $item->from->matricule }}</td>
                                 <td>{{ $item->from->email }}</td>
-                                <td> <a href="{{ asset('public/assets/clients/documents/'.$item->fichier) }}" download="{{$item->fichier }}" style="border-radius: 15px" class="">téléchargé</a> </td>
+                               
+                                  @if ($item->fichier!="")
+                                  <td> <a href="{{ asset('public/assets/clients/documents/'.$item->fichier) }}" download="{{$item->fichier }}" style="border-radius: 15px" class="">téléchargé</a> </td>
+                                   @else
+                                  <td>No file </td>
+                                  @endif
+                                 
+                           
+                            
+                               
                                 <td> 
                                     <button class="voir-plus form-control bg-success text-white" style="border-radius: 15px" data-content="{{ $item->content}}" data-toggle="modal" data-target="#m_modal_4">Détail
                                     

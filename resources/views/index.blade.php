@@ -145,23 +145,30 @@
                     <div class="createPost">
 
                         <!-- <h3 class="mini-headign">Create Post</h3> -->
+                       <form action="" method="post">
+                        @csrf
+                        <div class="">
+                            <input type="text-area" name="titre" placeholder="Ajouter un titre">
+                        </div>
                         <div class="post-text">
                             <img src="{{ asset("assets/images/user.jpg") }}" alt="user">
-                            <input type="text-area" placeholder="What's on your mind, zahidul">
+                            <input type="text-area" name="contenu" placeholder="Faire une publication">
                         </div>
+                       </form>
+                       
 
                         <div class="post-icon">
                             <a href="#" style="background: #ffebed;">
                             <i style="background: #ff4154;" class="fa-solid fa-camera"></i>
-                            Gallery</a>
+                            Ajouter une image</a>
 
-                            <a href="#" style="background: #ccdcff;">
+                            {{-- <a href="#" style="background: #ccdcff;">
                             <i style="background: #0053ff;" class="fa-solid fa-video"></i>
                             Video</a>
 
                             <a href="#" style="background: #d7ffef;">
                             <i style="background: #00d181;" class="fa-solid fa-location-dot"></i>
-                            Location</a>
+                            Location</a> --}}
 
                             <!-- <a href="#" style="background: #cff3ff;">
                                 <i style="background: #04c3ff;" class="fa-solid fa-gift"></i>Gift
@@ -169,7 +176,7 @@
                             
                             <a href="#" style="background: #fff4d1;">
                             <i style="background: #ffca28;" class="fa-solid fa-face-grin-beam"></i>
-                            Feeling / Acrivity</a>
+                            Publier</a>
 
                         </div>
 

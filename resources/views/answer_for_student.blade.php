@@ -18,9 +18,15 @@
             @foreach ($message_for_mes as $item)
             <tr>
                 <td class="truncate-text">{{ \Illuminate\Support\Str::limit($item->content, 50) }}</td>
+                @if ($item->fichier!="")
                 <td> <a href="{{ asset('public/assets/clients/documents/'.$item->fichier) }}" download="{{$item->fichier }}" style="border-radius: 15px">{{ $item->fichier }}</a> </td>
+
+                @else
+                <td>No file </td>
+
+                @endif
                 <td> 
-                    <button class="voir-plus form-control bg-success text-white" style="border-radius: 15px" data-content="{{ $item->content}}" data-toggle="modal" data-target="#m_modal_4">Détail
+                    <button class="voir-plus form-control bg-light text-dark" style="border-radius: 15px" data-content="{{ $item->content}}" data-toggle="modal" data-target="#m_modal_4">Détail
                     
                     </button> 
                     <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

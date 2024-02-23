@@ -3,13 +3,14 @@
 @section('content')
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
    <br><br>
-    @if(session('success'))
+    {{-- @if(session('success'))
     <div class="alert alert-success text-center h4">
         {{ session('success') }}
     </div>
-   @endif
+   @endif --}}
+ 
     <div class="m-grid m-grid--hor m-grid--root m-page">
-        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <div class="">
 
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
 
@@ -48,15 +49,37 @@
                                 </div>
                             </div>
                         </form>
+
+                        @if ($message = session('success'))
+                        @section('alert')
+                        <script type="text/javascript">
+                         const Toast = Swal.mixin({
+                             toast: true,
+                             position: 'top-end',
+                             showConfirmButton: false,
+                             timer: 6000,
+                             timerProgressBar: true,
+                             didOpen: (toast) => {
+                                 toast.addEventListener('mouseenter', Swal.stopTimer)
+                                 toast.addEventListener('mouseleave', Swal.resumeTimer)
+                             }
+                         })
+                     
+                         Toast.fire({
+                             icon: 'success',
+                             title: '{{ $message }}'
+                         })
+                       </script>
+                        @endsection
+                      
+                       @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="../../../assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
 
-    <script src="../../../assets/demo/default/custom/crud/forms/validation/form-widgets.js" type="text/javascript"></script>
-
+    
     <!--end::Page Scripts -->
 </body>
 @endsection

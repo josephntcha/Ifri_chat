@@ -10,9 +10,9 @@ class MessageForIfri extends Model
     use HasFactory;
     protected $fillable=[
         'content',
-        'fichier',
         'from_id',
         'to_id',
+        'fichier',
         'from_admin',
         'read_at'
     

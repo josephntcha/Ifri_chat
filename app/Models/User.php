@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Promotion;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'promotion_id',
+        'filiere_id',
         'password',
     ];
 
@@ -47,6 +50,20 @@ class User extends Authenticatable
     public function conversations()
     { 
         return $this->hasMany(Conversation::class,'sender_id')->orWhere('receiver_id',$this->id)->whereNotDeleted();
+    }
+
+    // public function promotion()
+    // { 
+    //     return $this->belongsTo(Promotion::class,'promotion_id','id');
+    // }
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class,'promotion_id');
+    }
+
+    public function filiere()
+    {
+        return $this->belongsTo(Filiere::class,'filiere_id');
     }
 
     /**

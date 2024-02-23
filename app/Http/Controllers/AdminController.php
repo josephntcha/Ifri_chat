@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Filiere;
+use App\Models\MessageForIfri;
+use App\Models\Promotion;
+use Rules\Password;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Repository\ConversationRepository;
 
 class AdminController extends Controller
@@ -31,12 +36,10 @@ class AdminController extends Controller
 //Fonction qui contôle si l'utilisateur connecté est un administrateur afin de lui donne accès au dashboard admin
     public function admin(){
         if (Auth::user()->isAdmin=="true") {
-           $users= User::all();
-           $total_employes=User::Where('poste','Employé')->get();
-           $total_stage=User::Where('poste','Stagiaire')->get();
-           $total_sans_emploie=User::Where('poste','Sans emploi')->get();
-          // dd($total_employes->count());
-            return view('admin',compact('users','total_employes','total_stage','total_sans_emploie'));
+          
+         $promotions=Promotion::all();
+         $filieres=Filiere::all();
+            return view('admin',compact('promotions','filieres'));
         }else {
             dd("vous n'etes pas un administrateur");
         }
@@ -45,7 +48,10 @@ class AdminController extends Controller
 
     //fonction pour que l'administration reponde à un étudiant x ayant envoyé un message
     public function reponseAdmin(User $user){
-        return view('reponse_ifri',compact('user'));
+        $id_user=Auth::user()->id;
+        $content=MessageForIfri::Where('to_id',$id_user)->Where('from_id',$user->id)
+        ->get();
+        return view('reponse_ifri',compact('user','content'));
     }
 
     public function Promotion($promotion) {
@@ -58,7 +64,8 @@ class AdminController extends Controller
     public function SendMessagePromotion($promotion, Request $request){
       if (Auth::user()->isAdmin=="true") {
 
-         $etudiants= User::Where('promotion',$promotion)->get();
+         $etudiant= Promotion::Where('annee',$promotion)->get();
+         $etudiants=$etudiant->users;
          $user_admin=User::Where('isAdmin',true)->first();
          $request->validate([
             'fichier' => 'required|mimes:pdf|max:10240', // PDF, max 10MB
@@ -81,14 +88,169 @@ class AdminController extends Controller
     }
 
     //fonction pour avoir les statistiques liées aux élèves
-    public function Statistique($promotion) {
-        $effectif_promotion=User::Where('promotion',$promotion)->get();
-        $users= User::all();
-           $total_employes=User::Where('poste','Employé')->Where('promotion',$promotion)->get();
-           $total_stage=User::Where('poste','Stagiaire')->Where('promotion',$promotion)->get();
-           $total_sans_emploie=User::Where('poste','Sans emploi')->Where('promotion',$promotion)->get();
-           
-        return view('admin',compact('users','effectif_promotion','total_employes','total_stage','total_sans_emploie'));
+    public function Statistique($promotionId) {
+
+        if ($promotionId=="toute promotion") {
+            $users=User::all();
+            $users_emploi = User::where('poste', 'employé')->get();
+            $users_stage = User::where('poste', 'Stagiaire')->get();
+            $users_sans = User::where('poste', 'Sans emploi')->get();
+            $responseData = [
+                'users' => $users,
+                'users_emploi' => $users_emploi,
+                'users_stage' => $users_stage,
+                'users_sans' => $users_sans,
+            ];
+
+          }else {
+            $promotion_users = Promotion::with('users')->where('annee', $promotionId)->first();
+             $users=$promotion_users->users;
+
+            $users_emploi = $promotion_users->users()->where('poste', 'Employé')->get();
+            $users_stage = $promotion_users->users()->where('poste', 'Stagiaire')->get();
+            $users_sans = $promotion_users->users()->where('poste', 'Sans emploi')->get();
+
+            $responseData = [
+                'users' => $users,
+                'users_emploi' => $users_emploi,
+                'users_stage' => $users_stage,
+                'users_sans' => $users_sans,
+            ];
+      
+          }
+
+     return response()->json($responseData)->header('Content-Type', 'application/json');
+
          
     }
+
+    public function StatistiqueFiliere($promotionId, $filiere){
+
+         if ($filiere=="toute filiere") {
+            return redirect()->route('statisque_promotion',$promotionId);
+         }
+        if ($promotionId=="toute promotion") {
+
+            $users_filiere = Filiere::with('users')->where('filiere', $filiere)->first();
+            $users=$users_filiere->users;
+            $users_emploi = $users_filiere->users()->where('poste', 'employé')->get();
+            $users_stage =  $users_filiere->users()->where('poste', 'Stagiaire')->get();
+            $users_sans =   $users_filiere->users()->where('poste', 'Sans emploi')->get();
+
+            $responseData = [
+                'users' => $users,
+                'users_emploi' => $users_emploi,
+                'users_stage' => $users_stage,
+                'users_sans' => $users_sans,
+            ];
+          }else {
+
+            //$users = User::where('promotion', $promotionId)->where('filiere', $filiere)->get();
+            $promotion = Promotion::with('users')->where('annee', $promotionId)->first();
+            $filiere = Filiere::Where('filiere',$filiere)->first();
+            $users = $promotion->users()->where('filiere_id', $filiere->id)->get();
+           // $users_statistique = $promotion->users()->where('filiere_id', $filiere->id);
+
+            $users_emploi =$promotion->users()->where('filiere_id', $filiere->id)->where('poste', 'Employé')->get();
+            $users_stage =$promotion->users()->where('filiere_id', $filiere->id)->where('poste', 'Stagiaire')->get();
+            $users_sans =$promotion->users()->where('filiere_id', $filiere->id)->where('poste', 'Sans emploi')->get();
+
+            $responseData = [
+                'users' => $users,
+                'users_emploi' => $users_emploi,
+                'users_stage' => $users_stage,
+                'users_sans' => $users_sans,
+                
+            ];
+          }
+
+          return response()->json($responseData)->header('Content-Type', 'application/json');
+
+    }
+
+    public function AjoutEtudiant(Request $request){
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed'],
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+    }
+
+      // méthode pour ajouter une promotion
+      public function AjoutPromotion(Request $request){
+        $promotion_existe=Promotion::Where('annee',$request->input('promotion'))->first();
+        if (!$promotion_existe) {
+            $promotion = new Promotion();
+            $promotion->annee = $request->input('promotion');
+            $promotion->save();
+           
+            $message="Promotion ajoutée avec succès";
+        }else{
+            $message="La promotion existe déjà";
+
+        }
+        return response()->json(['success' => true, 'message' => $message]);
+      }
+
+   // méthode pour ajouter une filiére
+   public function AjoutFiliere(Request $request){
+    $filiere_existe=Filiere::Where('filiere',$request->input('filiere'))->first();
+    if (!$filiere_existe) {
+        $filiere = new Filiere();
+        $filiere->filiere = $request->input('filiere');
+        $filiere->save();
+       
+        $message="filiere ajoutée avec succès";
+    }else{
+        $message="La filiere existe déjà";
+
+    }
+    return response()->json(['success' => true, 'message' => $message]);
+  }
+
+  public function ModifierFiliere($filiereId , Request $request){
+   
+       
+       try {
+        $filiere = Filiere::findOrFail($filiereId);
+        $new_filiere=$request->input('filiere');
+        if (!$new_filiere) {
+            return response()->json(['success' => false, 'message' => 'Le champ filiere ne peut pas être vide.']);
+        }
+       $modifier=$filiere->update(['filiere'=>$new_filiere]);
+       if ($modifier) {
+        return response()->json(['success' => true, 'message' => 'La filière a été modifiée avec succès.']);
+       }
+        
+    } catch (\Exception $e) {
+        // Retourner une réponse JSON en cas d'erreur
+        return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la filière.'.$e->getMessage()]);
+    }
+
+  }
+
+
+  public function SupprimerFiliere($id)  {
+    $filiere = Filiere::findOrFail($id);
+    try {
+        $delete=$filiere->delete();
+        if (!$delete) {
+            return response()->json(['success' => false, 'message' => 'La filiere n\'a été supprimée']);
+        }else {
+            return response()->json(['success' => true, 'message' => 'La filière a été supprimée avec succès.']);
+
+        }
+    } catch (\Exception $e) {
+        // Retourner une réponse JSON en cas d'erreur
+        return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la filière.'.$e->getMessage()]);
+    }
+  }
+
 }

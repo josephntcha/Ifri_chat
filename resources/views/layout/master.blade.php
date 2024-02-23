@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin</title>
+    {{-- <link href="{{ asset("asset/boot/css/bootstrap.mini.css") }}" rel="stylesheet" type="text/css" /> --}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('asset/vendors/sweetalert2/dist/sweetalert2.min.css') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+
     <link href="../../asset/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="../../asset/boot/css/bootstrap.mini.css" rel="stylesheet" type="text/css" />
 
     <!--RTL version:<link href="../../asset/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
     <link href="../../asset/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
 
+
     <!--RTL version:<link href="../../asset/demo/default/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 
     <!--end::Global Theme Styles -->
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
     <script>
          WebFont.load({
         google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
@@ -24,7 +29,6 @@
       });
     </script>
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!--begin::Global Theme Styles -->
 		<link href="../../../asset/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
@@ -54,20 +58,25 @@
      @include('layout.footer')
 
     </div> 
-	<script src="../../asset/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ asset('asset/vendors/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('asset/vendors/sweetalert2/dist/sweetalert2.init.js') }}">
+   <!-- Bootstrap JS -->
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <script src="../../../asset/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-		<script src="../../../asset/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+    <script src="{{ asset('asset/js/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset("asset/vendors/base/vendors.bundle.js") }}" type="text/javascript"></script>
+		<script src="{{ asset("asset/demo/default/base/scripts.bundle.js") }}" type="text/javascript"></script>
+
 
 		<!--end::Global Theme Bundle -->
 
 		<!--begin::Page Vendors -->
-		<script src="../../../asset/vendors/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+		<script src="{{ asset("asset/vendors/custom/datatables/datatables.bundle.js") }}" type="text/javascript"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 
-		<!--end::Page Vendors -->
-
-		<!--begin::Page Scripts -->
-		<script src="../../../asset/demo/default/custom/crud/datatables/basic/scrollable.js" type="text/javascript"></script>
+		<script src="{{ asset("asset/demo/default/custom/crud/datatables/basic/scrollable.js") }}" type="text/javascript"></script>
+   
     @yield('script_jquey')
+
 </body>
 </html>

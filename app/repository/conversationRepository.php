@@ -52,6 +52,7 @@ class ConversationRepository{
    }
 
    public function CreateMessageForIfri(String $content,String $fichier,int $to,int $from){
+   //dd($fichier);
     return $this->messageforifri->newQuery()->create([
       'content'=>$content,
       'fichier'=>$fichier,

@@ -52,7 +52,7 @@
                  </a>
                 <a href="{{ route('message_to_ifri') }}"><i class="fa-solid fa-tv"><span>Ifri</span></i></a>
                 <!-- <i class="fa-solid fa-store"></i> -->
-                <a href="{{ route('conversation.friend') }}">
+                <a href="/users">
                     <i class="fa-solid fa-users"></i>
                 </a>
                 <a href="{{ route('message_for_me',Auth::user()->id) }}">M-IFRI</a>
@@ -116,6 +116,7 @@
     
         </nav>
          <br><br>
+       
         <main class="py-4">
 
             @yield('content')
@@ -125,8 +126,9 @@
     <script src="../../../asset/vendors/base/vendors.bundle.js" type="text/javascript"></script>
 	<script src="../../asset/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
 	<script src="asset/js/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @yield('script_jquey')
-
-
+    @yield('alert')
 </body>
 </html>

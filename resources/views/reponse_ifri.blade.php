@@ -1,28 +1,41 @@
 @extends('layouthead.header')
 @section('content')
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
-    <br><br>
-     @if(session('success'))
-     <div class="alert alert-success text-center h4">
-         {{ session('success') }}
-     </div>
-    @endif
+    
+    <div class="bg-white">
+        @foreach ($content as $item)
+           <div class="col-10 offset-md-1">
+            <span class="bg-success rounded">{{$item->created_at->format('g:i a') }}</span>
+             <br>
+            {{ $item->content }}
+           </div>
+            <br>
+
+        @endforeach
+       </div>
      <div class="m-grid m-grid--hor m-grid--root m-page">
-         <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
- 
+         <div class="">
+          
              <div class="m-grid__item m-grid__item--fluid m-wrapper">
- 
                  <div class="m-content">
                      <div class="m-portlet">
                          <div class="m-portlet__head">
                              <div class="m-portlet__head-caption">
                                  <div class="m-portlet__head-title">
-                                     <h3 class="m-portlet__head-text">
+                                     <h3 class="m-portlet__head-text text-center">
                                          Repondre à - <strong>{{ $user->name }}</strong> 
                                      </h3>
                                  </div>
                              </div>
                          </div>
+                         <div class="col-3">
+                            @if(session('success'))
+                            <div class="alert alert-success text-center h4">
+                                {{ session('success') }}
+                            </div>
+                         @endif
+                         </div>
+                        
                          <form class="m-form m-form--fit m-form--label-align-right" id="m_form_1" action="{{ route('send_message_to_student',$user->id) }}" method="POST" enctype="multipart/form-data">
                              @csrf
                              <div class="m-portlet__body">
