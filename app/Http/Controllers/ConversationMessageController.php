@@ -55,7 +55,7 @@ class ConversationMessageController extends Controller
 
 
        $this->r->CreateMessageForIfri($request->get('markdown'),$filename,$user->id,$user_admin->id);
-         session()->flash('success', 'Message avec sucèss');
+         session()->flash('success', 'Message envoyé avec sucèss');
           return back();
 
        //return view('message_to_ifri');
@@ -86,10 +86,7 @@ class ConversationMessageController extends Controller
       return view('answer_for_student',compact('message_for_mes'));
   }
 
-  public function Action(){
 
-    return view('action');
-  }
 
   public function DataPromotion($promotionId){
     if ($promotionId=="toute promotion") {

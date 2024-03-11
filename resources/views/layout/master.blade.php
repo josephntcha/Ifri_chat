@@ -75,7 +75,9 @@
      <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 
 		<script src="{{ asset("asset/demo/default/custom/crud/datatables/basic/scrollable.js") }}" type="text/javascript"></script>
-   
+    <script src="{{ asset("asset/demo/default/custom/header/actions.js") }}" type="text/javascript"></script>
+
+    @yield('alert')
     @yield('script_jquey')
 
 </body>

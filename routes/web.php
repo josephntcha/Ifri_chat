@@ -27,6 +27,9 @@ Route::get('/message_to_ifri', function () {
     return view('message_to_ifri');
 })->name('message_to_ifri');
 
+Route::get('/publication', function () {
+    return view('publication');
+});
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -58,7 +61,11 @@ Route::post('/ajout-de-promotion', [App\Http\Controllers\AdminController::class,
 //route pour l'ajout d'une filière
 Route::post('/ajout-de-filiere', [App\Http\Controllers\AdminController::class,'AjoutFiliere']);
 Route::post('/modifier-filiere/{id}', [App\Http\Controllers\AdminController::class,'ModifierFiliere']);
+Route::post('/modifier-promotion/{id}', [App\Http\Controllers\AdminController::class,'ModifierPromotion']);
 Route::delete('/supprimer-filiere/{id}', [App\Http\Controllers\AdminController::class,'SupprimerFiliere']);
+Route::delete('/supprimer-promotion/{id}', [App\Http\Controllers\AdminController::class,'SupprimerPromotion']);
+Route::get('/action', [App\Http\Controllers\AdminController::class, 'Action'])->name('action');
+
 
 
 
@@ -76,7 +83,6 @@ Route::delete('/supprimer-filiere/{id}', [App\Http\Controllers\AdminController::
     Route::post('/send_message_to_ifri/{user}', [ConversationMessageController::class, 'MessageIfri'])->name('send_message_to_ifri');
     Route::post('/send_message_to_student/{user}', [ConversationMessageController::class, 'MessageAnswer'])->name('send_message_to_student');
     Route::get('/message_for_me/{user}', [ConversationMessageController::class, 'MessageForMe'])->name('message_for_me');
-    Route::get('/action', [ConversationMessageController::class, 'Action'])->name('action');
     Route::get('/get-etu-promotion/{promotion}', [ConversationMessageController::class, 'DataPromotion'])->name('get-etu-promotion');
     Route::get('/get-etu-promotion-filiere/{promotion}/{filiere}', [ConversationMessageController::class, 'DataPromotionFiliere']);
 

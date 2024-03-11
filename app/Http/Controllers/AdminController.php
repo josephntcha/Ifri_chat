@@ -46,6 +46,12 @@ class AdminController extends Controller
         
     }
 
+    public function Action(){
+        $promotions=Promotion::all();
+        $filieres=Filiere::all();
+        return view('action', compact('promotions','filieres'));
+      }
+
     //fonction pour que l'administration reponde à un étudiant x ayant envoyé un message
     public function reponseAdmin(User $user){
         $id_user=Auth::user()->id;
@@ -252,5 +258,43 @@ class AdminController extends Controller
         return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la filière.'.$e->getMessage()]);
     }
   }
+
+
+  public function SupprimerPromotion($id)  {
+    $promotion = Promotion::findOrFail($id);
+    try {
+        $delete=$promotion->delete();
+        if (!$delete) {
+            return response()->json(['success' => false, 'message' => 'La promotion n\'a été supprimée']);
+        }else {
+            return response()->json(['success' => true, 'message' => 'La promotion a été supprimée avec succès.']);
+
+        }
+    } catch (\Exception $e) {
+        // Retourner une réponse JSON en cas d'erreur
+        return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la promotion.'.$e->getMessage()]);
+    }
+  }
+  
+
+  public function ModifierPromotion($promotionId , Request $request){
+    try {
+     $promotion = Promotion::findOrFail($promotionId);
+     $new_promotion=$request->input('promotion');
+     if (!$new_promotion) {
+         return response()->json(['success' => false, 'message' => 'Le champ promotion ne peut pas être vide.']);
+     }
+    $modifier=$promotion->update(['annee'=>$new_promotion]);
+    if ($modifier) {
+     return response()->json(['success' => true, 'message' => 'La promotion a été modifiée avec succès.']);
+    }
+     
+ } catch (\Exception $e) {
+     // Retourner une réponse JSON en cas d'erreur
+     return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la promotion.'.$e->getMessage()]);
+ }
+
+}
+
 
 }

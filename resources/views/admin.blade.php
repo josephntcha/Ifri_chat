@@ -1,7 +1,28 @@
 @extends('layout.master')
 @section('content')
-    <div class="container offset-md-2">
+@if ($message = session('success'))
+@section('alert')
+<script type="text/javascript">
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 6000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
 
+Toast.fire({
+    icon: 'success',
+    title: '{{ $message }}'
+})
+</script>
+@endsection
+@endif
+    <div class="container offset-md-2">
         <div class="row justify-content-between">
             <button class="bg-primary btn btn-success btn-sm mt-md-3" style="margin-left: 8px" data-toggle="modal"
                 data-target="#filiereModal">
@@ -82,7 +103,7 @@
             </div>
             {{-- fin du modal --}}
             <button class="bg-secondary text-black p-2 mt-md-3 btn" data-toggle="modal"data-target="#eleveModal"><i
-                    class="fa fa-plus" aria-hidden="true"></i> Ajouter un nouvel elève</button>
+                    class="flaticon-add-circular-button" aria-hidden="true"></i> Ajouter un nouvel elève</button>
             {{-- modal d'ajout d'un nouvel elève --}}
             <div class="modal fade" id="eleveModal" tabindex="-1" role="dialog" aria-labelledby="eleveModalLabel"
                 aria-hidden="true">
@@ -109,7 +130,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="eleveName">Promotion</label>
-                                    <select name="promotion" id="" class="form-control">
+                                    <select name="promotion" id="ajoutElevePromotion" class="form-control" style="width: 100%">
                                         <option value=""></option>
                                         @foreach ($promotions as $promotion)
                                             <option value="{{ $promotion->id }}">{{ $promotion->annee }}</option>
@@ -117,8 +138,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="eleveName">Filière</label>
-                                    <select name="filiere" id="" class="form-control">
+                                    <label for="ajoutEleveFiliere">Filière</label>
+                                    <select name="filiere" id="ajoutEleveFiliere" class="form-control" style="width: 100%">
                                         <option value=""></option>
                                         @foreach ($filieres as $filiere)
                                             <option value="{{ $filiere->id }}">{{ $filiere->filiere }}</option>
@@ -166,10 +187,10 @@
                                             {{-- <td><a href=""><i class="flaticon-delete" style="color: red;"></i></a></td> --}}
                                             <td>
                                                 <form method="POST" action="" accept-charset="UTF-8"
-                                                    style="display:inline">
+                                                    style="display:inline">  
                                                     @method('DELETE')
                                                     @csrf
-                                                 
+
                                                     <button type="button" class="btn btn-sm" title="Delete Student"
                                                         onclick="confirmDelete({{ $filiere->id }})">
                                                         <i class="flaticon-delete" style="color: red;"></i>
@@ -177,7 +198,7 @@
 
                                                 </form>
                                                 <script type="text/javascript">
-                                                       function deleteStudent(filiereId) {
+                                                  function deleteStudent(filiereId) {
                                                         $.ajax({
                                                             type: 'DELETE',
                                                             url: '/supprimer-filiere/' + filiereId,
@@ -186,38 +207,39 @@
                                                             },
                                                             success: function(response) {
                                                                 $('.msg-return').text(response.message);
-                                                                // Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-                                                                // Ajoutez le code pour actualiser la page ou mettre à jour l'interface utilisateur si nécessaire
+
+
                                                             },
                                                             error: function(xhr, status, error) {
                                                                 // Traitez les erreurs ici
                                                                 console.error(xhr.responseText);
                                                             }
                                                         });
-                                                        }
-                                                    function confirmDelete(filiereId) {
+                                                    }
+                                                 function confirmDelete(filiereId) {
+                                                 
                                                         Swal.fire({
                                                             title: 'Are you sure?',
                                                             text: "You won't be able to revert this!",
-                                                            icon: 'warning',
                                                             showCancelButton: true,
                                                             confirmButtonColor: '#3085d6',
                                                             cancelButtonColor: '#d33',
                                                             confirmButtonText: 'Yes, delete it!'
                                                         }).then((result) => {
-                                                            if (result.isConfirmed) {
                                                                 deleteStudent(filiereId);
-                                                            }
-                                                        })
+                                                        });
                                                     }
+                                                  
 
-                                             
+                                                   
                                                 </script>
                                             </td>
                                             {{-- modifier une filiere --}}
-                                            <td><button class="btn btn" onclick="setFiliereId('{{ $filiere->id }}')"
+                                            <td><button class="btn btn" onclick="setFiliereId('{{ $filiere->id }}'), putFiliere('{{ $filiere->filiere }}')"
                                                     data-toggle="modal" data-target="#modifierModal"><i
-                                                        class="flaticon-edit" style="color: green;"></i></button></td>
+                                                        class="flaticon-edit" style="color: green;"></i>
+                                                </button>
+                                            </td>
                                             {{-- modal pour modifier une filiere --}}
                                             <div class="modal fade" id="modifierModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="modifierModalLabel" aria-hidden="true">
@@ -239,13 +261,19 @@
                                                                 <div class="form-group">
                                                                     <label for="modifierName">Nom de la filière</label>
                                                                     <input type="text" value=""
-                                                                        class="form-control" name="filiere">
+                                                                        class="form-control" name="filiere" id="put_filiere">
                                                                 </div>
                                                                 <!-- Add other form fields as needed -->
                                                             </form>
                                                         </div>
                                                         <script>
                                                             var filiereId;
+                                                            var put_filiere;
+                                                            function putFiliere(filiere) {
+                                                                put_filiere=filiere
+                                                                $("#put_filiere").val(put_filiere);
+                                                            
+                                                            }
 
                                                             function setFiliereId(id) {
 
@@ -339,9 +367,139 @@
                                     @foreach ($promotions as $promotion)
                                         <tr>
                                             <td>{{ $promotion->annee }}</td>
-                                            <td><a href=""><i class="flaticon-delete" style="color: red;"></i></a>
+                                           <td>
+                                                <form method="POST" action="" accept-charset="UTF-8"
+                                                    style="display:inline">  
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="button" class="btn btn-sm" title="Delete Student"
+                                                        onclick="confirmDeletePromotion({{ $promotion->id }})">
+                                                        <i class="flaticon-delete" style="color: red;"></i>
+                                                    </button>
+                                                </form>
+                                                <script type="text/javascript">
+                                                  function deletePromotion(promotionId) {
+                                                        $.ajax({
+                                                            type: 'DELETE',
+                                                            url: '/supprimer-promotion/' + promotionId,
+                                                            data: {
+                                                                _token: '{{ csrf_token() }}'
+                                                            },
+                                                            success: function(response) {
+                                                                $('.msg-return').text(response.message);
+
+                                                            },
+                                                            error: function(xhr, status, error) {
+                                                                // Traitez les erreurs ici
+                                                                console.error(xhr.responseText);
+                                                            }
+                                                        });
+                                                    }
+                                                 function confirmDeletePromotion(promotionId) {
+                                                 
+                                                        Swal.fire({
+                                                            title: 'Are you sure?',
+                                                            text: "You won't be able to revert this!",
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: '#3085d6',
+                                                            cancelButtonColor: '#d33',
+                                                            confirmButtonText: 'Yes, delete it!'
+                                                        }).then((result) => {
+                                                                deletePromotion(promotionId);
+                                                        });
+                                                    }
+                                                </script>
                                             </td>
-                                            <td><a href=""><i class="flaticon-edit"></i></a></td>
+                                            <td><button class="btn btn" onclick="setPromotionId('{{$promotion->id}}'), putPromotion('{{ $promotion->annee }}')"
+                                                data-toggle="modal" data-target="#modifierPromoModal"><i
+                                                    class="flaticon-edit" style="color: green;"></i>
+                                            </button>
+                                              {{-- modal pour modifier une promotion --}}
+                                              <div class="modal fade" id="modifierPromoModal" tabindex="-1" role="dialog"
+                                              aria-labelledby="modifierModalLabel" aria-hidden="true">
+                                              <div class="modal-dialog" role="document">
+                                                  <div class="modal-content">
+                                                      <div class="modal-header">
+                                                          <h5 class="modal-title" id="modifierModalLabel">Modifier la
+                                                              promotion</h5>
+                                                          <button type="button" class="close" data-dismiss="modal"
+                                                              aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                          </button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          <!-- Your form goes here -->
+                                                          <form id="modifierPromoForm">
+                                                              <!-- Form fields go here -->
+                                                              @csrf
+                                                              <div class="form-group">
+                                                                  <label for="modifierName">Nom de la promotion</label>
+                                                                  <input type="text" value="" class="form-control" name="promotion" id="updatePromotion">
+                                                              </div>
+                                                              <!-- Add other form fields as needed -->
+                                                          </form>
+                                                      </div>
+                                                     
+                                                      <script>
+                                                         var promotion_annee;
+                                                          var promotionId;
+
+                                                          function putPromotion(promotion) {
+                                                              promotion_annee=promotion;
+                                                              $("#updatePromotion").val(promotion_annee);
+                                                            }
+
+                                                          function setPromotionId(id) {
+                                                              promotionId = id;
+                                                          }
+
+                                                          function modifierPromotion() {
+                                                              var id = promotionId;
+                                                              $('#modifierPromoSpinner').removeClass('d-none');
+
+                                                              var formData = $('#modifierPromoForm').serialize();
+
+
+                                                              // Envoyer la requête Ajax
+                                                              $.ajax({
+                                                                  type: 'POST',
+                                                                  url: '/modifier-promotion/' + id,
+                                                                  data: formData,
+
+                                                                  success: function(response) {
+                                                                      // Traitement du succès (par exemple, actualiser la page, fermer le modal, etc.)
+
+                                                                      $('.msg-return').text(response.message);
+                                                                      $('#modifierPromoModal').modal('hide');
+                                                                  },
+                                                                  error: function(xhr, status, error) {
+                                                                      // Traitement des erreurs (affichage d'un message d'erreur, par exemple)
+                                                                      console.error(xhr.responseText);
+                                                                  },
+                                                                  complete: function() {
+                                                                      // Masquer le spinner après la requête
+                                                                      $('#modifierPromoSpinner').addClass('d-none');
+                                                                  }
+                                                              });
+
+                                                          }
+                                                      </script>
+                                                      <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary"
+                                                              data-dismiss="modal">Fermer</button>
+                                                          <button type="submit" id="submitmodifier"
+                                                              class="btn btn-primary" onclick="modifierPromotion()"><i
+                                                                  class="fa fa-plus" aria-hidden="true"></i> Modifier
+                                                              <span id="modifierPromoSpinner"
+                                                                  class="spinner-border spinner-border-sm d-none"
+                                                                  role="status" aria-hidden="true"></span>
+                                                          </button>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          {{-- fin modal --}}
+                                        </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -356,7 +514,8 @@
             </div>
             {{-- fin --}}
             <a href="/action" class="bg-light text-dark btn  mt-md-3"> Liste elève</a>
-            <div class="msg-return btn btn-success btn-sm mt-md-3" style="color: #EEEE; text-align: center;"></div>
+
+            <div class="msg-return btn btn-success  btn-sm mt-md-3" style="color: #EEEE; text-align: center;"></div>
 
         </div>
 
@@ -370,7 +529,7 @@
                 <div class="row">
                     <div class="col-xl-4">
                         <!--begin:: Widgets/Blog-->
-                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force">
+                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force" style="border-radius: 15px">
                             <div class="m-portlet__head m-portlet__head--fit-">
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
@@ -384,100 +543,32 @@
                                     <ul class="m-portlet__nav">
                                         <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                             m-dropdown-toggle="hover">
-                                            <select id="selectPromotion" name="promotion">
+                                            <select id="selectPromotion" name="promotion" class="px-1">
                                                 <!-- Remplacez cela par la boucle qui affiche vos promotions -->
                                                 <option value="toute promotion">toute promotion</option>
                                                 @foreach ($promotions as $promotion)
-                                                <option value="{{ $promotion->annee }}</">{{ $promotion->annee }}</</option>
+                                                    <option value="{{ $promotion->annee }}">{{ $promotion->annee }}
+                                                    </option>
                                                 @endforeach
-                                                
+
                                             </select>
-                                            {{-- <a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill m-btn btn-outline-light m-btn--hover-light">
-                                            Toute promotion
-                                        </a>
-                                        <div class="m-dropdown__wrapper">
-                                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                            <div class="m-dropdown__inner">
-                                                <div class="m-dropdown__body">
-                                                    <div class="m-dropdown__content">
-                                                        <ul class="m-nav">
-                                                            <li class="m-nav__section m-nav__section--first">
-                                                                <span class="m-nav__section-text">Année</span>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="/admin" class="m-nav__link">
-                                                                    <span class="m-nav__link-text">Toutes les promotions</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="{{ route('statistique_to_promotion',$promotion1) }}" class="m-nav__link">
-                                                                    <span class="m-nav__link-text">2015-2016</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="{{ route('statistique_to_promotion',$promotion2) }}" class="m-nav__link">
-                                                                    <span class="m-nav__link-text">2016-2017</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="{{ route('statistique_to_promotion',$promotion3) }}" class="m-nav__link">
-                                                                    <span class="m-nav__link-text">2017-2018</span>
-                                                                </a>
-                                                            </li>
-                                                          
-                                                        </ul> 
-                                                   
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>  --}}
+
                                         </li>
                                     </ul>
                                 </div>
-
                                 <div class="m-portlet__head-tools">
                                     <ul class="m-portlet__nav">
 
                                         <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                             m-dropdown-toggle="hover">
-                                            <select id="selectFiliere" name="filiere">
+                                            <select id="selectFiliere" name="filiere" class="px-1">
                                                 <!-- Options seront ajoutées dynamiquement par JavaScript -->
                                                 <option value="toute filiere">toute filiere</option>
                                                 @foreach ($filieres as $filiere)
-                                                <option value="{{ $filiere->filiere }}">{{ $filiere->filiere }}</option>
+                                                    <option value="{{ $filiere->filiere }}">{{ $filiere->filiere }}
+                                                    </option>
                                                 @endforeach
                                             </select>
-                                            {{-- <a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill m-btn btn-outline-light m-btn--hover-light">
-                                           Filières
-                                        </a> --}}
-                                            {{-- <div class="m-dropdown__wrapper">
-                                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                            <div class="m-dropdown__inner">
-                                                <div class="m-dropdown__body">
-                                                    <div class="m-dropdown__content">
-                                                        <ul class="m-nav">
-                                                          
-                                                            <li class="m-nav__item">
-                                                                <a href="{{ route('statistique_to_promotion',$filiere1) }}" class="m-nav__link">
-                                                                    <span class="m-nav__link-text">GL</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="{{ route('statistique_to_promotion',$filiere2) }}" class="m-nav__link">
-                                                                    <span class="m-nav__link-text">SI</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="{{ route('statistique_to_promotion',$filiere3) }}" class="m-nav__link">
-                                                                    <span class="m-nav__link-text">IM</span>
-                                                                </a>
-                                                            </li>
-                                                          
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                         </li>
                                     </ul>
                                 </div>
@@ -486,13 +577,12 @@
                             <div class="m-portlet__body">
                                 <div class="m-widget27 m-portlet-fit--sides">
                                     <div class="m-widget27__pic">
-                                        <img src="assets/app/media/img//bg/bg-4.jpg" alt="">
+                                        <img src="asset/app/media/img//bg/bg-4.jpg" alt="">
                                         <h6 class="m-widget27__title m--font-light">
-                                            <span>
-                                                <span>EFFECTIF
+                                            <span >
+                                                <span>Effectif
                                                     <span>
-                                                        <span id="effectif">
-
+                                                        <span  id="effectif">
                                                         </span>
                                                     </span>
                                                 </span>
@@ -509,7 +599,7 @@
                     <div class="col-xl-4">
 
                         <!--begin:: Widgets/Blog-->
-                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force">
+                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force" style="border-radius: 15px">
                             <div class="m-portlet__head m-portlet__head--fit">
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
@@ -562,7 +652,7 @@
                     <div class="col-xl-4">
 
                         <!--begin:: Packages-->
-                        <div class="m-portlet m--bg-warning m-portlet--bordered-semi m-portlet--full-height ">
+                        <div class="m-portlet m--bg-warning m-portlet--bordered-semi m-portlet--full-height" style="border-radius: 15px">
                             <div class="m-portlet__head">
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
@@ -581,7 +671,7 @@
                                             <div class="m-widget_content-item">
                                                 <span>Total</span>
                                             </div>
-                                            <h3 class="m--font-accent">60</h3>
+                                            <h3 class="m--font-accent">000</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -600,7 +690,7 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            Envoyer un message à une promotion
+                                            Envoyer message
                                         </h3>
                                     </div>
 
@@ -610,51 +700,45 @@
                                         <li class="m-portlet__nav-item">
                                             <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                                 m-dropdown-toggle="hover" aria-expanded="true">
-                                                <span>Choisir Filières</span>
-                                                <a href="#"
-                                                    class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                                    <i class="la la-ellipsis-h m--font-brand"></i>
-                                                </a>
-                                                <div class="m-dropdown__wrapper">
-                                                    <span
-                                                        class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                                    <div class="m-dropdown__inner">
-                                                        <div class="m-dropdown__body">
-                                                            <div class="m-dropdown__content">
-                                                                <ul class="m-nav">
-                                                                    <li class="m-nav__section m-nav__section--first">
-                                                                        <span class="m-nav__section-text">Filières</span>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        @php
-                                                                            $promotion1 = '2015-2017';
-                                                                            $promotion2 = '2017-2018';
-                                                                            $promotion3 = '2017-2018';
-                                                                        @endphp
-                                                                        <a href="{{ route('message_to_promotion', $promotion1) }}"
-                                                                            class="m-nav__link">
-                                                                            <span class="m-nav__link-text">GL</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="{{ route('message_to_promotion', $promotion2) }}"
-                                                                            class="m-nav__link">
-                                                                            <span class="m-nav__link-text">SI</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="{{ route('message_to_promotion', $promotion3) }}"
-                                                                            class="m-nav__link">
-                                                                            <span class="m-nav__link-text">IM</span>
-                                                                        </a>
-                                                                    </li>
-
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <span>choisir promotion</span>
+                                    
                                             </div>
+                                        </li>
+                                     
+
+                                        <li class="m-portlet__nav-item">
+                                            <select name="" id="promotionId1" class="px-5">
+                                            <option value=""></option>
+                                           @foreach ($promotions as $promotion)
+                                               <option value="{{ $promotion->annee }}">{{ $promotion->annee }}</option>
+                                           @endforeach
+                                          </select>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="m-portlet__head-tools">
+                                    <ul class="m-portlet__nav">
+                                        <li class="m-portlet__nav-item">
+                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                m-dropdown-toggle="hover" aria-expanded="true">
+                                                <span>Choisir Filières</span>
+                                            </div>
+                                        </li>
+                                        {{-- <li class="m-nav__item">
+                                            <a href="{{ route('message_to_promotion', $promotion3) }}"
+                                                class="m-nav__link">
+                                                <span class="m-nav__link-text">IM</span>
+                                            </a>
+                                        </li> --}}
+                                        <li class="m-portlet__nav-item">
+                                            <select name="" id="filiereId1" class="px-5">
+                                            <option value=""></option>
+                                           @foreach ($filieres as $filiere)
+                                               <option value="{{ $filiere->filiere }}">{{ $filiere->filiere }}</option>
+                                           @endforeach
+                                          </select>
                                         </li>
                                     </ul>
                                 </div>
@@ -664,66 +748,91 @@
                                         <li class="m-portlet__nav-item">
                                             <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                                 m-dropdown-toggle="hover" aria-expanded="true">
-                                                <span>choisir promotion</span>
-                                                <a href="#"
-                                                    class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                                    <i class="la la-ellipsis-h m--font-brand"></i>
-                                                </a>
-                                                <div class="m-dropdown__wrapper">
-                                                    <span
-                                                        class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                                    <div class="m-dropdown__inner">
-                                                        <div class="m-dropdown__body">
-                                                            <div class="m-dropdown__content">
-                                                                <ul class="m-nav">
-                                                                    <li class="m-nav__section m-nav__section--first">
-                                                                        <span class="m-nav__section-text">Année</span>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        @php
-                                                                            $promotion1 = 2015 - 2016;
-                                                                            $promotion2 = 2016 - 2017;
-                                                                            $promotion3 = 2017 - 2018;
-                                                                        @endphp
-                                                                        <a href="{{ route('message_to_promotion', $promotion1) }}"
-                                                                            class="m-nav__link">
-                                                                            <span class="m-nav__link-text">2015-2016</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="{{ route('message_to_promotion', $promotion2) }}"
-                                                                            class="m-nav__link">
-                                                                            <span class="m-nav__link-text">2016-2017</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="{{ route('message_to_promotion', $promotion3) }}"
-                                                                            class="m-nav__link">
-                                                                            <span class="m-nav__link-text">2017-2018</span>
-                                                                        </a>
-                                                                    </li>
+                                                @php
+                                                    $promotion="2015-2016";
+                                                @endphp
+                                               <a href="{{ route('message_to_promotion',$promotion) }}"><span>rédiger</span></a> 
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
 
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                    <div class="m-portlet__head-tools bg-white col-md-4">
+                                <div class="offset-md-3 m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push mt-4">
+                                   <a href="/message_ifri"><span>Messages envoyés par les étudiants</span></a> 
+                                </div>
+                    </div>
+                   
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-8">
+                        <div class="m-portlet m-portlet--mobile ">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                          Publication
+                                        </h3>
+                                    </div>
+
+                                </div>
+                                <div class="m-portlet__head-tools">
+                                    <ul class="m-portlet__nav">
+                                        <li class="m-portlet__nav-item">
+                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                m-dropdown-toggle="hover" aria-expanded="true">
+                                                <span>choisir promotion</span>
+                                              
+                                               
+                                            </div>
+                                        </li>
+                                        <li class="m-portlet__nav-item">
+                                            <select name="" id="promotionId" class="px-5">
+                                            <option value=""></option>
+                                           @foreach ($promotions as $promotion)
+                                               <option value="{{ $promotion->annee }}">{{ $promotion->annee }}</option>
+                                           @endforeach
+                                          </select>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="m-portlet__head-tools">
+                                    <ul class="m-portlet__nav">
+                                        <li class="m-portlet__nav-item">
+                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                m-dropdown-toggle="hover" aria-expanded="true">
+                                                <span>Choisir Filières</span>
+                                            </div>
+                                        </li>
+                                        <li class="m-portlet__nav-item">
+                                            <select name="" id="filiereId" class="px-5">
+                                            <option value=""></option>
+                                           @foreach ($filieres as $filiere)
+                                               <option value="{{ $filiere->filiere }}">{{ $filiere->filiere }}</option>
+                                           @endforeach
+                                          </select>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="m-portlet__head-tools">
+                                    <ul class="m-portlet__nav">
+                                        <li class="m-portlet__nav-item">
+                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                m-dropdown-toggle="hover" aria-expanded="true">
+                                               <a href="/publication"><span>publier</span></a> 
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-
-                                <!--begin: Datatable -->
-                                <div class="m_datatable" id="m_datatable_latest_orders"></div>
-
-                                <!--end: Datatable -->
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-4 bg-white">
-                        <a href="/message_ifri" class="offset-3 h5 text-muted mt-5 pt-5">Messages reçus</a>
                     </div>
                 </div>
             </div>
@@ -734,7 +843,75 @@
 @section('script_jquey')
     <script>
         $(document).ready(function() {
+            
+            $("#promotionId").select2({
+                placeholder: "promotion",
+                language: {
+                    noResults: function() {
+                        return "Aucun résultat trouvé";
+                    }
+                }
+            });
 
+            $("#promotionId1").select2({
+                placeholder: "promotion",
+                language: {
+                    noResults: function() {
+                        return "Aucun résultat trouvé";
+                    }
+                }
+            });
+
+            $("#selectPromotion").select2({
+                placeholder: "Choisir une promotion",
+                language: {
+                    noResults: function() {
+                        return "Aucun résultat trouvé";
+                    }
+                }
+            });
+            $("#selectFiliere").select2({
+                placeholder: "Choisir une filiere",
+                language: {
+                    noResults: function() {
+                        return "Aucun résultat trouvé";
+                    }
+                }
+            });
+            $("#filiereId").select2({
+                placeholder: "Filiere",
+                language: {
+                    noResults: function() {
+                        return "Aucun résultat trouvé";
+                    }
+                }
+            });
+            $("#filiereId1").select2({
+                placeholder: "Filiere",
+                language: {
+                    noResults: function() {
+                        return "Aucun résultat trouvé";
+                    }
+                }
+            });  
+
+            $("#ajoutElevePromotion").select2({
+                placeholder: "Choisir une filiere",
+                language: {
+                    noResults: function() {
+                        return "Aucun résultat trouvé";
+                    }
+                }
+            });
+
+            $("#ajoutEleveFiliere").select2({
+                placeholder: "Choisir une filiere",
+                language: {
+                    noResults: function() {
+                        return "Aucun résultat trouvé";
+                    }
+                }
+            });
 
             $("#selectPromotion").on("change", function() {
                 // const option = $("#promotion :selected");
@@ -762,7 +939,7 @@
 
                         $('#effectif').append('<span>' + users.length + '</span>');
                         $('#effectif_emploi').append('<span>' + users_emploi.length +
-                        '</span>');
+                            '</span>');
                         $('#effectif_stage').append('<span>' + users_stage.length + '</span>');
                         $('#effectif_sans_emploi').append('<span>' + users_sans.length +
                             '</span>');
@@ -804,7 +981,7 @@
 
                         $('#effectif').append('<span>' + users.length + '</span>');
                         $('#effectif_emploi').append('<span>' + users_emploi.length +
-                        '</span>');
+                            '</span>');
                         $('#effectif_stage').append('<span>' + users_stage.length + '</span>');
                         $('#effectif_sans_emploi').append('<span>' + users_sans.length +
                             '</span>');
@@ -833,6 +1010,7 @@
 
                         // Hide the spinner on success
                         $('#promotionSpinner').addClass('d-none');
+                              
                         $('#msg-return').addClass('bg-success');
                         $('.msg-return').text(response.message);
                         // Optionally, close the modal on success
@@ -868,9 +1046,22 @@
 
                         // Hide the spinner on success
                         $('#filiereSpinner').addClass('d-none');
-                        $('#msg-return').addClass('bg-success');
-                        $('.msg-return').text(response.message);
-                        // Optionally, close the modal on success
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 6000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                        });
                         $('#filiereModal').modal('hide');
 
                     },

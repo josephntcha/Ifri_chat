@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{-- <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -44,10 +44,9 @@
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+</x-guest-layout> --}}
 
-
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -63,8 +62,8 @@
             }
           });
         </script>
-		<link href="../../../asset/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="../../../asset/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="{{ asset("asset/vendors/base/vendors.bundle.css") }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset("asset/demo/default/base/style.bundle.css") }}" rel="stylesheet" type="text/css" />
 </head>
 <body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 
@@ -77,14 +76,14 @@
                         <div class="m-login__content">
                             <div class="m-login__logo">
                                 <a href="#">
-                                    <img src="../../../asset/app/media/img/logos/logoifri.png" class="col-4 w-100">
+                                    <img src="{{ asset("asset/app/media/img/logos/logoifri.png") }}" class="col-4 w-100">
                                 </a>
                             </div>
                             <div class="m-login__title">
-                                <h3 class="text-white">IFRI-NETWORK Community</h3>
+                                <h3 class="text-white">AluminiNet</h3>
                             </div>
                             <div class="m-login__desc text-light">
-                                Connecter vous et communiquez aisement avec la communauté IFRI
+                                Connectez vous et communiquez aisement avec la communauté IFRI
                             </div>
                             <div class="m-login__form-action">
                                 <button type="button" id="m_login_signup" class="btn btn-outline-focus m-btn--pill text-light">Compte entreprise</button>
@@ -105,18 +104,19 @@
                         <form class="m-login__form m-form" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="matricule">{{ __('Matricule') }}</label>
-                                <input id="matricule" type="text" class="form-control @error('matricule') is-invalid @enderror" name="matricule" value="{{ old('matricule') }}" required>
-                                @error('matricule')
+                                <label for="email">{{ __('Matricule') }}</label>
+                                
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
+                                @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="code_inscription">{{ __('Code d\'inscription') }}</label>
-                                <input id="code_inscription" type="text" class="form-control @error('code_inscription') is-invalid @enderror" name="code_inscription" value="{{ old('code_inscription') }}" required autofocus>
-                                @error('code_inscription')
+                                <label for="password">{{ __('Code inscription') }}</label>
+                                <input id="password"   type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autofocus required autocomplete="current-password">
+                                @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -135,20 +135,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="row mb-0">
-                        <div class="col-md-8 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Login') }}
-                            </button>
-
-                            @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            @endif
-                        </div>
-                    </div> --
-
                              <div class="m-login__form-action">
                                 <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Se connecter</button>
                             </div> 
@@ -205,12 +191,17 @@
         </div>
     </div>
 
-   
-    <script src="../../../asset/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-    <script src="../../../asset/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-    <script src="../../../asset/snippets/custom/pages/user/login.js" type="text/javascript"></script>
+    <!-- end:: Page -->
 
+    <!--begin::Global Theme Bundle -->
+    <script src="{{ asset("asset/vendors/base/vendors.bundle.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("asset/demo/default/base/scripts.bundle.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("asset/snippets/custom/pages/user/login.js") }}" type="text/javascript"></script>
 
+    <!--end::Page Scripts -->
 </body>
-</html> --}}
+</html>
+
+
+
 
