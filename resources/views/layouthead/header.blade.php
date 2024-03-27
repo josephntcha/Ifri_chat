@@ -34,43 +34,13 @@
     <div id="app">
        
         <nav>
-
-            <div class="left">
-                <div class="logo">
-                    <img src="{{ asset('asset/img/logo.png') }}">
-                </div>
-    
-                <div class="search_bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search EBook">
-                </div>
-            </div>
-    
-            <div class="center">
-                 <a href="/home"> 
-                    <i class="fa-solid fa-house"></i>
-                 </a>
-                <a href="{{ route('message_to_ifri') }}"><i class="fa-solid fa-tv"><span>Ifri</span></i></a>
-                <!-- <i class="fa-solid fa-store"></i> -->
-                <a href="/users">
-                    <i class="fa-solid fa-users"></i>
-                </a>
-                <a href="{{ route('message_for_me',Auth::user()->id) }}">M-IFRI</a>
-            </div>
-    
-            <div class="right">
-    
-                <i class="fa-solid fa-list-ul"></i>
-                <i class="fa-brands fa-facebook-messenger"></i> <span class="text-white px-1 bg-danger" style="border-radius: 50%;margin-top:-10%"> 
+            <div class="right offset-md-11">
+                <span class="text-white px-1 bg-danger" style="border-radius: 50%;margin-top:-10%"> 
                     @if (isset($count_unread))
                     {{$count_unread }}
-                   @endif </span>
-
-                <i class="fa-solid fa-bell"></i>
-                <i class="fa-solid fa-moon"></i>
-                
-                
-                <ul class="navbar-nav ms-autoweb">
+                    @endif 
+                </span>
+                <ul class="navbar-nav">
                     <!-- Authentication Links -->
                     @guest
                          @if (Route::has('login'))

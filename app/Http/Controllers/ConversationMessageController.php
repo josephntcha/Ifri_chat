@@ -90,31 +90,29 @@ class ConversationMessageController extends Controller
 
   public function DataPromotion($promotionId){
     if ($promotionId=="toute promotion") {
-      $users=User::with('promotion')->get();
+      $users=User::with('filiere')->get();
     }else{
-      $promotion_etudiant= Promotion::with('users')->where('annee', $promotionId)->first();
-      $users=$promotion_etudiant->users;
-      
+      $users=User::with('filiere')->where('promotion_id',$promotionId)->get();
+     // $promotion_etudiant= Promotion::with('users')->where('annee', $promotionId)->first();
+     // $users=$promotion_etudiant->users;
     }
     return response()->json($users)->header('Content-Type', 'application/json');
-
   }
 
   public function DataPromotionFiliere($promotionId, $filiereName) {
 
-     if ($promotionId=="toute promotion") {
-      $filiere_users= Filiere::with('users')->where('filiere',$filiereName)->first();
-       $users =$filiere_users->users; //User::where('filiere', $filiere)->get();
-     }else {
-      $promotion = Promotion::with('users')->where('annee', $promotionId)->first();
-      $filiere = Filiere::Where('filiere',$filiereName)->first();
+     if (($promotionId=="toute promotion")) {
 
-      $users = $promotion->users()->where('filiere_id', $filiere->id)->get();
+     // $filiere_users= Filiere::with('users')->where('id',$filiereName)->first();
+       $users =User::with('filiere')->where('filiere_id',$filiereName); //User::where('filiere', $filiere)->get();
+       
+     }elseif ($filiereName=="toute filiere") {
+      $users=User::with('filiere')->where('promotion_id',$promotionId)->get();
 
-      //  $users = User::where('promotion', $promotionId)
-      //  ->where('filiere', $filiere)
-      //  ->get();
+     }
+     else {
 
+      $users=User::with('filiere')->where('promotion_id',$promotionId)->where('filiere_id',$filiereName)->get();
      }
     return response()->json($users);
 }

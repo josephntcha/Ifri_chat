@@ -24,6 +24,7 @@ class User extends Authenticatable
         'promotion_id',
         'filiere_id',
         'password',
+        'matricule'
     ];
 
     /**

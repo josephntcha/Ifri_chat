@@ -46,6 +46,7 @@
     </form>
 </x-guest-layout> --}}
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,22 +70,22 @@
 
     <!-- begin:: Page -->
     <div class="m-grid m-grid--hor m-grid--root m-page">
-        <div class="m-login m-login--signin  m-login--5" id="m_login" style="background-image: url(../../../asset/app/media/img//bg/bg-3.jpg);">
-            <div class="m-login__wrapper-1 m-portlet-full-height" style="background-image: url(../../../asset/app/media/img//bg/bg-4.jpg)">
+        <div class="m-login m-login--signin  m-login--5" id="m_login" style="">
+            <div class="m-login__wrapper-1 m-portlet-full-height" style="background:#005fbd">
                 <div class="m-login__wrapper-1-1">
                     <div class="m-login__contanier">
                         <div class="m-login__content">
                             <div class="m-login__logo">
                                 <a href="#">
-                                    <img src="{{ asset("asset/app/media/img/logos/logoifri.png") }}" class="col-4 w-100">
+                                    <img src="{{ asset("images/connexion.png") }}" class="col-6 w-100">
                                 </a>
                             </div>
                             <div class="m-login__title">
                                 <h3 class="text-white">AluminiNet</h3>
                             </div>
                             <div class="m-login__desc text-light">
-                                Connectez vous et communiquez aisement avec la communauté IFRI
-                            </div>
+                                Rejoindre la communaute des anciens etudiants d'IFRI                 
+                             </div>
                             <div class="m-login__form-action">
                                 <button type="button" id="m_login_signup" class="btn btn-outline-focus m-btn--pill text-light">Compte entreprise</button>
                             </div>
@@ -122,21 +123,22 @@
                                     </span>
                                 @enderror
                             </div>
+                        
 
                           
-                    <div class="row mb-3">
-                        <div class="col-md-6 offset-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <div class="row mb-3">
+                                <div class="col-md-6 offset-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                <label class="form-check-label" for="remember">
-                                    {{ __('Remember Me') }}
-                                </label>
+                                        <label class="form-check-label" for="remember">
+                                            {{ __('Remember Me') }}
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                              <div class="m-login__form-action">
-                                <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Se connecter</button>
+                                <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" style="background:#005fbd">Se connecter</button>
                             </div> 
                         </form>
                     </div>

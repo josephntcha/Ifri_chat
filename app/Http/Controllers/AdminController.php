@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Filiere;
-use App\Models\MessageForIfri;
-use App\Models\Promotion;
 use Rules\Password;
 use App\Models\User;
+use App\Models\Filiere;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
+use App\Models\MessageForIfri;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use App\Mail\EnvoieMailPasswordForAlumni;
 use App\Repository\ConversationRepository;
 
 class AdminController extends Controller
@@ -174,20 +177,20 @@ class AdminController extends Controller
 
     }
 
-    public function AjoutEtudiant(Request $request){
+    // public function AjoutEtudiant(Request $request){
 
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed'],
-        ]);
+    //     $request->validate([
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+    //         'password' => ['required', 'confirmed'],
+    //     ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-    }
+    //     User::create([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //     ]);
+    // }
 
       // méthode pour ajouter une promotion
       public function AjoutPromotion(Request $request){
@@ -295,6 +298,32 @@ class AdminController extends Controller
  }
 
 }
+
+public function AjoutAlumni(Request $request){
+   
+    $alumni_existe=User::Where('matricule',$request->input('matricule'))->first();
+    $password_default='$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';//password
+    if (!$alumni_existe) {
+     $user=User::create([
+            'name'=> $request->nom,
+            'email'=> $request->email,
+            'matricule'=> $request->matricule,
+            'promotion_id'=> $request->promotion,
+            'filiere_id'=> $request->filiere,
+            'password'=> $password_default,
+
+        ]);
+      //  Session::put('password', $password_default);
+      // $email_envoie =Mail::to($request->email)->send(new EnvoieMailPasswordForAlumni());
+        if ($user) {
+            $message="Alumnus ajouté avec succès";
+        }
+    }else{
+        $message="Alumnus existe déjà";
+
+    }
+    return response()->json(['success' => true, 'message' => $message,'alumni_existe'=>$alumni_existe]);
+  }
 
 
 }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('poste')->nullable();
             $table->string('cv')->nullable();
            // $table->string('filiere')->nullable();
+           $table->string('Numero_telephone')->nullable();
            $table->unsignedBigInteger('filiere_id'); 
             $table->string('langage')->nullable();
             $table->string('expérience')->nullable();

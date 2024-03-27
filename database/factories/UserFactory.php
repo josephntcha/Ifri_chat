@@ -24,6 +24,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
             'matricule' => fake()->unique()->randomNumber(8),
+            'Numero_telephone' => fake()->unique()->randomNumber(8),
            // 'promotion' => fake()->randomElement(['2015-2016', '2016-2017', '2017-2018']),
            'promotion_id'=>rand(1,3),
            'filiere_id'=>rand(1,3),

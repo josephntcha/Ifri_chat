@@ -7,6 +7,8 @@
     <title>Admin</title>
     {{-- <link href="{{ asset("asset/boot/css/bootstrap.mini.css") }}" rel="stylesheet" type="text/css" /> --}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('asset/vendors/base/flowbite.min.css') }}" />
+
     <link rel="stylesheet" href="{{ asset('asset/vendors/sweetalert2/dist/sweetalert2.min.css') }}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>

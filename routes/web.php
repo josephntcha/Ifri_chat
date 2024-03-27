@@ -51,13 +51,14 @@ Route::post('/admin_send_message_promotion/{promotion}', [App\Http\Controllers\A
 Route::get('/statisque_promotion/{promotion}', [App\Http\Controllers\AdminController::class,'Statistique'])->name('statisque_promotion');
 Route::get('/statisque_promotion_filiere/{promotion}/{filiere}', [App\Http\Controllers\AdminController::class,'StatistiqueFiliere'])->name('statisque_promotion_filiere');
 Route::get('/reponse_admin/{user}', [App\Http\Controllers\AdminController::class,'reponseAdmin'])->name('reponse_ifri')->middleware('auth');
-Route::post('/ajout_etudiant', [App\Http\Controllers\AdminController::class,'AjoutEtudiant'])->name('ajout_etudiant');
+//Route::post('/ajout_etudiant', [App\Http\Controllers\AdminController::class,'AjoutEtudiant'])->name('ajout_etudiant');
 
 Route::get('/friends', [ConversationMessageController::class, 'friends'])->name('conversation.friend');
 Route::get('/message_for_me/{user}', [ConversationMessageController::class, 'MessageForMe'])->name('message_for_me');
 
 //route pour l'ajout d'une promotion /ajout-de-promotion
 Route::post('/ajout-de-promotion', [App\Http\Controllers\AdminController::class,'AjoutPromotion']);
+Route::post('/ajout_alumni', [App\Http\Controllers\AdminController::class,'AjoutAlumni']);
 //route pour l'ajout d'une filière
 Route::post('/ajout-de-filiere', [App\Http\Controllers\AdminController::class,'AjoutFiliere']);
 Route::post('/modifier-filiere/{id}', [App\Http\Controllers\AdminController::class,'ModifierFiliere']);
@@ -102,5 +103,6 @@ Route::middleware('auth')->group(function (){
     
     Route::get('/users',Users::class)->name('users');
 });
+
 
 

@@ -57,9 +57,9 @@
                         <span><i class="fas fa-user-friends"></i></span>
                         <h3>Friends</h3>
                     </a>
-                    <a href="group.html" class="menu-item active">
-                        <span><i class="fas fa-users"></i></span>
-                        <h3>Groups</h3>
+                    <a href="{{ route('message_for_me',Auth::user()->id) }}" class="menu-item active">
+                        {{-- <span><i class="fas fa-users"></i></span> --}}
+                        <h3>Info-IFRI</h3>
                     </a>
                     <a href="/message_to_ifri" class="menu-item active">
                         <span><i class="fas fa-briefcase"></i></span>
@@ -142,9 +142,9 @@
                         <span><i class="fas fa-palette"></i></span>
                         <h3>Theme</h3>
                     </a>
-                    <a class="menu-item active">
-                        <span><i class="fas fa-gear"></i></span>
-                        <h3>Settings</h3>
+                    <a  class="menu-item active">
+                        <span><i class="fas fa-gear"></i></span> 
+                        <h3>Setting</h3>
                     </a>
                 </div>
                 <!-- ------------- END Sidebar ------------ -->

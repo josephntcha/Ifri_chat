@@ -22,6 +22,11 @@
                                     <h3 class="m-portlet__head-text">
                                         Laisser un message à l'administration IFRI
                                     </h3>
+                                    @foreach ($errors->all() as $error)
+                                        <div class="text-red-500">
+                                            {{ $error }}
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -32,7 +37,7 @@
                                 <div class="form-group m-form__group row">
                                     <label class="col-form-label col-lg-3 col-sm-12">Entrez votre message</label>
                                     <div class="col-lg-9 col-md-9 col-sm-12">
-                                        <textarea name="markdown" class="form-control" data-provide="markdown" rows="10"></textarea>
+                                        <textarea name="markdown" class="form-control" data-provide="markdown" rows="10" required></textarea>
                                         <span class="m-form__help">Enter some markdown content</span>
                                     </div>
                                 </div>
@@ -42,7 +47,7 @@
                                 <div class="m-form__actions m-form__actions">
                                     <div class="row">
                                         <div class="col-lg-9 ml-lg-auto">
-                                            <button type="submit" class="btn btn-success">Envoyer</button>
+                                            <button type="submit" class="btn text-white" style="background:#005fbd">Envoyer</button>
                                             <button type="reset" class="btn btn-secondary text-dark">Supprimer</button>
                                         </div>
                                     </div>
@@ -78,7 +83,6 @@
         </div>
     </div>
 
-    
     <!--end::Page Scripts -->
 </body>
 @endsection

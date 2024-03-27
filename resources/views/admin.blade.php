@@ -103,33 +103,37 @@ Toast.fire({
             </div>
             {{-- fin du modal --}}
             <button class="bg-secondary text-black p-2 mt-md-3 btn" data-toggle="modal"data-target="#eleveModal"><i
-                    class="flaticon-add-circular-button" aria-hidden="true"></i> Ajouter un nouvel elève</button>
+                    class="flaticon-add-circular-button" aria-hidden="true"></i> Ajouter un alumnus</button>
             {{-- modal d'ajout d'un nouvel elève --}}
             <div class="modal fade" id="eleveModal" tabindex="-1" role="dialog" aria-labelledby="eleveModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-tpromotionFormitle" id="eleveModalLabel">Ajouter une nouvel nouvel elève</h5>
+                            <h5 class="modal-tpromotionFormitle" id="eleveModalLabel">Ajouter une nouvel alumnus</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <!-- Your form goes here -->
-                            <form>
-                                <!-- Form fields go here -->
+                            
+                            <form  id="alumniForm">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="eleveName">Nom de l'elève</label>
-                                    <input type="text" class="form-control" id="eleveName" name="eleveName">
+                                    <label for="nom">Nom de l'elève</label>
+                                    <input type="text" class="form-control" id="nom" name="nom" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="eleveName">Email</label>
-                                    <input type="email" class="form-control" id="eleveName" name="eleveName">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="eleveName">Promotion</label>
+                                    <label for="matricule">Matricule</label>
+                                    <input type="number" class="form-control" id="matricule" name="matricule" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="promotion">Promotion</label>
                                     <select name="promotion" id="ajoutElevePromotion" class="form-control" style="width: 100%">
                                         <option value=""></option>
                                         @foreach ($promotions as $promotion)
@@ -138,7 +142,7 @@ Toast.fire({
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="ajoutEleveFiliere">Filière</label>
+                                    <label for="filiere">Filière</label>
                                     <select name="filiere" id="ajoutEleveFiliere" class="form-control" style="width: 100%">
                                         <option value=""></option>
                                         @foreach ($filieres as $filiere)
@@ -147,13 +151,17 @@ Toast.fire({
                                     </select>
                                 </div>
                                 <!-- Add other form fields as needed -->
+                                
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i>
+                            <button type="button" class="btn btn-primary" id="submitAlumni"><i class="fa fa-plus" aria-hidden="true"></i>
                                 Ajouter</button>
+                                <span id="alumniSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                    aria-hidden="true"></span>
                         </div>
+                       
                     </div>
                 </div>
             </div>
@@ -206,7 +214,23 @@ Toast.fire({
                                                                 _token: '{{ csrf_token() }}'
                                                             },
                                                             success: function(response) {
-                                                                $('.msg-return').text(response.message);
+                                                               // $('.msg-return').text(response.message);
+                                                               const Toast = Swal.mixin({
+                                                                    toast: true,
+                                                                    position: 'top-end',
+                                                                    showConfirmButton: false,
+                                                                    timer: 6000,
+                                                                    timerProgressBar: true,
+                                                                    didOpen: (toast) => {
+                                                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                                    }
+                                                                });
+
+                                                                Toast.fire({
+                                                                    icon: 'success',
+                                                                    title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                                                                }); 
 
 
                                                             },
@@ -298,7 +322,23 @@ Toast.fire({
                                                                     success: function(response) {
                                                                         // Traitement du succès (par exemple, actualiser la page, fermer le modal, etc.)
 
-                                                                        $('.msg-return').text(response.message);
+                                                                        //$('.msg-return').text(response.message);
+                                                                        const Toast = Swal.mixin({
+                                                                                toast: true,
+                                                                                position: 'top-end',
+                                                                                showConfirmButton: false,
+                                                                                timer: 6000,
+                                                                                timerProgressBar: true,
+                                                                                didOpen: (toast) => {
+                                                                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                                                }
+                                                                            });
+
+                                                                            Toast.fire({
+                                                                                icon: 'success',
+                                                                                title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                                                                            }); 
                                                                         $('#modifierModal').modal('hide');
                                                                     },
                                                                     error: function(xhr, status, error) {
@@ -386,7 +426,23 @@ Toast.fire({
                                                                 _token: '{{ csrf_token() }}'
                                                             },
                                                             success: function(response) {
-                                                                $('.msg-return').text(response.message);
+                                                               // $('.msg-return').text(response.message);
+                                                               const Toast = Swal.mixin({
+                                                                                toast: true,
+                                                                                position: 'top-end',
+                                                                                showConfirmButton: false,
+                                                                                timer: 6000,
+                                                                                timerProgressBar: true,
+                                                                                didOpen: (toast) => {
+                                                                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                                                }
+                                                                            });
+
+                                                                            Toast.fire({
+                                                                                icon: 'success',
+                                                                                title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                                                                            }); 
 
                                                             },
                                                             error: function(xhr, status, error) {
@@ -469,7 +525,23 @@ Toast.fire({
                                                                   success: function(response) {
                                                                       // Traitement du succès (par exemple, actualiser la page, fermer le modal, etc.)
 
-                                                                      $('.msg-return').text(response.message);
+                                                                     // $('.msg-return').text(response.message);
+                                                                     const Toast = Swal.mixin({
+                                                                                toast: true,
+                                                                                position: 'top-end',
+                                                                                showConfirmButton: false,
+                                                                                timer: 6000,
+                                                                                timerProgressBar: true,
+                                                                                didOpen: (toast) => {
+                                                                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                                                }
+                                                                            });
+
+                                                                            Toast.fire({
+                                                                                icon: 'success',
+                                                                                title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                                                                            }); 
                                                                       $('#modifierPromoModal').modal('hide');
                                                                   },
                                                                   error: function(xhr, status, error) {
@@ -515,7 +587,7 @@ Toast.fire({
             {{-- fin --}}
             <a href="/action" class="bg-light text-dark btn  mt-md-3"> Liste elève</a>
 
-            <div class="msg-return btn btn-success  btn-sm mt-md-3" style="color: #EEEE; text-align: center;"></div>
+            {{-- <div class="msg-return btn btn-success  btn-sm mt-md-3" style="color: #EEEE; text-align: center;"></div> --}}
 
         </div>
 
@@ -997,7 +1069,7 @@ Toast.fire({
             $('#submitPromotion').on('click', function() {
                 // Show the spinner
                 $('#promotionSpinner').removeClass('d-none');
-
+                
                 // Prepare the form data
                 var formData = $('#promotionForm').serialize();
 
@@ -1010,9 +1082,24 @@ Toast.fire({
 
                         // Hide the spinner on success
                         $('#promotionSpinner').addClass('d-none');
-                              
-                        $('#msg-return').addClass('bg-success');
-                        $('.msg-return').text(response.message);
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 6000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                        }); 
+                        // $('#msg-return').addClass('bg-success');
+                        // $('.msg-return').text(response.message);
                         // Optionally, close the modal on success
                         $('#promotionModal').modal('hide');
 
@@ -1026,6 +1113,90 @@ Toast.fire({
                     }
                 });
             });
+
+            //Ajout d'un nouvel alumnus
+
+            // $('#submitAlumni').on('click',function () {
+            //   $('#alumniSpinner').removeClass('d-none');
+
+            //   var formData= $('#alumniForm').serialize();
+
+            //   $.ajax({
+            //     type:'POST',
+            //     url: 'ajout_alumni',
+            //     data: formData,
+            //     success: function(respone){
+            //         $('#alumniSpinner').addClass('d-none');
+
+            //         const Toast = Swal.mixin({
+            //                 toast: true,
+            //                 position: 'top-end',
+            //                 showConfirmButton: false,
+            //                 timer: 6000,
+            //                 timerProgressBar: true,
+            //                 didOpen: (toast) => {
+            //                     toast.addEventListener('mouseenter', Swal.stopTimer)
+            //                     toast.addEventListener('mouseleave', Swal.resumeTimer)
+            //                 }
+            //             });
+
+            //             Toast.fire({
+            //                 icon: 'success',
+            //                 title: response.message 
+            //             });
+
+            //             $('#eleveModal').modal('hide');
+            //     };
+            //     error: function(error) {
+            //             // Handle errors if any
+            //             console.error('Error:', error);
+
+            //             // Hide the spinner on error
+            //             $('#alumniSpinner').addClass('d-none');
+            //         }
+            //   });
+                
+            // })           
+            
+
+            $('#submitAlumni').on('click', function() {
+                // Show the spinner
+                $('#alumniSpinner').removeClass('d-none');
+                var formData = $('#alumniForm').serialize();
+                console.log('echec');
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajout_alumni',
+                    data: formData,
+                    success: function(response) {
+                        $('#alumniSpinner').addClass('d-none');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 6000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message 
+                        }); 
+                        $('#eleveModal').modal('hide');
+
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                        $('#alumniSpinner').addClass('d-none');
+                    }
+                });
+            });
+
             //fin
 
             //ajout d'une filière
@@ -1065,7 +1236,7 @@ Toast.fire({
                         $('#filiereModal').modal('hide');
 
                     },
-                    error: function(error) {
+                    error: function(error) { 
                         // Handle errors if any
                         console.error('Error:', error);
 
