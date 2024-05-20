@@ -23,18 +23,14 @@
                 <input type="search" placeholder="Search for">
             </div>
             <div class="create">
-                <label class="btn btn-primary" for="Create-post">Create</label>
                 <div class="profile-picture">
                     <img src="{{ asset("new/images/profile-1.jpg") }}" alt="User Profile">
                 </div>
             </div>
         </div>
     </nav>
-
-    <!-- MAIN -->
     <main>
         <div class="container">
-            <!-- ============= main left =============== -->
             <div class="left">
                 <a class="profile">
                     <div class="profile-picture">
@@ -47,7 +43,6 @@
                         </p>
                     </div>
                 </a>
-                <!-- ------------- Sidebar ------------ -->
                 <div class="sidebar">
                     <a href="/index" class="menu-item active">
                         <span><i class="fas fa-house"></i></span>
@@ -58,7 +53,6 @@
                         <h3>Friends</h3>
                     </a>
                     <a href="{{ route('message_for_me',Auth::user()->id) }}" class="menu-item active">
-                        {{-- <span><i class="fas fa-users"></i></span> --}}
                         <h3>Info-IFRI</h3>
                     </a>
                     <a href="/message_to_ifri" class="menu-item active">
@@ -149,52 +143,9 @@
                 </div>
                 <!-- ------------- END Sidebar ------------ -->
             </div>
-            <!-- ============= END main left =============== -->
-
-            <!-- ============= main middle =============== -->
+            
             <div class="middle">
-                <!-- ------------- Stories ------------ -->
-                <!-- <div class="stories">
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="images/profile-7.jpg">
-                        </div>
-                        <p class="name">Your Story</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="images/profile-8.jpg">
-                        </div>
-                        <p class="name">Steph James</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="images/profile-9.jpg">
-                        </div>
-                        <p class="name">Lova Chimaine</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="images/profile-10.jpg">
-                        </div>
-                        <p class="name">Roberto deGuelliro</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="images/profile-11.jpg">
-                        </div>
-                        <p class="name">Cheese Akpan</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="images/profile-12.jpg">
-                        </div>
-                        <p class="name">BrotherHood Guy</p>
-                    </div>
-                </div> -->
-                <!-- ------------- END Stories ------------ -->
-
-                <!-- ------------- Create Post ------------ -->
+              
                 <form class="create-post">
                     <div class="profile-picture">
                         <img src="{{ asset("new/images/profile-1.jpg") }}">

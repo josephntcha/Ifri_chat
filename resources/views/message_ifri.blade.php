@@ -9,8 +9,8 @@
                     <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
                         <thead>
                             <tr>
-                                <th>Etudiant ID</th>
                                 <th>Etudiant</th>
+                                <th>Téléphone</th>
                                 <th>Promotion</th>
                                 <th>Message</th>
                                 <th>Matricule</th>
@@ -25,8 +25,8 @@
 
                             @foreach ($messages_ifri as $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
                                 <td>{{ $item->from->name }}</td>
+                                <td>{{ $item->from->Numero_telephone }}</td>
                                 <td>{{ $item->from->promotion->annee}}</td>
                                 <td class="truncate-text">{{ \Illuminate\Support\Str::limit($item->content, 25) }}</td>
                                 {{-- <td>{{ $item->content }}</td> --}}

@@ -16,13 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('matricule');
-          //  $table->enum('promotion',['2015-2016','2016-2017','2017-2018'])->nullable();
             $table->unsignedBigInteger('promotion_id'); // Clé étrangère
             $table->enum('isAdmin',['true','false'])->default('false');
             $table->string('description')->nullable();
             $table->string('poste')->nullable();
             $table->string('cv')->nullable();
-           // $table->string('filiere')->nullable();
            $table->string('Numero_telephone')->nullable();
            $table->unsignedBigInteger('filiere_id'); 
             $table->string('langage')->nullable();

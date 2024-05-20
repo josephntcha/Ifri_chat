@@ -1,15 +1,11 @@
 @extends('layout.master')
-
-
 @section('content')
-<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
-   <br><br>
     @if(session('success'))
     <div class="alert alert-success text-center h4">
         {{ session('success') }}
     </div>
    @endif
-    <div class="m-grid m-grid--hor m-grid--root m-page">
+    <div class="">
         <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
 
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -20,12 +16,12 @@
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
                                     <h3 class="m-portlet__head-text">
-                                        Envoyez un message à a promotion ----- <strong>{{ $promotion }}</strong> 
+                                        Envoyez un message à la promotion:  <strong>{{ $annee }}</strong> , Filière: <strong>{{ $nom_filiere }}</strong> 
                                     </h3>
                                 </div>
                             </div>
                         </div>
-                        <form class="m-form m-form--fit m-form--label-align-right" id="m_form_1" action="{{ route('send_message_to_promotion',$promotion) }}" method="POST" enctype="multipart/form-data">
+                        <form class="m-form m-form--fit m-form--label-align-right" method="POST" action="{{ route('send_message_to_promotion',['promotion' => $promotion, 'filiere' => $filiere]) }}"  enctype="multipart/form-data">
                             @csrf
                             <div class="m-portlet__body">
                                 <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
@@ -59,5 +55,5 @@
     <script src="../../../assets/demo/default/custom/crud/forms/validation/form-widgets.js" type="text/javascript"></script>
 
     <!--end::Page Scripts -->
-</body>
+
 @endsection

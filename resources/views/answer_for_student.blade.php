@@ -19,7 +19,7 @@
             <tr>
                 <td class="truncate-text">{{ \Illuminate\Support\Str::limit($item->content, 50) }}</td>
                 @if ($item->fichier!="")
-                <td> <a href="{{ asset('public/assets/clients/documents/'.$item->fichier) }}" download="{{$item->fichier }}" style="border-radius: 15px">{{ $item->fichier }}</a> </td>
+                <td> <a href="{{ asset('public/assets/clients/documents/'.$item->fichier) }}" download="{{$item->fichier }}" style="border-radius: 15px">télécharger</a> </td>
 
                 @else
                 <td>No file </td>

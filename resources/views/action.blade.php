@@ -179,6 +179,7 @@
 
                                                 <button type="button" class="btn btn-sm" title="Delete Student"
                                                     onclick="confirmDelete({{ $filiere->id }})">
+                                                    
                                                     <i class="flaticon-delete" style="color: red;"></i>
                                                 </button>
 
@@ -679,6 +680,7 @@
 
                            
                         });
+                        
                         $(document).ready(function() {
                                     $('input[type="checkbox"]').each(function() {
                                         var userId = $(this).attr('id').replace('toggle-user-', '');
@@ -724,14 +726,39 @@
                         effectif.empty();
                         effectif.append('<span>' + users.length + '</span>');
                         $.each(users, function(index, user) {
+                            var switchButton = '<td><label for="toggle-user-' + index + '" class="flex items-center cursor-pointer relative">' +
+                            '<input type="checkbox" id="toggle-user-' + index + '" class="sr-only" checked>' +
+                            '<div class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"></div>' +
+                            '<span class="ml-3 text-gray-900 text-sm font-medium"></span>' +
+                            '</label></td>';
                             usersContainer.append('<tr>' +
                                 '<td>' + user.name + '</td>' +
-                                '<td>' + user.filiere.filiere+ '</td>' +
+                                '<td>' +user.filiere.filiere+ '</td>' +
                                 '<td>' + user.matricule + '</td>' +
                                 '<td>' + user.email + '</td>' +
                                 '<td>' + user.Numero_telephone + '</td>' +
+                                switchButton +
                                 '</tr>');
+
+                                $(document).on('change', 'input[type="checkbox"]', function() {
+                                    var userId = $(this).attr('id').replace('toggle-user-', '');
+                                    var isDisabled = !$(this).prop('checked');
+                                    localStorage.setItem('user_' + userId, isDisabled);
+                                });
+
                         });
+
+                        $(document).ready(function() {
+                                    $('input[type="checkbox"]').each(function() {
+                                        var userId = $(this).attr('id').replace('toggle-user-', '');
+                                        var isDisabled = localStorage.getItem('user_' + userId);
+
+                                        if (isDisabled === 'true') {
+                                            $(this).prop('checked', false);
+                                            //logique si un étudiant est désactivé
+                                        }
+                                    });
+                                });
 
                     },
                     error: function(xhr, status, error) {

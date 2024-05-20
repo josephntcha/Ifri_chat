@@ -1,27 +1,27 @@
 @extends('layout.master')
 @section('content')
-@if ($message = session('success'))
-@section('alert')
-<script type="text/javascript">
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 6000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-})
+    @if ($message = session('success'))
+        @section('alert')
+            <script type="text/javascript">
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 6000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
 
-Toast.fire({
-    icon: 'success',
-    title: '{{ $message }}'
-})
-</script>
-@endsection
-@endif
+                Toast.fire({
+                    icon: 'success',
+                    title: '{{ $message }}'
+                })
+            </script>
+        @endsection
+    @endif
     <div class="container offset-md-2">
         <div class="row justify-content-between">
             <button class="bg-primary btn btn-success btn-sm mt-md-3" style="margin-left: 8px" data-toggle="modal"
@@ -117,8 +117,8 @@ Toast.fire({
                         </div>
                         <div class="modal-body">
                             <!-- Your form goes here -->
-                            
-                            <form  id="alumniForm">
+
+                            <form id="alumniForm">
                                 @csrf
                                 <div class="form-group">
                                     <label for="nom">Nom de l'elève</label>
@@ -134,7 +134,8 @@ Toast.fire({
                                 </div>
                                 <div class="form-group">
                                     <label for="promotion">Promotion</label>
-                                    <select name="promotion" id="ajoutElevePromotion" class="form-control" style="width: 100%">
+                                    <select name="promotion" id="ajoutElevePromotion" class="form-control"
+                                        style="width: 100%">
                                         <option value=""></option>
                                         @foreach ($promotions as $promotion)
                                             <option value="{{ $promotion->id }}">{{ $promotion->annee }}</option>
@@ -143,7 +144,8 @@ Toast.fire({
                                 </div>
                                 <div class="form-group">
                                     <label for="filiere">Filière</label>
-                                    <select name="filiere" id="ajoutEleveFiliere" class="form-control" style="width: 100%">
+                                    <select name="filiere" id="ajoutEleveFiliere" class="form-control"
+                                        style="width: 100%">
                                         <option value=""></option>
                                         @foreach ($filieres as $filiere)
                                             <option value="{{ $filiere->id }}">{{ $filiere->filiere }}</option>
@@ -151,17 +153,18 @@ Toast.fire({
                                     </select>
                                 </div>
                                 <!-- Add other form fields as needed -->
-                                
+
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary" id="submitAlumni"><i class="fa fa-plus" aria-hidden="true"></i>
+                            <button type="button" class="btn btn-primary" id="submitAlumni"><i class="fa fa-plus"
+                                    aria-hidden="true"></i>
                                 Ajouter</button>
-                                <span id="alumniSpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                                    aria-hidden="true"></span>
+                            <span id="alumniSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                aria-hidden="true"></span>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -195,7 +198,7 @@ Toast.fire({
                                             {{-- <td><a href=""><i class="flaticon-delete" style="color: red;"></i></a></td> --}}
                                             <td>
                                                 <form method="POST" action="" accept-charset="UTF-8"
-                                                    style="display:inline">  
+                                                    style="display:inline">
                                                     @method('DELETE')
                                                     @csrf
 
@@ -206,7 +209,7 @@ Toast.fire({
 
                                                 </form>
                                                 <script type="text/javascript">
-                                                  function deleteStudent(filiereId) {
+                                                    function deleteStudent(filiereId) {
                                                         $.ajax({
                                                             type: 'DELETE',
                                                             url: '/supprimer-filiere/' + filiereId,
@@ -214,8 +217,8 @@ Toast.fire({
                                                                 _token: '{{ csrf_token() }}'
                                                             },
                                                             success: function(response) {
-                                                               // $('.msg-return').text(response.message);
-                                                               const Toast = Swal.mixin({
+                                                                // $('.msg-return').text(response.message);
+                                                                const Toast = Swal.mixin({
                                                                     toast: true,
                                                                     position: 'top-end',
                                                                     showConfirmButton: false,
@@ -229,9 +232,10 @@ Toast.fire({
 
                                                                 Toast.fire({
                                                                     icon: 'success',
-                                                                    title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
-                                                                }); 
-
+                                                                    title: response
+                                                                        .message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                                                                });
+                                                                $('#listefiliereModal').modal('hide');
 
                                                             },
                                                             error: function(xhr, status, error) {
@@ -240,8 +244,9 @@ Toast.fire({
                                                             }
                                                         });
                                                     }
-                                                 function confirmDelete(filiereId) {
-                                                 
+
+                                                    function confirmDelete(filiereId) {
+
                                                         Swal.fire({
                                                             title: 'Are you sure?',
                                                             text: "You won't be able to revert this!",
@@ -250,16 +255,14 @@ Toast.fire({
                                                             cancelButtonColor: '#d33',
                                                             confirmButtonText: 'Yes, delete it!'
                                                         }).then((result) => {
-                                                                deleteStudent(filiereId);
+                                                            deleteStudent(filiereId);
                                                         });
                                                     }
-                                                  
-
-                                                   
                                                 </script>
                                             </td>
                                             {{-- modifier une filiere --}}
-                                            <td><button class="btn btn" onclick="setFiliereId('{{ $filiere->id }}'), putFiliere('{{ $filiere->filiere }}')"
+                                            <td><button class="btn btn"
+                                                    onclick="setFiliereId('{{ $filiere->id }}'), putFiliere('{{ $filiere->filiere }}')"
                                                     data-toggle="modal" data-target="#modifierModal"><i
                                                         class="flaticon-edit" style="color: green;"></i>
                                                 </button>
@@ -285,7 +288,8 @@ Toast.fire({
                                                                 <div class="form-group">
                                                                     <label for="modifierName">Nom de la filière</label>
                                                                     <input type="text" value=""
-                                                                        class="form-control" name="filiere" id="put_filiere">
+                                                                        class="form-control" name="filiere"
+                                                                        id="put_filiere">
                                                                 </div>
                                                                 <!-- Add other form fields as needed -->
                                                             </form>
@@ -293,10 +297,11 @@ Toast.fire({
                                                         <script>
                                                             var filiereId;
                                                             var put_filiere;
+
                                                             function putFiliere(filiere) {
-                                                                put_filiere=filiere
+                                                                put_filiere = filiere
                                                                 $("#put_filiere").val(put_filiere);
-                                                            
+
                                                             }
 
                                                             function setFiliereId(id) {
@@ -324,21 +329,22 @@ Toast.fire({
 
                                                                         //$('.msg-return').text(response.message);
                                                                         const Toast = Swal.mixin({
-                                                                                toast: true,
-                                                                                position: 'top-end',
-                                                                                showConfirmButton: false,
-                                                                                timer: 6000,
-                                                                                timerProgressBar: true,
-                                                                                didOpen: (toast) => {
-                                                                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                                                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                                                                }
-                                                                            });
+                                                                            toast: true,
+                                                                            position: 'top-end',
+                                                                            showConfirmButton: false,
+                                                                            timer: 6000,
+                                                                            timerProgressBar: true,
+                                                                            didOpen: (toast) => {
+                                                                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                                            }
+                                                                        });
 
-                                                                            Toast.fire({
-                                                                                icon: 'success',
-                                                                                title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
-                                                                            }); 
+                                                                        Toast.fire({
+                                                                            icon: 'success',
+                                                                            title: response
+                                                                                .message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                                                                        });
                                                                         $('#modifierModal').modal('hide');
                                                                     },
                                                                     error: function(xhr, status, error) {
@@ -407,9 +413,9 @@ Toast.fire({
                                     @foreach ($promotions as $promotion)
                                         <tr>
                                             <td>{{ $promotion->annee }}</td>
-                                           <td>
+                                            <td>
                                                 <form method="POST" action="" accept-charset="UTF-8"
-                                                    style="display:inline">  
+                                                    style="display:inline">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="button" class="btn btn-sm" title="Delete Student"
@@ -418,7 +424,7 @@ Toast.fire({
                                                     </button>
                                                 </form>
                                                 <script type="text/javascript">
-                                                  function deletePromotion(promotionId) {
+                                                    function deletePromotion(promotionId) {
                                                         $.ajax({
                                                             type: 'DELETE',
                                                             url: '/supprimer-promotion/' + promotionId,
@@ -426,23 +432,25 @@ Toast.fire({
                                                                 _token: '{{ csrf_token() }}'
                                                             },
                                                             success: function(response) {
-                                                               // $('.msg-return').text(response.message);
-                                                               const Toast = Swal.mixin({
-                                                                                toast: true,
-                                                                                position: 'top-end',
-                                                                                showConfirmButton: false,
-                                                                                timer: 6000,
-                                                                                timerProgressBar: true,
-                                                                                didOpen: (toast) => {
-                                                                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                                                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                                                                }
-                                                                            });
+                                                                // $('.msg-return').text(response.message);
+                                                                const Toast = Swal.mixin({
+                                                                    toast: true,
+                                                                    position: 'top-end',
+                                                                    showConfirmButton: false,
+                                                                    timer: 6000,
+                                                                    timerProgressBar: true,
+                                                                    didOpen: (toast) => {
+                                                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                                    }
+                                                                });
 
-                                                                            Toast.fire({
-                                                                                icon: 'success',
-                                                                                title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
-                                                                            }); 
+                                                                Toast.fire({
+                                                                    icon: 'success',
+                                                                    title: response
+                                                                        .message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                                                                });
+                                                                $('#listepromotionModal').modal('hide');
 
                                                             },
                                                             error: function(xhr, status, error) {
@@ -451,8 +459,9 @@ Toast.fire({
                                                             }
                                                         });
                                                     }
-                                                 function confirmDeletePromotion(promotionId) {
-                                                 
+
+                                                    function confirmDeletePromotion(promotionId) {
+
                                                         Swal.fire({
                                                             title: 'Are you sure?',
                                                             text: "You won't be able to revert this!",
@@ -461,72 +470,78 @@ Toast.fire({
                                                             cancelButtonColor: '#d33',
                                                             confirmButtonText: 'Yes, delete it!'
                                                         }).then((result) => {
-                                                                deletePromotion(promotionId);
+                                                            deletePromotion(promotionId);
                                                         });
                                                     }
                                                 </script>
                                             </td>
-                                            <td><button class="btn btn" onclick="setPromotionId('{{$promotion->id}}'), putPromotion('{{ $promotion->annee }}')"
-                                                data-toggle="modal" data-target="#modifierPromoModal"><i
-                                                    class="flaticon-edit" style="color: green;"></i>
-                                            </button>
-                                              {{-- modal pour modifier une promotion --}}
-                                              <div class="modal fade" id="modifierPromoModal" tabindex="-1" role="dialog"
-                                              aria-labelledby="modifierModalLabel" aria-hidden="true">
-                                              <div class="modal-dialog" role="document">
-                                                  <div class="modal-content">
-                                                      <div class="modal-header">
-                                                          <h5 class="modal-title" id="modifierModalLabel">Modifier la
-                                                              promotion</h5>
-                                                          <button type="button" class="close" data-dismiss="modal"
-                                                              aria-label="Close">
-                                                              <span aria-hidden="true">&times;</span>
-                                                          </button>
-                                                      </div>
-                                                      <div class="modal-body">
-                                                          <!-- Your form goes here -->
-                                                          <form id="modifierPromoForm">
-                                                              <!-- Form fields go here -->
-                                                              @csrf
-                                                              <div class="form-group">
-                                                                  <label for="modifierName">Nom de la promotion</label>
-                                                                  <input type="text" value="" class="form-control" name="promotion" id="updatePromotion">
-                                                              </div>
-                                                              <!-- Add other form fields as needed -->
-                                                          </form>
-                                                      </div>
-                                                     
-                                                      <script>
-                                                         var promotion_annee;
-                                                          var promotionId;
+                                            <td><button class="btn btn"
+                                                    onclick="setPromotionId('{{ $promotion->id }}'), putPromotion('{{ $promotion->annee }}')"
+                                                    data-toggle="modal" data-target="#modifierPromoModal"><i
+                                                        class="flaticon-edit" style="color: green;"></i>
+                                                </button>
+                                                {{-- modal pour modifier une promotion --}}
+                                                <div class="modal fade" id="modifierPromoModal" tabindex="-1"
+                                                    role="dialog" aria-labelledby="modifierModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="modifierModalLabel">Modifier
+                                                                    la
+                                                                    promotion</h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!-- Your form goes here -->
+                                                                <form id="modifierPromoForm">
+                                                                    <!-- Form fields go here -->
+                                                                    @csrf
+                                                                    <div class="form-group">
+                                                                        <label for="modifierName">Nom de la
+                                                                            promotion</label>
+                                                                        <input type="text" value=""
+                                                                            class="form-control" name="promotion"
+                                                                            id="updatePromotion">
+                                                                    </div>
+                                                                    <!-- Add other form fields as needed -->
+                                                                </form>
+                                                            </div>
 
-                                                          function putPromotion(promotion) {
-                                                              promotion_annee=promotion;
-                                                              $("#updatePromotion").val(promotion_annee);
-                                                            }
+                                                            <script>
+                                                                var promotion_annee;
+                                                                var promotionId;
 
-                                                          function setPromotionId(id) {
-                                                              promotionId = id;
-                                                          }
+                                                                function putPromotion(promotion) {
+                                                                    promotion_annee = promotion;
+                                                                    $("#updatePromotion").val(promotion_annee);
+                                                                }
 
-                                                          function modifierPromotion() {
-                                                              var id = promotionId;
-                                                              $('#modifierPromoSpinner').removeClass('d-none');
+                                                                function setPromotionId(id) {
+                                                                    promotionId = id;
+                                                                }
 
-                                                              var formData = $('#modifierPromoForm').serialize();
+                                                                function modifierPromotion() {
+                                                                    var id = promotionId;
+                                                                    $('#modifierPromoSpinner').removeClass('d-none');
+
+                                                                    var formData = $('#modifierPromoForm').serialize();
 
 
-                                                              // Envoyer la requête Ajax
-                                                              $.ajax({
-                                                                  type: 'POST',
-                                                                  url: '/modifier-promotion/' + id,
-                                                                  data: formData,
+                                                                    // Envoyer la requête Ajax
+                                                                    $.ajax({
+                                                                        type: 'POST',
+                                                                        url: '/modifier-promotion/' + id,
+                                                                        data: formData,
 
-                                                                  success: function(response) {
-                                                                      // Traitement du succès (par exemple, actualiser la page, fermer le modal, etc.)
+                                                                        success: function(response) {
+                                                                            // Traitement du succès (par exemple, actualiser la page, fermer le modal, etc.)
 
-                                                                     // $('.msg-return').text(response.message);
-                                                                     const Toast = Swal.mixin({
+                                                                            // $('.msg-return').text(response.message);
+                                                                            const Toast = Swal.mixin({
                                                                                 toast: true,
                                                                                 position: 'top-end',
                                                                                 showConfirmButton: false,
@@ -540,38 +555,40 @@ Toast.fire({
 
                                                                             Toast.fire({
                                                                                 icon: 'success',
-                                                                                title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
-                                                                            }); 
-                                                                      $('#modifierPromoModal').modal('hide');
-                                                                  },
-                                                                  error: function(xhr, status, error) {
-                                                                      // Traitement des erreurs (affichage d'un message d'erreur, par exemple)
-                                                                      console.error(xhr.responseText);
-                                                                  },
-                                                                  complete: function() {
-                                                                      // Masquer le spinner après la requête
-                                                                      $('#modifierPromoSpinner').addClass('d-none');
-                                                                  }
-                                                              });
+                                                                                title: response
+                                                                                    .message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                                                                            });
+                                                                            $('#modifierPromoModal').modal('hide');
+                                                                        },
+                                                                        error: function(xhr, status, error) {
+                                                                            // Traitement des erreurs (affichage d'un message d'erreur, par exemple)
+                                                                            console.error(xhr.responseText);
+                                                                        },
+                                                                        complete: function() {
+                                                                            // Masquer le spinner après la requête
+                                                                            $('#modifierPromoSpinner').addClass('d-none');
+                                                                        }
+                                                                    });
 
-                                                          }
-                                                      </script>
-                                                      <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary"
-                                                              data-dismiss="modal">Fermer</button>
-                                                          <button type="submit" id="submitmodifier"
-                                                              class="btn btn-primary" onclick="modifierPromotion()"><i
-                                                                  class="fa fa-plus" aria-hidden="true"></i> Modifier
-                                                              <span id="modifierPromoSpinner"
-                                                                  class="spinner-border spinner-border-sm d-none"
-                                                                  role="status" aria-hidden="true"></span>
-                                                          </button>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          {{-- fin modal --}}
-                                        </td>
+                                                                }
+                                                            </script>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Fermer</button>
+                                                                <button type="submit" id="submitmodifier"
+                                                                    class="btn btn-primary"
+                                                                    onclick="modifierPromotion()"><i class="fa fa-plus"
+                                                                        aria-hidden="true"></i> Modifier
+                                                                    <span id="modifierPromoSpinner"
+                                                                        class="spinner-border spinner-border-sm d-none"
+                                                                        role="status" aria-hidden="true"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{-- fin modal --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -585,14 +602,8 @@ Toast.fire({
                 </div>
             </div>
             {{-- fin --}}
-            <a href="/action" class="bg-light text-dark btn  mt-md-3"> Liste elève</a>
-
-            {{-- <div class="msg-return btn btn-success  btn-sm mt-md-3" style="color: #EEEE; text-align: center;"></div> --}}
-
+            <a href="/action" class="bg-light text-dark btn  mt-md-3"> Liste alumni</a>
         </div>
-
-
-
     </div>
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
 
@@ -601,7 +612,8 @@ Toast.fire({
                 <div class="row">
                     <div class="col-xl-4">
                         <!--begin:: Widgets/Blog-->
-                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force" style="border-radius: 15px">
+                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force"
+                            style="border-radius: 15px">
                             <div class="m-portlet__head m-portlet__head--fit-">
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
@@ -615,8 +627,8 @@ Toast.fire({
                                     <ul class="m-portlet__nav">
                                         <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                             m-dropdown-toggle="hover">
-                                            <select id="selectPromotion" name="promotion" class="px-1">
-                                                <!-- Remplacez cela par la boucle qui affiche vos promotions -->
+                                            <select id="selectPromotion" name="promotion" class="px-3">
+
                                                 <option value="toute promotion">toute promotion</option>
                                                 @foreach ($promotions as $promotion)
                                                     <option value="{{ $promotion->annee }}">{{ $promotion->annee }}
@@ -633,7 +645,7 @@ Toast.fire({
 
                                         <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                             m-dropdown-toggle="hover">
-                                            <select id="selectFiliere" name="filiere" class="px-1">
+                                            <select id="selectFiliere" name="filiere" class="px-4">
                                                 <!-- Options seront ajoutées dynamiquement par JavaScript -->
                                                 <option value="toute filiere">toute filiere</option>
                                                 @foreach ($filieres as $filiere)
@@ -651,10 +663,10 @@ Toast.fire({
                                     <div class="m-widget27__pic">
                                         <img src="asset/app/media/img//bg/bg-4.jpg" alt="">
                                         <h6 class="m-widget27__title m--font-light">
-                                            <span >
+                                            <span>
                                                 <span>Effectif
                                                     <span>
-                                                        <span  id="effectif">
+                                                        <span id="effectif">
                                                         </span>
                                                     </span>
                                                 </span>
@@ -671,7 +683,8 @@ Toast.fire({
                     <div class="col-xl-4">
 
                         <!--begin:: Widgets/Blog-->
-                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force" style="border-radius: 15px">
+                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force"
+                            style="border-radius: 15px">
                             <div class="m-portlet__head m-portlet__head--fit">
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
@@ -724,12 +737,13 @@ Toast.fire({
                     <div class="col-xl-4">
 
                         <!--begin:: Packages-->
-                        <div class="m-portlet m--bg-warning m-portlet--bordered-semi m-portlet--full-height" style="border-radius: 15px">
+                        <div class="m-portlet m--bg-warning m-portlet--bordered-semi m-portlet--full-height"
+                            style="border-radius: 15px">
                             <div class="m-portlet__head">
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text m--font-light">
-                                            AUCUNE INFORMATION
+                                            Demande de stage
                                         </h3>
                                     </div>
                                 </div>
@@ -738,13 +752,14 @@ Toast.fire({
                             <div class="m-portlet__body">
                                 <!--begin::Widget 29-->
                                 <div class="m-widget29">
-                                    <div class="m-widget_content">
+                                    <div class="m-widget_content" style="border-radius: 30px">
                                         <div class="m-widget_content-items">
                                             <div class="m-widget_content-item">
-                                                <span>Total</span>
+                                                <span>Effectif</span>
                                             </div>
-                                            <h3 class="m--font-accent">000</h3>
+                                            <h3 class="m--font-accent">15</h3>
                                         </div>
+                                        <a href="" style="font-size: 20px"> Voir CV</a>
                                     </div>
                                 </div>
 
@@ -756,89 +771,88 @@ Toast.fire({
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-8">
-                        <div class="m-portlet m-portlet--mobile ">
-                            <div class="m-portlet__head">
-                                <div class="m-portlet__head-caption">
-                                    <div class="m-portlet__head-title">
-                                        <h3 class="m-portlet__head-text">
-                                            Envoyer message
-                                        </h3>
-                                    </div>
-
-                                </div>
-                                <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-                                        <li class="m-portlet__nav-item">
-                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                m-dropdown-toggle="hover" aria-expanded="true">
-                                                <span>choisir promotion</span>
+                        <div class="col-xl-8">
+                            <form action="/message_to_promotion" method="POST">
+                                @csrf
+                                <div class="m-portlet m-portlet--mobile ">
+                                    <div class="m-portlet__head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <h3 class="m-portlet__head-text">
+                                                    Envoyer message
+                                                </h3>
+                                            </div>
+        
+                                        </div>
+        
+                                        
+                                            <div class="m-portlet__head-tools">
+                                                <ul class="m-portlet__nav">
+                                                    <li class="m-portlet__nav-item">
+                                                        <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                            m-dropdown-toggle="hover" aria-expanded="true">
+                                                            <span>choisir promotion</span>
+            
+                                                        </div>
+                                                    </li>
+            
+            
+                                                    <li class="m-portlet__nav-item">
+                                                        <select name="promotion_message" id="promotionId1" class="px-5">
+                                                            <option value=""></option>
+                                                            @foreach ($promotions as $promotion)
+                                                                <option value="{{ $promotion->id }}">{{ $promotion->annee }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </li>
+            
+                                                </ul>
+                                            </div>
+                                            <div class="m-portlet__head-tools">
+                                                <ul class="m-portlet__nav">
+                                                    <li class="m-portlet__nav-item">
+                                                        <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                            m-dropdown-toggle="hover" aria-expanded="true">
+                                                            <span>Choisir Filières</span>
+                                                        </div>
+                                                    </li>
+            
+                                                    <li class="m-portlet__nav-item">
+                                                        <select name="filiere_message" id="filiereId1" class="px-5">
+                                                            <option value=""></option>
+                                                            @foreach ($filieres as $filiere)
+                                                                <option value="{{ $filiere->id }}">{{ $filiere->filiere }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                        <div class="m-portlet__head-tools">
+                                            <ul class="m-portlet__nav">
+                                                <li class="m-portlet__nav-item">
+                                                    <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                        m-dropdown-toggle="hover" aria-expanded="true">
+                                                        <button type="submit" class="p-2" style="border-radius:15px"
+                                                            ><span style="font-size: 17px">rédiger</span></button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     
-                                            </div>
-                                        </li>
-                                     
-
-                                        <li class="m-portlet__nav-item">
-                                            <select name="" id="promotionId1" class="px-5">
-                                            <option value=""></option>
-                                           @foreach ($promotions as $promotion)
-                                               <option value="{{ $promotion->annee }}">{{ $promotion->annee }}</option>
-                                           @endforeach
-                                          </select>
-                                        </li>
-
-                                    </ul>
+                                    </div>
                                 </div>
+                           </form>
+                        </div>
+                 
 
-                                <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-                                        <li class="m-portlet__nav-item">
-                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                m-dropdown-toggle="hover" aria-expanded="true">
-                                                <span>Choisir Filières</span>
-                                            </div>
-                                        </li>
-                                        {{-- <li class="m-nav__item">
-                                            <a href="{{ route('message_to_promotion', $promotion3) }}"
-                                                class="m-nav__link">
-                                                <span class="m-nav__link-text">IM</span>
-                                            </a>
-                                        </li> --}}
-                                        <li class="m-portlet__nav-item">
-                                            <select name="" id="filiereId1" class="px-5">
-                                            <option value=""></option>
-                                           @foreach ($filieres as $filiere)
-                                               <option value="{{ $filiere->filiere }}">{{ $filiere->filiere }}</option>
-                                           @endforeach
-                                          </select>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-                                        <li class="m-portlet__nav-item">
-                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                m-dropdown-toggle="hover" aria-expanded="true">
-                                                @php
-                                                    $promotion="2015-2016";
-                                                @endphp
-                                               <a href="{{ route('message_to_promotion',$promotion) }}"><span>rédiger</span></a> 
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-                            </div>
+                    <div class="m-portlet__head-tools bg-white col-md-4">
+                        <div
+                            class="offset-md-1 m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push mt-4">
+                            <a href="/message_ifri" style="font-size: 17px"><span>Messages envoyés par les étudiants</span></a>
                         </div>
                     </div>
 
-                    <div class="m-portlet__head-tools bg-white col-md-4">
-                                <div class="offset-md-3 m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push mt-4">
-                                   <a href="/message_ifri"><span>Messages envoyés par les étudiants</span></a> 
-                                </div>
-                    </div>
-                   
                 </div>
 
                 <div class="row">
@@ -848,57 +862,20 @@ Toast.fire({
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                          Publication
+                                            Publier dans toutes les promotions
                                         </h3>
                                     </div>
 
                                 </div>
-                                <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-                                        <li class="m-portlet__nav-item">
-                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                m-dropdown-toggle="hover" aria-expanded="true">
-                                                <span>choisir promotion</span>
-                                              
-                                               
-                                            </div>
-                                        </li>
-                                        <li class="m-portlet__nav-item">
-                                            <select name="" id="promotionId" class="px-5">
-                                            <option value=""></option>
-                                           @foreach ($promotions as $promotion)
-                                               <option value="{{ $promotion->annee }}">{{ $promotion->annee }}</option>
-                                           @endforeach
-                                          </select>
-                                        </li>
-                                    </ul>
-                                </div>
+                              
+                               
 
                                 <div class="m-portlet__head-tools">
                                     <ul class="m-portlet__nav">
                                         <li class="m-portlet__nav-item">
                                             <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                                 m-dropdown-toggle="hover" aria-expanded="true">
-                                                <span>Choisir Filières</span>
-                                            </div>
-                                        </li>
-                                        <li class="m-portlet__nav-item">
-                                            <select name="" id="filiereId" class="px-5">
-                                            <option value=""></option>
-                                           @foreach ($filieres as $filiere)
-                                               <option value="{{ $filiere->filiere }}">{{ $filiere->filiere }}</option>
-                                           @endforeach
-                                          </select>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-                                        <li class="m-portlet__nav-item">
-                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                m-dropdown-toggle="hover" aria-expanded="true">
-                                               <a href="/publication"><span>publier</span></a> 
+                                                <a href="/publication" style="font-size: 20px"><span>publier</span></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -915,7 +892,7 @@ Toast.fire({
 @section('script_jquey')
     <script>
         $(document).ready(function() {
-            
+
             $("#promotionId").select2({
                 placeholder: "promotion",
                 language: {
@@ -965,7 +942,7 @@ Toast.fire({
                         return "Aucun résultat trouvé";
                     }
                 }
-            });  
+            });
 
             $("#ajoutElevePromotion").select2({
                 placeholder: "Choisir une filiere",
@@ -986,15 +963,13 @@ Toast.fire({
             });
 
             $("#selectPromotion").on("change", function() {
-                // const option = $("#promotion :selected");
                 const promotion = $("#selectPromotion").val();
                 var url = "{{ route('statisque_promotion', ['promotion' => ':promotion']) }}";
                 url = url.replace(':promotion', promotion);
                 $.ajax({
                     url: url,
                     type: 'GET',
-                    //data: { promotion_id: promotion},
-                    dataType: 'json', // Spécifiez le type de données attendu
+                    dataType: 'json', 
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -1018,7 +993,6 @@ Toast.fire({
 
                     },
                     error: function(xhr, status, error) {
-                        // Gestion des erreurs
                         console.error(xhr.responseText);
                     }
                 });
@@ -1030,7 +1004,6 @@ Toast.fire({
                 var selectedPromotion = $('#selectPromotion').val();
                 var selectedFiliere = $('#selectFiliere').val();
 
-                // Exécutez la requête Ajax avec la promotion et la filière sélectionnées
                 $.ajax({
                     url: "/statisque_promotion_filiere/" + selectedPromotion + "/" +
                         selectedFiliere,
@@ -1067,110 +1040,14 @@ Toast.fire({
 
             //Ajout d'une promotion
             $('#submitPromotion').on('click', function() {
-                // Show the spinner
                 $('#promotionSpinner').removeClass('d-none');
-                
-                // Prepare the form data
                 var formData = $('#promotionForm').serialize();
-
-                // Make the AJAX request
                 $.ajax({
                     type: 'POST',
-                    url: '/ajout-de-promotion', // Replace with the actual URL to handle form submission
+                    url: '/ajout-de-promotion', 
                     data: formData,
                     success: function(response) {
-
-                        // Hide the spinner on success
                         $('#promotionSpinner').addClass('d-none');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 6000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        });
-
-                        Toast.fire({
-                            icon: 'success',
-                            title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
-                        }); 
-                        // $('#msg-return').addClass('bg-success');
-                        // $('.msg-return').text(response.message);
-                        // Optionally, close the modal on success
-                        $('#promotionModal').modal('hide');
-
-                    },
-                    error: function(error) {
-                        // Handle errors if any
-                        console.error('Error:', error);
-
-                        // Hide the spinner on error
-                        $('#promotionSpinner').addClass('d-none');
-                    }
-                });
-            });
-
-            //Ajout d'un nouvel alumnus
-
-            // $('#submitAlumni').on('click',function () {
-            //   $('#alumniSpinner').removeClass('d-none');
-
-            //   var formData= $('#alumniForm').serialize();
-
-            //   $.ajax({
-            //     type:'POST',
-            //     url: 'ajout_alumni',
-            //     data: formData,
-            //     success: function(respone){
-            //         $('#alumniSpinner').addClass('d-none');
-
-            //         const Toast = Swal.mixin({
-            //                 toast: true,
-            //                 position: 'top-end',
-            //                 showConfirmButton: false,
-            //                 timer: 6000,
-            //                 timerProgressBar: true,
-            //                 didOpen: (toast) => {
-            //                     toast.addEventListener('mouseenter', Swal.stopTimer)
-            //                     toast.addEventListener('mouseleave', Swal.resumeTimer)
-            //                 }
-            //             });
-
-            //             Toast.fire({
-            //                 icon: 'success',
-            //                 title: response.message 
-            //             });
-
-            //             $('#eleveModal').modal('hide');
-            //     };
-            //     error: function(error) {
-            //             // Handle errors if any
-            //             console.error('Error:', error);
-
-            //             // Hide the spinner on error
-            //             $('#alumniSpinner').addClass('d-none');
-            //         }
-            //   });
-                
-            // })           
-            
-
-            $('#submitAlumni').on('click', function() {
-                // Show the spinner
-                $('#alumniSpinner').removeClass('d-none');
-                var formData = $('#alumniForm').serialize();
-                console.log('echec');
-                
-                $.ajax({
-                    type: 'POST',
-                    url: '/ajout_alumni',
-                    data: formData,
-                    success: function(response) {
-                        $('#alumniSpinner').addClass('d-none');
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -1186,7 +1063,49 @@ Toast.fire({
                         Toast.fire({
                             icon: 'success',
                             title: response.message 
-                        }); 
+                        });
+                        $('#promotionModal').modal('hide');
+
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+
+                        $('#promotionSpinner').addClass('d-none');
+                    }
+                });
+            });
+
+
+
+
+            $('#submitAlumni').on('click', function() {
+                $('#alumniSpinner').removeClass('d-none');
+                var formData = $('#alumniForm').serialize();
+                console.log('echec');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajout_alumni',
+                    data: formData,
+                    success: function(response) {
+                        $('#alumniSpinner').addClass('d-none');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 6000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal
+                                    .resumeTimer)
+                            }
+                        });
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message
+                        });
                         $('#eleveModal').modal('hide');
 
                     },
@@ -1197,25 +1116,15 @@ Toast.fire({
                 });
             });
 
-            //fin
-
-            //ajout d'une filière
-
             $('#submitFiliere').on('click', function() {
-                // Show the spinner
                 $('#filiereSpinner').removeClass('d-none');
-
-                // Prepare the form data
                 var formData = $('#filiereForm').serialize();
 
-                // Make the AJAX request
                 $.ajax({
                     type: 'POST',
-                    url: '/ajout-de-filiere', // Replace with the actual URL to handle form submission
+                    url: '/ajout-de-filiere', 
                     data: formData,
                     success: function(response) {
-
-                        // Hide the spinner on success
                         $('#filiereSpinner').addClass('d-none');
                         const Toast = Swal.mixin({
                             toast: true,
@@ -1225,35 +1134,26 @@ Toast.fire({
                             timerProgressBar: true,
                             didOpen: (toast) => {
                                 toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                toast.addEventListener('mouseleave', Swal
+                                    .resumeTimer)
                             }
                         });
 
                         Toast.fire({
                             icon: 'success',
-                            title: response.message // Assure-toi que la réponse de ton serveur contient un champ "message"
+                            title: response.message 
                         });
                         $('#filiereModal').modal('hide');
 
                     },
-                    error: function(error) { 
-                        // Handle errors if any
+                    error: function(error) {
                         console.error('Error:', error);
 
-                        // Hide the spinner on error
                         $('#filiereSpinner').addClass('d-none');
                     }
                 });
             });
 
-
-            //fin ajout filiere
-
-            //modifier filiere
-
-
-
-            //fin
 
         });
     </script>

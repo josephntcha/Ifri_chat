@@ -36,7 +36,6 @@ class AdminController extends Controller
 
 
 
-//Fonction qui contôle si l'utilisateur connecté est un administrateur afin de lui donne accès au dashboard admin
     public function admin(){
         if (Auth::user()->isAdmin=="true") {
           
@@ -55,7 +54,6 @@ class AdminController extends Controller
         return view('action', compact('promotions','filieres'));
       }
 
-    //fonction pour que l'administration reponde à un étudiant x ayant envoyé un message
     public function reponseAdmin(User $user){
         $id_user=Auth::user()->id;
         $content=MessageForIfri::Where('to_id',$id_user)->Where('from_id',$user->id)
@@ -63,31 +61,47 @@ class AdminController extends Controller
         return view('reponse_ifri',compact('user','content'));
     }
 
-    public function Promotion($promotion) {
-        return view('promotion',compact('promotion'));
-
+    public function Promotion(Request $request) {
+        $promotion=$request->input('promotion_message');
+        $filiere=$request->input('filiere_message');
+        $annee=Promotion::findOrfail($promotion)->annee;
+        $nom_filiere=Filiere::findOrfail($filiere)->filiere;
+       //dd($annee,$nom_filiere);
+           
+        return view('promotion',compact('promotion','filiere','annee','nom_filiere'));
     }
 
-//Fonction pour envoyer un message à toutes les promotions
 
-    public function SendMessagePromotion($promotion, Request $request){
+    public function SendMessagePromotion($promotion,$filiere, Request $request){
+       
       if (Auth::user()->isAdmin=="true") {
 
-         $etudiant= Promotion::Where('annee',$promotion)->get();
-         $etudiants=$etudiant->users;
-         $user_admin=User::Where('isAdmin',true)->first();
+        // $promotion_find= Promotion::Where('id',$promotion)->get();
+       //  $etudiants=$promotion_find->users;
+        if ($promotion && $filiere) {
+            $etudiants=User::where('promotion_id',$promotion)->where('filiere_id',$filiere)->get();
+        }elseif(!$promotion && $filiere){
+            $etudiants=User::where('filiere_id',$filiere)->get();
+        }elseif ($promotion && !$filiere) {
+            $etudiants=User::where('promotion_id',$promotion)->get();  
+        }elseif (!$promotion && !$filiere) {
+            return response()->json(['message'=>'Veuillez choisir une promtion ou une filière']);
+        }
+         $user_admin=Auth::user()->id;
+
          $request->validate([
             'fichier' => 'required|mimes:pdf|max:10240', // PDF, max 10MB
              ]);
+
              if($request->hasFile('fichier')){
-                $image = $request->file('fichier');
-                $filename = time().'.'.$image->getClientOriginalExtension();
-                $image->move('public/asset/clients/documents/',$filename);
+                $fichier = $request->file('fichier');
+                $filename = time().'.'.$fichier->getClientOriginalExtension();
+                $fichier->move('public/asset/clients/documents/',$filename);
             }
             
          for ($i=0; $i < $etudiants->count() ; $i++) {
             
-          $this->r->CreateMessageForIfriAnswer($request->get('markdown'),$filename,$etudiants[$i]->id,$user_admin->id);
+          $this->r->CreateMessageForIfriAnswer($request->get('markdown'),$filename,$etudiants[$i]->id,$user_admin);
          }
         }else {
           dd("une erreur s'est produite");
@@ -96,7 +110,6 @@ class AdminController extends Controller
        return back();
     }
 
-    //fonction pour avoir les statistiques liées aux élèves
     public function Statistique($promotionId) {
 
         if ($promotionId=="toute promotion") {
@@ -154,11 +167,9 @@ class AdminController extends Controller
             ];
           }else {
 
-            //$users = User::where('promotion', $promotionId)->where('filiere', $filiere)->get();
             $promotion = Promotion::with('users')->where('annee', $promotionId)->first();
             $filiere = Filiere::Where('filiere',$filiere)->first();
             $users = $promotion->users()->where('filiere_id', $filiere->id)->get();
-           // $users_statistique = $promotion->users()->where('filiere_id', $filiere->id);
 
             $users_emploi =$promotion->users()->where('filiere_id', $filiere->id)->where('poste', 'Employé')->get();
             $users_stage =$promotion->users()->where('filiere_id', $filiere->id)->where('poste', 'Stagiaire')->get();
@@ -177,22 +188,7 @@ class AdminController extends Controller
 
     }
 
-    // public function AjoutEtudiant(Request $request){
-
-    //     $request->validate([
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-    //         'password' => ['required', 'confirmed'],
-    //     ]);
-
-    //     User::create([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //     ]);
-    // }
-
-      // méthode pour ajouter une promotion
+ 
       public function AjoutPromotion(Request $request){
         $promotion_existe=Promotion::Where('annee',$request->input('promotion'))->first();
         if (!$promotion_existe) {
@@ -208,7 +204,6 @@ class AdminController extends Controller
         return response()->json(['success' => true, 'message' => $message]);
       }
 
-   // méthode pour ajouter une filiére
    public function AjoutFiliere(Request $request){
     $filiere_existe=Filiere::Where('filiere',$request->input('filiere'))->first();
     if (!$filiere_existe) {
@@ -239,7 +234,6 @@ class AdminController extends Controller
        }
         
     } catch (\Exception $e) {
-        // Retourner une réponse JSON en cas d'erreur
         return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la filière.'.$e->getMessage()]);
     }
 
@@ -257,7 +251,6 @@ class AdminController extends Controller
 
         }
     } catch (\Exception $e) {
-        // Retourner une réponse JSON en cas d'erreur
         return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la filière.'.$e->getMessage()]);
     }
   }
@@ -274,7 +267,6 @@ class AdminController extends Controller
 
         }
     } catch (\Exception $e) {
-        // Retourner une réponse JSON en cas d'erreur
         return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la promotion.'.$e->getMessage()]);
     }
   }
@@ -293,7 +285,6 @@ class AdminController extends Controller
     }
      
  } catch (\Exception $e) {
-     // Retourner une réponse JSON en cas d'erreur
      return response()->json(['success' => false, 'message' => 'Erreur lors de la modification de la promotion.'.$e->getMessage()]);
  }
 
@@ -313,8 +304,7 @@ public function AjoutAlumni(Request $request){
             'password'=> $password_default,
 
         ]);
-      //  Session::put('password', $password_default);
-      // $email_envoie =Mail::to($request->email)->send(new EnvoieMailPasswordForAlumni());
+      
         if ($user) {
             $message="Alumnus ajouté avec succès";
         }
