@@ -757,9 +757,9 @@
                                             <div class="m-widget_content-item">
                                                 <span>Effectif</span>
                                             </div>
-                                            <h3 class="m--font-accent">15</h3>
+                                            <h3 class="m--font-accent">{{ $user_stage->count() }}</h3>
                                         </div>
-                                        <a href="" style="font-size: 20px"> Voir CV</a>
+                                        <a href="/user_cv" style="font-size: 20px"> Voir CV</a>
                                     </div>
                                 </div>
 
@@ -772,7 +772,7 @@
                 </div>
                 <div class="row">
                         <div class="col-xl-8">
-                            <form action="/message_to_promotion" method="POST">
+                            <form action="{{ route('/message_to_promotion') }}" method="POST">
                                 @csrf
                                 <div class="m-portlet m-portlet--mobile ">
                                     <div class="m-portlet__head">

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('matricule');
             $table->unsignedBigInteger('promotion_id'); // Clé étrangère
             $table->enum('isAdmin',['true','false'])->default('false');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('poste')->nullable();
             $table->string('cv')->nullable();
            $table->string('Numero_telephone')->nullable();

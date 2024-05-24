@@ -36,8 +36,11 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'admin'])->name('admin');
-    Route::post('/message_to_promotion', [App\Http\Controllers\AdminController::class, 'Promotion']);
-    Route::post('/admin_send_message_promotion/{promotion}/{filiere}', [App\Http\Controllers\AdminController::class, 'SendMessagePromotion'])->name('send_message_to_promotion');
+    Route::get('/user_cv', [App\Http\Controllers\AdminController::class, 'CV'])->name('user_cv');
+    Route::get('/entretien', [App\Http\Controllers\AdminController::class, 'Entretien']);
+    Route::post('/stage_emploi_contact', [App\Http\Controllers\AdminController::class, 'Contact']);
+    Route::post('/message_to_promotion', [App\Http\Controllers\AdminController::class, 'Promotion'])->name('/message_to_promotion');
+    Route::post('/admin_send_message_promotion', [App\Http\Controllers\AdminController::class, 'SendMessagePromotion']);
     Route::get('/statisque_promotion/{promotion}', [App\Http\Controllers\AdminController::class, 'Statistique'])->name('statisque_promotion');
     Route::get('/statisque_promotion_filiere/{promotion}/{filiere}', [App\Http\Controllers\AdminController::class, 'StatistiqueFiliere'])->name('statisque_promotion_filiere');
     Route::get('/reponse_admin/{user}', [App\Http\Controllers\AdminController::class, 'reponseAdmin'])

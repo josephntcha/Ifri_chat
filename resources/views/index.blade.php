@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="images/" type="image/x-icon">
     <title>AluminiNet</title>
+    
     <!-- Links -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ asset("new/fontawesome_free_6_5_1_web/css/all.min.css") }}">
     <link rel="stylesheet" href="{{ asset("new/style.css") }}">
 </head>
@@ -22,9 +25,10 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="search" placeholder="Search for">
             </div>
+           
             <div class="create">
                 <div class="profile-picture">
-                    <img src="{{ asset("new/images/profile-1.jpg") }}" alt="User Profile">
+                    <img src="{{ asset("new/images/uac.jpg") }}" alt="User Profile">
                 </div>
             </div>
         </div>
@@ -35,12 +39,10 @@
                 <a class="profile">
                     <div class="profile-picture">
                         <img src="{{ asset("new/images/profile-1.jpg") }}" alt>
-                    </div>
+                    </div> <div class="online"></div>
                     <div class="handle">
-                        <h4>Diana Ipsum</h4>
-                        <p class="text-muted">
-                            Lorem Ipsum
-                        </p>
+                        <h4>{{ Auth()->user()->name }}</h4>
+                     
                     </div>
                 </a>
                 <div class="sidebar">
@@ -48,11 +50,21 @@
                         <span><i class="fas fa-house"></i></span>
                         <h3>Home</h3>
                     </a>
+                    <a href="/entretien" class="menu-item active">
+                        <span style="margin-left: 27px"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                          </svg></span>
+                        <h3>Entretien</h3>
+                    </a>
                     <a href="/users" class="menu-item active">
                         <span><i class="fas fa-user-friends"></i></span>
                         <h3>Friends</h3>
                     </a>
                     <a href="{{ route('message_for_me',Auth::user()->id) }}" class="menu-item active">
+                        <span><svg class="info" xmlns="http://www.w3.org/2000/svg"  width="30" height="30" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                          </svg></span>
                         <h3>Info-IFRI</h3>
                     </a>
                     <a href="/message_to_ifri" class="menu-item active">
@@ -136,23 +148,20 @@
                         <span><i class="fas fa-palette"></i></span>
                         <h3>Theme</h3>
                     </a>
-                    <a  class="menu-item active">
-                        <span><i class="fas fa-gear"></i></span> 
-                        <h3>Setting</h3>
-                    </a>
+                  
                 </div>
                 <!-- ------------- END Sidebar ------------ -->
             </div>
             
             <div class="middle">
               
-                <form class="create-post">
+                {{-- <form class="create-post">
                     <div class="profile-picture">
                         <img src="{{ asset("new/images/profile-1.jpg") }}">
                     </div>
                     <input type="text" placeholder="What's of news ?" id="create-post">
                     <input type="submit" value="Post" class="btn btn-primary">
-                </form>
+                </form> --}}
                 <!-- ------------- END Create Post ------------ -->
 
                 <!-- ------------- Feeds ------------ -->
@@ -161,11 +170,11 @@
                         <div class="head">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="{{ asset("new/images/profile-13.jpg") }}">
+                                    <img src="{{ asset("new/images/ifri.jpg") }}">
                                 </div>
                                 <div class="ingo">
-                                    <h3>Lana Rose</h3>
-                                    <small>Dubai, 15 minutes ago</small>
+                                    <h3>Institut de Formation et de Recherche en Informatique</h3>
+                                    <small></small>
                                 </div>
                             </div>
                             <span class="edit">
@@ -173,7 +182,15 @@
                             </span>
                         </div>
                         <div class="photo">
-                            <img src="{{ asset("new/images/feed-1.jpg") }}">
+                            <img src="{{ asset("new/images/header.png") }}">
+                        </div>
+                        <h5>contenu</h5>
+                        <div class="text-center text-info" style="font-family: 'Inter', sans-serif;">
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem optio labore ut aspernatur, magni excepturi soluta velit! Officia atque tenetur, beatae doloribus, natus, eum repellendus tempora commodi mollitia tempore voluptates.
+                               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas fugit neque maxime ad! Ipsam temporibus cum sint dolores magnam aliquid quod quis minus asperiores tenetur, necessitatibus eaque suscipit alias dolorum.
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, magni reiciendis eius deserunt, at optio et incidunt repellendus doloribus numquam nemo, rerum eaque non ratione tenetur porro maxime repudiandae. Alias.
+                               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque iste id quisquam esse aliquam recusandae asperiores. Nostrum aspernatur enim, repellat quidem veritatis deleniti, fugiat temporibus similique magnam officiis laudantium nisi.
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum quas earum eum architecto quibusdam quis excepturi possimus itaque, vel alias necessitatibus perspiciatis odit, deleniti sapiente sed repellendus nulla dolorem et!
                         </div>
                         <div class="action-buttons">
                             <div class="interaction-buttons">
@@ -185,251 +202,9 @@
                                 <span><i class="fas fa-bookmark"></i></span>
                             </div>
                         </div>
-                        <div class="liked-by">
-                            <span><img src="{{ asset("new/images/profile-11.jpg") }}"></span>
-                            <span><img src="{{ asset("new/images/profile-14.jpg") }}"></span>
-                            <span><img src="{{ asset("new/images/profile-5.jpg") }}"></span>
-                            <p>Liked by <b>Ernest Rebecca</b> and <b>342 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Lana Rose</b> Lorem ipsum dorto color irema. <span class="H-tag">#lifestyle</span></p>
-                        </div>
-                        <div class="coments text-muted">View all 135 comments</div>
+                       
                     </div>
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="{{ asset("new/images/profile-14.jpg") }}">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Loria Grandfell</h3>
-                                    <small>KYOTO, 15 minutes ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="fas fa-ellipsis"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="{{ asset("new/images/feed-2.jpg") }}">
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="fas fa-heart"></i></span>
-                                <span><i class="fas fa-comment-dots"></i></span>
-                                <span><i class="fas fa-share-nodes"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="fas fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                        <div class="liked-by">
-                            <span><img src="{{ asset("new/images/profile-1.jpg") }}"></span>
-                            <span><img src="{{ asset("new/images/profile-4.jpg") }}"></span>
-                            <span><img src="{{ asset("new/images/profile-5.jpg") }}"></span>
-                            <p>Liked by <b>Ernest Rebecca</b> and <b>342 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Lana Rose</b> Lorem ipsum dorto color irema. <span class="H-tag">#lifestyle</span></p>
-                        </div>
-                        <div class="coments text-muted">View all 135 comments</div>
-                    </div>
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="{{ asset("new/images/profile-15.jpg") }}">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Lorem Daki</h3>
-                                    <small>URBAIN, 15 minutes ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="fas fa-ellipsis"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="{{ asset("new/images/feed-3.jpg") }}">
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="fas fa-heart"></i></span>
-                                <span><i class="fas fa-comment-dots"></i></span>
-                                <span><i class="fas fa-share-nodes"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="fas fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                        <div class="liked-by">
-                            <span><img src="{{ asset("new/images/profile-13.jpg") }}"></span>
-                            <span><img src="{{ asset("new/images/profile-4.jpg") }}"></span>
-                            <span><img src="{{ asset("new/images/profile-7.jpg") }}"></span>
-                            <p>Liked by <b>Ernest Rebecca</b> and <b>342 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Lana Rose</b> Lorem ipsum dorto color irema. <span class="H-tag">#lifestyle</span></p>
-                        </div>
-                        <div class="coments text-muted">View all 135 comments</div>
-                    </div>
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="{{ asset("new/images/profile-16.jpg") }}">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Lana Rose</h3>
-                                    <small>Dubai, 15 minutes ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="fas fa-ellipsis"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="images/feed-4.jpg">
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="fas fa-heart"></i></span>
-                                <span><i class="fas fa-comment-dots"></i></span>
-                                <span><i class="fas fa-share-nodes"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="fas fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                        <div class="liked-by">
-                            <span><img src="images/profile-19.jpg"></span>
-                            <span><img src="images/profile-14.jpg"></span>
-                            <span><img src="images/profile-15.jpg"></span>
-                            <p>Liked by <b>Ernest Rebecca</b> and <b>342 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Lana Rose</b> Lorem ipsum dorto color irema. <span class="H-tag">#lifestyle</span></p>
-                        </div>
-                        <div class="coments text-muted">View all 135 comments</div>
-                    </div>
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="images/profile-17.jpg">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Lana Rose</h3>
-                                    <small>Dubai, 15 minutes ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="fas fa-ellipsis"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="images/feed-5.jpg">
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="fas fa-heart"></i></span>
-                                <span><i class="fas fa-comment-dots"></i></span>
-                                <span><i class="fas fa-share-nodes"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="fas fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                        <div class="liked-by">
-                            <span><img src="images/profile-11.jpg"></span>
-                            <span><img src="images/profile-14.jpg"></span>
-                            <span><img src="images/profile-5.jpg"></span>
-                            <p>Liked by <b>Ernest Rebecca</b> and <b>342 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Lana Rose</b> Lorem ipsum dorto color irema. <span class="H-tag">#lifestyle</span></p>
-                        </div>
-                        <div class="coments text-muted">View all 135 comments</div>
-                    </div>
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="images/profile-18.jpg">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Lana Rose</h3>
-                                    <small>Dubai, 15 minutes ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="fas fa-ellipsis"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="images/feed-6.jpg">
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="fas fa-heart"></i></span>
-                                <span><i class="fas fa-comment-dots"></i></span>
-                                <span><i class="fas fa-share-nodes"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="fas fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                        <div class="liked-by">
-                            <span><img src="images/profile-11.jpg"></span>
-                            <span><img src="images/profile-14.jpg"></span>
-                            <span><img src="images/profile-5.jpg"></span>
-                            <p>Liked by <b>Ernest Rebecca</b> and <b>342 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Lana Rose</b> Lorem ipsum dorto color irema. <span class="H-tag">#lifestyle</span></p>
-                        </div>
-                        <div class="coments text-muted">View all 135 comments</div>
-                    </div>
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="images/profile-19.jpg">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Lana Rose</h3>
-                                    <small>Dubai, 15 minutes ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="fas fa-ellipsis"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="images/feed-7.jpg">
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="fas fa-heart"></i></span>
-                                <span><i class="fas fa-comment-dots"></i></span>
-                                <span><i class="fas fa-share-nodes"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="fas fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                        <div class="liked-by">
-                            <span><img src="images/profile-11.jpg"></span>
-                            <span><img src="images/profile-14.jpg"></span>
-                            <span><img src="images/profile-5.jpg"></span>
-                            <p>Liked by <b>Ernest Rebecca</b> and <b>342 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Lana Rose</b> Lorem ipsum dorto color irema. <span class="H-tag">#lifestyle</span></p>
-                        </div>
-                        <div class="coments text-muted">View all 135 comments</div>
-                    </div>
+                    
                 </div>
                 <!-- ------------- END Feeds ------------ -->
             </div>
@@ -439,7 +214,7 @@
             <div class="right">
                 <div class="messages">
                     <div class="heading">
-                        <h4>Messages</h4><i class="fas fa-file-pen"></i>
+                        <h4>Messages</h4>
                     </div>
                     <!-- ---------- Search Bar ---------- -->
                     <div class="search-bar">
@@ -465,7 +240,7 @@
                     <div class="message">
                         <div class="profile-picture">
                             <img src="{{ asset("new/images/profile-3.jpg") }}">
-                            <div class="active"></div>
+                           
                         </div>
                         <div class="message-body">
                             <h5>Micha Loren</h5>
@@ -502,7 +277,7 @@
                     <div class="message">
                         <div class="profile-picture">
                             <img src="{{ asset("new/images/profile-7.jpg") }}">
-                            <div class="active"></div>
+                           
                         </div>
                         <div class="message-body">
                             <h5>Roberta Dinero</h5>
@@ -510,78 +285,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- ---------- END Message ---------- -->
-
-                <!-- ---------- Friend Requests ---------- -->
-                <div class="friend-requests">
-                    <h4>Requests</h4>
-                    <div class="request">
-                        <div class="info">
-                            <div class="profile-picture">
-                                <img src="images/profile-8.jpg">
-                            </div>
-                            <div>
-                                <h5>Santiago Vares</h5>
-                                <p class="text-muted">8 mutual friends</p>
-                            </div>
-                        </div>
-                        <div class="action">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
-                        </div>
-                    </div>
-                    <div class="request">
-                        <div class="info">
-                            <div class="profile-picture">
-                                <img src="images/profile-9.jpg">
-                            </div>
-                            <div>
-                                <h5>Hadna Bella</h5>
-                                <p class="text-muted">10 mutual friends</p>
-                            </div>
-                        </div>
-                        <div class="action">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
-                        </div>
-                    </div>
-                    <div class="request">
-                        <div class="info">
-                            <div class="profile-picture">
-                                <img src="images/profile-10.jpg">
-                            </div>
-                            <div>
-                                <h5>Mariano Durant</h5>
-                                <p class="text-muted">28 mutual friends</p>
-                            </div>
-                        </div>
-                        <div class="action">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
-                        </div>
-                    </div>
-                    <div class="request">
-                        <div class="info">
-                            <div class="profile-picture">
-                                <img src="images/profile-11.jpg">
-                            </div>
-                            <div>
-                                <h5>Gonzallo Valez</h5>
-                                <p class="text-muted">250 mutual friends</p>
-                            </div>
-                        </div>
-                        <div class="action">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <!-- ============= END main right =============== -->
         </div>
     </main>
-
-    <!-- ======================= Theme ======================= -->
     <div class="customize-theme">
         <div class="card">
             <h2>Cutomize your view</h2>

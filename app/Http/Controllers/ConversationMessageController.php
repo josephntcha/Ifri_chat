@@ -112,24 +112,29 @@ class ConversationMessageController extends Controller
             $fichier = $request->file('fichier_cv');
             $filename = time() . '.' . $fichier->getClientOriginalExtension();
             $fichier->move('public/assets/clients/documents/', $filename);
-            User::Where('id', $id)->update([
+           $update= User::Where('id', $id)->update([
                 'description' => $request->input('description'),
                 'poste' => $request->input('select_poste'),
                 'cv' => $filename,
             ]);
-        return response()->json(['message' => 'Information personnelle mise à jour']);
+            if($update){
+                return response()->json(['message' => 'Information personnelle mise à jour']);
+    
+            }
     }
 
-    public function Experience(User $user, Request $request)
+    public function Experience($id, Request $request)
     {
-        User::Where('id', $user->id)->update([
+       $update= User::Where('id', $id)->update([
             'langage' => $request->input('langage'),
             'expérience' => $request->input('experience'),
             'entreprise' => $request->input('entreprise'),
             'besoin_emploi' => $request->input('besoin'),
         ]);
+        if($update){
+            return response()->json(['message' => 'Information personnelle mise à jour']);
 
-        session()->flash('success_experience', 'Profile modifié avec succès');
+        }
         return back();
     }
 }

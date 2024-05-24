@@ -68,6 +68,10 @@ body {
     width: 90%;
     margin: 0 auto;
 }
+.info{
+    color: var(--color-gay);
+    margin-left: 30px;
+}
 
 .profile-picture{
     width: 2.7rem;
@@ -211,7 +215,7 @@ main .container .left .profile{
     background: var(--color-danger);
     color: white;
     font-size: 0.7rem;
-    width: fit-content;
+   
     border-radius: 0.8rem;
     padding: 0.1rem 0.4rem; /*A revoir*/
     position: absolute;
@@ -536,6 +540,15 @@ main .container .right{
     position: absolute;
     bottom: 0;
     right: 0;
+}
+.online{
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    border: 3px solid var(--color-white);
+    background: var(--color-success);
+    position: absolute;
+    margin-left: 36px;
 }
 
 /* --------- Friends requests Styles----------- */

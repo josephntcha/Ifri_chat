@@ -32,9 +32,7 @@
      @include('layout.header')
      @include('layout.sidebar')
      @yield('content')
-     @include('layout.footer')
-
-  
+     
     <script type="text/javascript" src="{{ asset('asset/vendors/sweetalert2/dist/sweetalert2.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('asset/vendors/sweetalert2/dist/sweetalert2.init.js') }}">
    <!-- Bootstrap JS -->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Rules\Password;
 use App\Models\User;
+use App\Models\Contact;
 use App\Models\Filiere;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
@@ -41,11 +42,17 @@ class AdminController extends Controller
           
          $promotions=Promotion::all();
          $filieres=Filiere::all();
-            return view('admin',compact('promotions','filieres'));
+         $user_stage=User::where('besoin_emploi','=','oui')->get();
+            return view('admin',compact('promotions','filieres','user_stage'));
         }else {
             dd("vous n'etes pas un administrateur");
         }
         
+    }
+
+    public function CV(){
+        $user=User::where('cv','!=',NULL)->get();
+        return view('cv',compact('user'));
     }
 
     public function Action(){
@@ -62,22 +69,22 @@ class AdminController extends Controller
     }
 
     public function Promotion(Request $request) {
+        
         $promotion=$request->input('promotion_message');
         $filiere=$request->input('filiere_message');
         $annee=Promotion::findOrfail($promotion)->annee;
         $nom_filiere=Filiere::findOrfail($filiere)->filiere;
-       //dd($annee,$nom_filiere);
            
         return view('promotion',compact('promotion','filiere','annee','nom_filiere'));
     }
 
 
-    public function SendMessagePromotion($promotion,$filiere, Request $request){
-       
+    public function SendMessagePromotion(Request $request){
+
+        $promotion=$request->input('promotion');
+        $filiere=$request->input('filiere');
       if (Auth::user()->isAdmin=="true") {
 
-        // $promotion_find= Promotion::Where('id',$promotion)->get();
-       //  $etudiants=$promotion_find->users;
         if ($promotion && $filiere) {
             $etudiants=User::where('promotion_id',$promotion)->where('filiere_id',$filiere)->get();
         }elseif(!$promotion && $filiere){
@@ -88,9 +95,10 @@ class AdminController extends Controller
             return response()->json(['message'=>'Veuillez choisir une promtion ou une filière']);
         }
          $user_admin=Auth::user()->id;
+         $contenu=$request->input('markdown');
 
          $request->validate([
-            'fichier' => 'required|mimes:pdf|max:10240', // PDF, max 10MB
+            'fichier' => 'required|mimes:pdf|max:10240', 
              ]);
 
              if($request->hasFile('fichier')){
@@ -98,16 +106,26 @@ class AdminController extends Controller
                 $filename = time().'.'.$fichier->getClientOriginalExtension();
                 $fichier->move('public/asset/clients/documents/',$filename);
             }
+       
             
          for ($i=0; $i < $etudiants->count() ; $i++) {
-            
-          $this->r->CreateMessageForIfriAnswer($request->get('markdown'),$filename,$etudiants[$i]->id,$user_admin);
+
+            MessageForIfri::create([
+                'content'=>$contenu,
+                'fichier'=>$filename,
+                'from_id'=>$user_admin,
+                'from_admin'=>'yes',
+                'to_id'=>$etudiants[$i]->id
+            ]);
+          
+          //$this->r->CreateMessageForIfriAnswer($contenu,$filename,$etudiants[$i]->id,$user_admin);
          }
         }else {
           dd("une erreur s'est produite");
         }
-       session()->flash('success', 'Message avec sucèss à la promotion'.$promotion);
-       return back();
+        return response()->json(['message'=>'Message envoyé avec succès']);
+
+      // return back();
     }
 
     public function Statistique($promotionId) {
@@ -313,6 +331,26 @@ public function AjoutAlumni(Request $request){
 
     }
     return response()->json(['success' => true, 'message' => $message,'alumni_existe'=>$alumni_existe]);
+  }
+
+
+  public function Contact(Request $request){
+   $contact= Contact::create([
+         'user_id'=>$request->input('id'),
+         'lien'=>$request->input('lien'),
+         'time'=>$request->input('time'),
+    ]);
+
+    if ($contact) {
+    return response()->json(['success' => true, 'message' => 'Information envoyé avec succès']);  
+    }
+
+               
+  }
+
+  public function Entretien(){
+    $contact=Contact::where('user_id',Auth()->user()->id)->get();
+    dd($contact);
   }
 
 

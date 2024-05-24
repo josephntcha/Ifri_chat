@@ -22,7 +22,7 @@
                         </div>
 
                         <!--begin::Form-->
-                        <form class="m-form m-form--fit m-form--label-align-right" id="form_info" action="{{ route('information_personnelles',$user->id) }}" method="POST" enctype="multipart/form-data">
+                        <form class="m-form m-form--fit m-form--label-align-right" id="form_info" enctype="multipart/form-data">
                             @csrf
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group m--margin-top-10">
@@ -54,25 +54,17 @@
                             </div>
                             <div class="m-portlet__foot m-portlet__foot--fit offset-md-1">
                                 <div class="m-form__actions">
-                                    <button type="submit" id="submit_inf" class="btn btn-primary"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                    <button type="button" id="submit_info" class="btn btn-primary"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
                                         aria-hidden="true"></span>
                                         Enregistrer</button>
                                     <button type="reset" class="btn btn-secondary text-dark">Cancel</button>
                                 </div>
                             </div>
                         </form>
-                      
-                    
-
-                        <!--end::Form-->
                     </div>
 
                     <div class="m-portlet m-portlet--tab col-md-5 offset-md-1" style="border-radius: 15px;">
-                        @if (session('success_experience'))
-                            <div class="alert alert-success text-center h4">
-                                {{ session('success_experience') }}
-                            </div>
-                        @endif
+                     
                         <div class="m-portlet__head">
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
@@ -87,8 +79,7 @@
                         </div>
 
                         <!--begin::Form-->
-                        <form class="m-form m-form--fit m-form--label-align-right"
-                            action="{{ route('experience', $user->id) }}" method="POST">
+                        <form class="m-form m-form--fit m-form--label-align-right" id="form_experience">
                             @csrf
                             <div class="m-portlet__body">
 
@@ -101,6 +92,7 @@
                                         <option value="Python">Python</option>
                                         <option value="Java">Java</option>
                                     </select>
+                                    <input type="hidden" id="value-experience-id" value="{{ $user->id }}">
                                 </div>
                                 <div class="form-group1 m-form__group">
                                     <input class="form-control" type="text" name="experience" id=""
@@ -122,7 +114,9 @@
                             </div>
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions">
-                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    <button type="button" id="submit-experience" class="btn btn-primary"><span id="experienceSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                        aria-hidden="true"></span>
+                                        Enregistrer</button>
                                     <button type="reset" class="btn btn-secondary text-dark">Cancel</button>
                                 </div>
                             </div>
@@ -145,13 +139,51 @@
             $('#submit_info').on('click', function() {
                 var id=$('#value-id').val();
                 $('#infoSpinner').removeClass('d-none');
-                var formData = $('#form_info').serialize();
+                var formData = new FormData($('#form_info')[0]);
                 $.ajax({
                     type: 'POST',
                     url: "/information_personnelles/"+ id,
                     data: formData,
+                    processData: false, 
+                     contentType: false,
                     success: function(response) {
                         $('#infoSpinner').addClass('d-none');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 6000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+
+            $('#submit-experience').on('click', function() {
+                var id=$('#value-experience-id').val();
+                $('#experienceSpinner').removeClass('d-none');
+                var formData = new FormData($('#form_experience')[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: "/experiences/"+ id,
+                    data: formData,
+                    processData: false, 
+                     contentType: false,
+                    success: function(response) {
+                        $('#experienceSpinner').addClass('d-none');
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
