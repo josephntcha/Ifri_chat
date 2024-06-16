@@ -154,18 +154,9 @@
             </div>
             
             <div class="middle">
-              
-                {{-- <form class="create-post">
-                    <div class="profile-picture">
-                        <img src="{{ asset("new/images/profile-1.jpg") }}">
-                    </div>
-                    <input type="text" placeholder="What's of news ?" id="create-post">
-                    <input type="submit" value="Post" class="btn btn-primary">
-                </form> --}}
-                <!-- ------------- END Create Post ------------ -->
-
-                <!-- ------------- Feeds ------------ -->
+      
                 <div class="feeds">
+                    @foreach ($publication as $item)
                     <div class="feed">
                         <div class="head">
                             <div class="user">
@@ -182,28 +173,17 @@
                             </span>
                         </div>
                         <div class="photo">
-                            <img src="{{ asset("new/images/header.png") }}">
+                            <img src="{{ asset("public/asset/clients/documents/".$item->image) }}">
                         </div>
-                        <h5>contenu</h5>
+                        <h3>contenu</h3>
                         <div class="text-center text-info" style="font-family: 'Inter', sans-serif;">
-                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem optio labore ut aspernatur, magni excepturi soluta velit! Officia atque tenetur, beatae doloribus, natus, eum repellendus tempora commodi mollitia tempore voluptates.
-                               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas fugit neque maxime ad! Ipsam temporibus cum sint dolores magnam aliquid quod quis minus asperiores tenetur, necessitatibus eaque suscipit alias dolorum.
-                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, magni reiciendis eius deserunt, at optio et incidunt repellendus doloribus numquam nemo, rerum eaque non ratione tenetur porro maxime repudiandae. Alias.
-                               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque iste id quisquam esse aliquam recusandae asperiores. Nostrum aspernatur enim, repellat quidem veritatis deleniti, fugiat temporibus similique magnam officiis laudantium nisi.
-                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum quas earum eum architecto quibusdam quis excepturi possimus itaque, vel alias necessitatibus perspiciatis odit, deleniti sapiente sed repellendus nulla dolorem et!
-                        </div>
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="fas fa-heart"></i></span>
-                                <span><i class="fas fa-comment-dots"></i></span>
-                                <span><i class="fas fa-share-nodes"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="fas fa-bookmark"></i></span>
-                            </div>
+                            {{ $item->contenu }}
                         </div>
                        
+                       
                     </div>
+                    @endforeach
+                  
                     
                 </div>
                 <!-- ------------- END Feeds ------------ -->

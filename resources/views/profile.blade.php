@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group1 m-form__group">
-                                    <label for="exampleInputEmail1">CHoisisez votre poste actuel</label>
+                                    <label for="exampleInputEmail1">Etat de l'étudiant</label>
                                     <div></div>
                                     <select class="custom-select form-control" name="select_poste">
                                         <option value="Employé" selected>Employé</option>
@@ -124,6 +124,7 @@
                         <!--end::Form-->
                     </div>
                 </div>
+                <a href="/index" class="bg-success text-white p-2 px-3" style="border-radius:15px">back</a>
             </div>
 
 

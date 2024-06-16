@@ -798,7 +798,7 @@
             
             
                                                     <li class="m-portlet__nav-item">
-                                                        <select name="promotion_message" id="promotionId1" class="px-5">
+                                                        <select name="promotion_message" required id="promotionId1" class="px-5">
                                                             <option value=""></option>
                                                             @foreach ($promotions as $promotion)
                                                                 <option value="{{ $promotion->id }}">{{ $promotion->annee }}</option>
@@ -818,7 +818,7 @@
                                                     </li>
             
                                                     <li class="m-portlet__nav-item">
-                                                        <select name="filiere_message" id="filiereId1" class="px-5">
+                                                        <select name="filiere_message" required id="filiereId1" class="px-5">
                                                             <option value=""></option>
                                                             @foreach ($filieres as $filiere)
                                                                 <option value="{{ $filiere->id }}">{{ $filiere->filiere }}</option>
@@ -850,7 +850,9 @@
                         <div
                             class="offset-md-1 m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push mt-4">
                             <a href="/message_ifri" style="font-size: 17px"><span>Messages envoyés par les étudiants</span></a>
-                        </div>
+                           
+                        </div> <br>
+                        <span class="offset-md-6" style="font-size: 30px;color:brown">{{ $totalMessage }}</span>
                     </div>
 
                 </div>

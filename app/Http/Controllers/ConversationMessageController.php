@@ -30,9 +30,11 @@ class ConversationMessageController extends Controller
         $this->auth = $auth;
     }
 
+    
+
     public function ShowIfri()
     {
-        $messages_ifri = MessageForIfri::Where('from_admin', '=', 'no')->get();
+        $messages_ifri = MessageForIfri::Where('from_admin', '=', 'no')->get()->reverse();
 
         return view('message_ifri', compact('messages_ifri'));
     }
@@ -50,12 +52,11 @@ class ConversationMessageController extends Controller
         }
 
         $this->r->CreateMessageForIfri($request->get('markdown'), $filename, $user->id, $user_admin->id);
-        session()->flash('success', 'Message envoyé avec sucèss');
-        return back();
+        return response()->json(['message' => 'Message envoyé avec sucèss à l\'administration']);
 
     }
 
-    public function MessageAnswer(User $user, Request $request)
+    public function MessageAnswer($id, Request $request)
     {
         if ($request->hasFile('fichier')) {
             $fichier = $request->file('fichier');
@@ -65,9 +66,8 @@ class ConversationMessageController extends Controller
             $filename = '';
         }
 
-        $this->r->CreateMessageForIfriAnswer($request->get('markdown'), $filename, $user->id, Auth::user()->id);
-        session()->flash('success', 'Reponse envoyée');
-        return back();
+        $this->r->CreateMessageForIfriAnswer($request->get('markdown'), $filename, $id, Auth::user()->id);
+        return response()->json(['message' => 'Reponse envoyée avec succès']);
     }
 
     public function MessageForMe(User $user)

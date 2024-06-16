@@ -28,7 +28,7 @@
                          class="m-menu__ver-arrow la la-angle-right"></i></a>
                     
                 </li>
-               <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="/action" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-share" style="color: white"></i><span class="m-menu__link-text text-white">Publication</span><i
+               <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="/publication" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-share" style="color: white"></i><span class="m-menu__link-text text-white">Publication</span><i
                          class="m-menu__ver-arrow la la-angle-right"></i></a>
                     
                 </li>

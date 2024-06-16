@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ConversationMessageController;
-
-
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::get('/message_to_ifri', function () {
     return view('message_to_ifri');
@@ -31,11 +31,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/index', [IndexController::class, 'Index'])->name('index');
+ 
+        Route::get('/index', [IndexController::class, 'Index'])->name('index');
+    
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'admin'])->name('admin');
+    Route::post('/faire_publication', [App\Http\Controllers\AdminController::class, 'Publication']);
     Route::get('/user_cv', [App\Http\Controllers\AdminController::class, 'CV'])->name('user_cv');
     Route::get('/entretien', [App\Http\Controllers\AdminController::class, 'Entretien']);
     Route::post('/stage_emploi_contact', [App\Http\Controllers\AdminController::class, 'Contact']);
@@ -67,7 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/message_ifri', [ConversationMessageController::class, 'ShowIfri'])->name('message_ifri');
     Route::get('/profile_compte/{user}', [ConversationMessageController::class, 'profile'])->name('profile_compte');
     Route::post('/send_message_to_ifri/{user}', [ConversationMessageController::class, 'MessageIfri'])->name('send_message_to_ifri');
-    Route::post('/send_message_to_student/{user}', [ConversationMessageController::class, 'MessageAnswer'])->name('send_message_to_student');
+    Route::post('/send_message_to_student/{id}', [ConversationMessageController::class, 'MessageAnswer'])->name('send_message_to_student');
     Route::get('/message_for_me/{user}', [ConversationMessageController::class, 'MessageForMe'])->name('message_for_me');
     Route::get('/get-etu-promotion/{promotion}', [ConversationMessageController::class, 'DataPromotion'])->name('get-etu-promotion');
     Route::get('/get-etu-promotion-filiere/{promotion}/{filiere}', [ConversationMessageController::class, 'DataPromotionFiliere']);

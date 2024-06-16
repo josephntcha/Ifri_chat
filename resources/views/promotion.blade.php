@@ -33,20 +33,21 @@
                                 <input type="hidden" name="filiere" value="{{ $filiere }}">
                                 <input class="form-control btn btn-control col-lg-8 col-md-9 col-sm-12 offset-4" type="file" name="fichier" id="file">
                             </div>
-                            
-                        </form>
-                        <div class="m-portlet__foot m-portlet__foot--fit">
-                            <div class="m-form__actions m-form__actions">
-                                <div class="row">
-                                    <div class="col-lg-9 ml-lg-auto">
-                                        <button type="button" id="submit_info" class="btn btn-success"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                                            aria-hidden="true"></span>
-                                            Envoyer</button>
-                                        <button type="reset" class="btn btn-secondary text-dark">Supprimer</button>
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions m-form__actions">
+                                    <div class="row">
+                                        <div class="col-lg-9 ml-lg-auto">
+                                            <button type="button" id="submit_info" class="btn btn-success"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                                aria-hidden="true"></span>
+                                                Envoyer</button>
+                                            <button type="reset" class="btn btn-secondary text-dark">Supprimer</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <a href="/admin" class="" style="font-size: 18px;margin-left:15px">back</a>
+                        </form>
+                        
                     </div>
                 </div>
             </div>

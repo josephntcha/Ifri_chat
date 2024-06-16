@@ -3,11 +3,7 @@
 @section('content')
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
    <br><br>
-    {{-- @if(session('success'))
-    <div class="alert alert-success text-center h4">
-        {{ session('success') }}
-    </div>
-   @endif --}}
+ 
  
     <div class="m-grid m-grid--hor m-grid--root m-page">
         <div class="">
@@ -30,7 +26,7 @@
                                 </div>
                             </div>
                         </div>
-                        <form class="m-form m-form--fit m-form--label-align-right" id="m_form_1" action="{{ route('send_message_to_ifri',Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+                        <form class="m-form m-form--fit m-form--label-align-right" id="form_info" enctype="multipart/form-data">
                             @csrf
                             <div class="m-portlet__body">
                                 <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
@@ -38,6 +34,7 @@
                                     <label class="col-form-label col-lg-3 col-sm-12">Entrez votre message</label>
                                     <div class="col-lg-9 col-md-9 col-sm-12">
                                         <textarea name="markdown" class="form-control" data-provide="markdown" rows="10" required></textarea>
+                                        <input type="hidden" name="" id="admin_id" value="{{ Auth::user()->id }}">
                                         <span class="m-form__help">Enter some markdown content</span>
                                     </div>
                                 </div>
@@ -47,36 +44,15 @@
                                 <div class="m-form__actions m-form__actions">
                                     <div class="row">
                                         <div class="col-lg-9 ml-lg-auto">
-                                            <button type="submit" class="btn text-white" style="background:#005fbd">Envoyer</button>
+                                            <button type="button" id="submit_info" class="btn text-white" style="background:#005fbd"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                                aria-hidden="true"></span>
+                                                Envoyer</button>
                                             <button type="reset" class="btn btn-secondary text-dark">Supprimer</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
-
-                        @if ($message = session('success'))
-                        @section('alert')
-                        <script type="text/javascript">
-                         const Toast = Swal.mixin({
-                             toast: true,
-                             position: 'top-end',
-                             showConfirmButton: false,
-                             timer: 6000,
-                             timerProgressBar: true,
-                             didOpen: (toast) => {
-                                 toast.addEventListener('mouseenter', Swal.stopTimer)
-                                 toast.addEventListener('mouseleave', Swal.resumeTimer)
-                             }
-                         })
-                     
-                         Toast.fire({
-                             icon: 'success',
-                             title: '{{ $message }}'
-                         })
-                       </script>
-                        @endsection
-                       @endif
                     </div>
                 </div>
             </div>
@@ -85,4 +61,45 @@
 
     <!--end::Page Scripts -->
 </body>
+@endsection
+
+@section('script_jquey')
+<script>
+     $(document).ready(function() {
+        $('#submit_info').on('click', function() {
+                $('#infoSpinner').removeClass('d-none');
+                var id=$('#admin_id').val();
+                var formData = new FormData($('#form_info')[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: "/send_message_to_ifri/"+id,
+                    data: formData,
+                    processData: false, 
+                    contentType: false,
+                    success: function(response) {
+                        $('#infoSpinner').addClass('d-none');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 6000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+    });
+</script>
 @endsection

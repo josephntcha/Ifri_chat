@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use App\Mail\EnvoieMailPasswordForAlumni;
+use App\Models\Publication;
 use App\Repository\ConversationRepository;
 
 class AdminController extends Controller
@@ -43,7 +44,9 @@ class AdminController extends Controller
          $promotions=Promotion::all();
          $filieres=Filiere::all();
          $user_stage=User::where('besoin_emploi','=','oui')->get();
-            return view('admin',compact('promotions','filieres','user_stage'));
+         $messages_ifri = MessageForIfri::Where('from_admin', '=', 'no')->get();
+         $totalMessage=count($messages_ifri);
+            return view('admin',compact('promotions','filieres','user_stage','totalMessage'));
         }else {
             dd("vous n'etes pas un administrateur");
         }
@@ -349,8 +352,24 @@ public function AjoutAlumni(Request $request){
   }
 
   public function Entretien(){
-    $contact=Contact::where('user_id',Auth()->user()->id)->get();
-    dd($contact);
+    $contact=Contact::where('user_id',Auth()->user()->id)->get()->last();
+  
+     return view('entretien',compact('contact'));
+  }
+
+  public function Publication(Request $request){
+   // dd($request->all()); 
+   $fichier=$request->file('fichier');
+   $filename = time().'.'.$fichier->getClientOriginalExtension();
+   $fichier->move('public/asset/clients/documents/',$filename);
+    Publication::create([
+      
+       'contenu'=>$request->input('markdown'),
+       'image'=>$filename,
+      
+    ]);
+
+    return response()->json(['message'=>'publication effectuée avec succès']);
   }
 
 
