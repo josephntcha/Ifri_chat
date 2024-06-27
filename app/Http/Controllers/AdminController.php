@@ -333,7 +333,7 @@ public function AjoutAlumni(Request $request){
         $message="Alumnus existe déjà";
 
     }
-    return response()->json(['success' => true, 'message' => $message,'alumni_existe'=>$alumni_existe]);
+    return response()->json(['success' => true, 'message' => $message]);
   }
 
 

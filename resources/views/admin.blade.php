@@ -110,7 +110,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-tpromotionFormitle" id="eleveModalLabel">Ajouter une nouvel alumnus</h5>
+                            <h5 class="modal-tpromotionFormitle" id="eleveModalLabel">Ajouter un nouveau alumnus</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -121,7 +121,7 @@
                             <form id="alumniForm">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="nom">Nom de l'elève</label>
+                                    <label for="nom">Nom alumnus</label>
                                     <input type="text" class="form-control" id="nom" name="nom" required>
                                 </div>
                                 <div class="form-group">
@@ -704,18 +704,18 @@
                                         <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
                                             <li class="m-widget28__nav-item nav-item ">
                                                 <a class="nav-link active" data-toggle="pill" href="#menu11">
-                                                    <h1 id="effectif_emploi"></h1><span>EMPLOYE</span>
+                                                    <h1 id="effectif_emploi"></h1><span style="font-size: 16px">EMPLOYE</span>
                                                 </a>
                                             </li>
                                             <li class="m-widget28__nav-item nav-item">
                                                 <a class="nav-link" data-toggle="pill" href="#menu21">
-                                                    <h1 id="effectif_stage"></h1><span>STAGE</span>
+                                                    <h1 id="effectif_stage"></h1><span style="font-size: 16px">STAGE</span>
                                                 </a>
                                             </li>
                                             <li class="m-widget28__nav-item nav-item">
 
                                                 <a class="nav-link" data-toggle="pill" href="#menu31">
-                                                    <h1 id="effectif_sans_emploi"></h1><span>SANS EMPLOIE</span>
+                                                    <h1 id="effectif_sans_emploi"></h1><span style="font-size: 14px">SANS EMPLOIE</span>
                                                 </a>
 
                                             </li>
@@ -1083,7 +1083,6 @@
             $('#submitAlumni').on('click', function() {
                 $('#alumniSpinner').removeClass('d-none');
                 var formData = $('#alumniForm').serialize();
-                console.log('echec');
 
                 $.ajax({
                     type: 'POST',

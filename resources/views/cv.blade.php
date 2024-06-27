@@ -74,7 +74,7 @@
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Fermer</button>
                                                         <button type="button" id="submitFiliere" class="btn btn-primary"><i
-                                                                class="fa fa-plus" aria-hidden="true"></i> Ajouter
+                                                                class="fa fa-plus" aria-hidden="true"></i> Contactez
                                                             <span id="filiereSpinner"
                                                                 class="spinner-border spinner-border-sm d-none"
                                                                 role="status" aria-hidden="true"></span>
