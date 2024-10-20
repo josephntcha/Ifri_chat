@@ -1,7 +1,7 @@
 
 ## Laravel Livewire Chat Course Demo App
 
-![./cover.jpeg](/cover.jpeg)
+![./dashboard_ifri.png](/Dashboard_Ifri.png)
 
 
 
