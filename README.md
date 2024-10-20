@@ -1,5 +1,6 @@
 
-## IFIR ALUMNI CHAT DEMO
+## IFRI ALUMNI CHAT DEMO
+Ce projet est destiné aux alumni de l'Institut de Formation et de Recherche en Informatique. Il permet une communication fluide entre l'administration et alumni
 
 ![./cover.jpeg](/cover.jpeg)
 
@@ -15,6 +16,7 @@
 -   `php artisan key:generate`
 -   `npm install && npm run dev`
 -   `php artisan serve`
--   `If you like connect with profil Admin, go to database and change the attribut value "isAdmin" to "true"`
+  
 
 then choose a user from the database and login.
+If you like connect with profil Admin, go to database and change the attribut value "isAdmin" to "true"
