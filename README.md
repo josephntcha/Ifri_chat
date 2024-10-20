@@ -2,7 +2,7 @@
 ## IFRI ALUMNI CHAT DEMO
 Ce projet est destiné aux alumni de l'Institut de Formation et de Recherche en Informatique. Il permet une communication fluide entre l'administration et alumni
 
-![./cover.jpeg](/cover.jpeg)
+![./dashboard.png](/dashboard.png)
 
 
 
