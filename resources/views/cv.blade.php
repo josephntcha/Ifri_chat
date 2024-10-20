@@ -67,7 +67,6 @@
                                                                 <input type="datetime-local" class="form-control" id="filiereName"
                                                                     name="time">
                                                             </div>
-                                                            <!-- Add other form fields as needed -->
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">

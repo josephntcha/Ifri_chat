@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Jetstream\Http\Controllers\Auth\AuthenticatedSessionController as JetstreamAuthenticatedSessionController;
-
+use App\Http\Controllers\Auth\AuthenticatedSessionController as JetstreamAuthenticatedSessionController;
 class LoginController extends JetstreamAuthenticatedSessionController
 {
     // Surcharge de la méthode authenticate
@@ -17,7 +16,7 @@ class LoginController extends JetstreamAuthenticatedSessionController
         ]);
 
         $credentials = $request->only('matricule', 'code_inscription');
-
+         dd($credentials);
         if (Auth::attempt($credentials, $request->remember)) {
             return $this->afterAuthenticated($request);
         }

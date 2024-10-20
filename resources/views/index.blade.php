@@ -154,7 +154,10 @@
             </div>
             
             <div class="middle">
-      
+                <div class="ingo">
+                    <h3>Institut de Formation et de Recherche en Informatique</h3>
+                    <small>Liste des publications faites par IFRI</small>
+                </div>
                 <div class="feeds">
                     @foreach ($publication as $item)
                     <div class="feed">
