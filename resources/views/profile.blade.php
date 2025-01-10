@@ -1,13 +1,12 @@
 @extends('layouthead.header')
 @section('content')
 
-    <body
-        class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
         <div class="m-grid m-grid--hor m-grid--root m-page">
 
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row mt-md-4">
-                    <div class="m-portlet m-portlet--tab col-md-5" style="border-radius: 15px;margin-left:60px">
+                    <div class="m-portlet m-portlet--tab col-md-5 ms-0 ms-md-5" style="border-radius: 15px">
                         <div class="m-portlet__head">
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
@@ -27,7 +26,7 @@
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group m--margin-top-10">
                                     <div class="alert m-alert m-alert--default" role="alert">
-                                        <textarea class="form-control" name="description"  cols="20" rows="5"
+                                        <textarea value="{{ $user->description }}" class="form-control" name="description"  cols="20" rows="5"
                                             placeholder="Biographie professionnelle"></textarea>
                                             <input type="hidden" id="value-id" value="{{ $user->id }}">
                                     </div>
@@ -54,10 +53,10 @@
                             </div>
                             <div class="m-portlet__foot m-portlet__foot--fit offset-md-1">
                                 <div class="m-form__actions">
-                                    <button type="button" id="submit_info" class="btn btn-primary"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                    <button type="button" id="submit_info" class="btn px-4 text-white" for="create-post" style="border-radius: 1.5rem;font-size: 18px;background-color: var(--green)"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
                                         aria-hidden="true"></span>
                                         Enregistrer</button>
-                                    <button type="reset" class="btn btn-secondary text-dark">Cancel</button>
+                                    <button type="reset" class="btn btn-secondary text-dark px-4" style="border-radius: 1.5rem;font-size: 18px">Cancel</button>
                                 </div>
                             </div>
                         </form>
@@ -99,7 +98,7 @@
                                         placeholder="entrez le nombre d'annéé d'expérience">
                                 </div>
                                 <div class="form-group1 m-form__group">
-                                    <input class="form-control" type="text" name="entreprise" id=""
+                                    <input value="{{ $user->entreprise }}" class="form-control" type="text" name="entreprise" id=""
                                         placeholder="Nom de l'entreprise">
                                 </div>
                                 <div class="form-group1 m-form__group">
@@ -114,17 +113,17 @@
                             </div>
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions">
-                                    <button type="button" id="submit-experience" class="btn btn-primary"><span id="experienceSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                    <button type="button" id="submit-experience" class="btn px-4 text-white" for="create-post" style="border-radius: 1.5rem;font-size: 18px;background-color: var(--green)"><span id="experienceSpinner" class="spinner-border spinner-border-sm d-none" role="status"
                                         aria-hidden="true"></span>
                                         Enregistrer</button>
-                                    <button type="reset" class="btn btn-secondary text-dark">Cancel</button>
+                                    <button type="reset" class="btn btn-secondary text-dark px-4" style="border-radius: 1.5rem;font-size: 18px">Cancel</button>
                                 </div>
                             </div>
                         </form>
                         <!--end::Form-->
                     </div>
                 </div>
-                <a href="/index" class="bg-success text-white p-2 px-3" style="border-radius:15px">back</a>
+                <a href="/index" class="btn px-4 text-white" for="create-post" style="border-radius: 1.5rem;font-size: 18px;background: #FFA446">retour</a>
             </div>
 
 

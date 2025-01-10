@@ -104,7 +104,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AlumniNet</title>
+  <link rel="icon" type="image/x-icon" href="{{ asset("images/logoifri.png") }}">
+  <title>IFRI-AlumniNetwork</title>
   <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
   <script src="{{ asset('../custom-scripts.js') }}" defer></script>
 </head>

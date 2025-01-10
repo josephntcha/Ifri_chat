@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset("images/logoifri.png") }}">
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('asset/vendors/base/flowbite.min.css') }}" />
 
@@ -23,7 +24,7 @@
     </script>
     <link rel="dns-prefetch" href="//fonts.bunny.net">
 		<link href="../../../asset/vendors/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-		<link rel="shortcut icon" href="../../../asset/demo/default/media/img/logo/favicon.ico" />
+		
 
 </head>
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">

@@ -49,6 +49,7 @@
     </nav>
     <main>
         <div class="col-8 text-center offset-md-2">
+            @if ($contact != null)
             <form action="">
                 <div class="form-group copy-container">
                     <label for="">Lien de la reunion</label>
@@ -60,6 +61,9 @@
                     <input type="text" class="form-control" value="{{ $contact->time }}" readonly>
                 </div>
             </form>
+            @else
+            <h2>Aucun entretient n'est prévu pour l'instant</h2>
+            @endif
                <a href="/index" class="bg-success text-white p-2 px-3" style="border-radius:15px">back</a>
          </div>
 

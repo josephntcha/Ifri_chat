@@ -353,7 +353,6 @@ public function AjoutAlumni(Request $request){
 
   public function Entretien(){
     $contact=Contact::where('user_id',Auth()->user()->id)->get()->last();
-  
      return view('entretien',compact('contact'));
   }
 

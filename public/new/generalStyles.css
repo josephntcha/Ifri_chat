@@ -1,0 +1,174 @@
+/* polices cdn */
+@import url('https://fonts.cdnfonts.com/css/myriad-pro');
+@import url('https://fonts.cdnfonts.com/css/lato');
+
+
+/* Polices definition local*/
+@font-face{
+    font-family: 'Myriad Pro';
+    src: local('/Users/merveille/Desktop/dossier/ sans/ titre/Responsive/ Social/ website/police/MyriadPro-Regular.ttf');
+}
+
+@font-face{
+    font-family: 'Lato';
+    src: url('C:/Users/H/Desktop/Responsive Social website/police/Lato-Regular.ttf') format('ttf'); 
+}
+
+/* style css */
+
+/* Variables */
+:root{
+    --primary-color-hue: 214;
+    --dark: 17%;
+    --light: 95%;
+    --white: 100%;
+
+    --color-white: hsl(252, 30%, var(--white));
+    --color-light: hsl(252, 30%, var(--light));
+    --color-gray: hsl(var(--primary-color-hue), 15%, 65%);
+    --color-primary: hsl(var(--primary-color-hue), 100%, 43%);
+    --color-secondary: hsl(252, 100%, 90%);
+    --color-success: hsl(120, 95%, 65%);
+    --color-danger: hsl(0, 95%, 65%);
+    --color-dark: hsl(252, 30%, var(--dark));
+    --color-black: hsl(252, 30%, 10%);
+
+    /* bouton */
+    --border-radius: 2rem;
+    --card-border-radius: 1rem;
+    --btn-padding: 0.6rem 2rem;
+    --search-padding: 0.6rem 1rem;
+    --card-padding: 1rem;
+
+    /* position */
+    --sticky-top-left: 5.4rem;
+    --sticky-top-right: -18rem;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    border: none;
+}
+
+a{
+    color: inherit;
+}
+
+body {
+    font-family: 'Myriad Pro', 'Lato', sans-serif;
+    color: var(--color-dark);
+    background: var(--color-light);
+    overflow-x: hidden;
+}
+
+/* general  styles*/
+.container{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.profile-picture{
+    width: 2.7rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+img{
+    display: block;
+    width: 100%;
+}
+
+.btn{
+    display: inline-block;
+    padding: var(--btn-padding);
+    font-weight: 500;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 300ms ease;
+    font-size: 0.9rem;
+}
+
+.btn:hover{
+    opacity: 0.8;
+}
+
+.btn-primary{
+    background: var(--color-primary);
+    color: white;
+}
+
+.text-bold{
+    font-weight: 500;
+}
+
+.text-muted{
+    color: var(--color-gray);
+}
+
+/* Navbar styles */
+nav{
+    width: 100%;
+    background: var(--color-white);
+    padding: 0.7rem 0;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+nav .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-bar{
+    background: var(--color-light);
+    border-radius: var(--border-radius);
+    padding: var(--search-padding);
+}
+
+.search-bar input[type="search"]{
+    background: transparent;
+    width: 30vw;
+    margin-left: 1rem;
+    font-size: .9rem;
+    color: var(--color-dark);
+}
+
+nav .search-bar input[type="search"]::placeholder{
+    color: var(--color-gray);
+}
+
+nav .create{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+nav .logo{
+    width: 9rem;
+    margin-left: 1rem;
+}
+
+/* =========== Main styles =========== */
+/* main{
+    position: relative;
+    top: 5.4rem;
+}
+
+main .container{
+    display: grid;
+    grid-template-columns: 20vw auto 5rem;
+    column-gap: 2rem;
+    position: relative;
+} */

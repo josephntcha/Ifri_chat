@@ -69,9 +69,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/message_ifri', [ConversationMessageController::class, 'ShowIfri'])->name('message_ifri');
     Route::get('/profile_compte/{user}', [ConversationMessageController::class, 'profile'])->name('profile_compte');
+    Route::get('/profile_dashboard/{user}', [ConversationMessageController::class, 'profileDashboard'])->name('profile_dashboard');
     Route::post('/send_message_to_ifri/{user}', [ConversationMessageController::class, 'MessageIfri'])->name('send_message_to_ifri');
     Route::post('/send_message_to_student/{id}', [ConversationMessageController::class, 'MessageAnswer'])->name('send_message_to_student');
-    Route::get('/message_for_me/{user}', [ConversationMessageController::class, 'MessageForMe'])->name('message_for_me');
     Route::get('/get-etu-promotion/{promotion}', [ConversationMessageController::class, 'DataPromotion'])->name('get-etu-promotion');
     Route::get('/get-etu-promotion-filiere/{promotion}/{filiere}', [ConversationMessageController::class, 'DataPromotionFiliere']);
 

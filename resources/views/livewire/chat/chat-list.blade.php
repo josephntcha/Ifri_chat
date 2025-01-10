@@ -28,7 +28,7 @@ Echo.private('users.{{ Auth()->User()->id }}')
         <div class="border-b justify-between flex items-center pb-2">
 
             <div class="flex items-center gap-2">
-                <h5 class="font-extrabold text-2xl">IFRI-friends</h5>
+                <h5 class="font-extrabold text-2xl">IFRI-Amis</h5>
             </div>
 
             <button>

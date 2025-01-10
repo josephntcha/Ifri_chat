@@ -23,7 +23,7 @@
         @endsection
     @endif
     <div class="container offset-md-2">
-        <div class="row justify-content-between">
+        <div class="row justify-content-between mt-md-0 mt-sm-2 mt-xl-0 mt-3">
             <button class="bg-primary btn btn-success btn-sm mt-md-3" style="margin-left: 8px" data-toggle="modal"
                 data-target="#filiereModal">
                 <i class="fa fa-plus" aria-hidden="true"></i> Ajouter une Filière
@@ -611,79 +611,81 @@
             <div class="m-content">
                 <div class="row">
                     <div class="col-xl-4">
+
                         <!--begin:: Widgets/Blog-->
-                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force"
-                            style="border-radius: 15px">
-                            <div class="m-portlet__head m-portlet__head--fit-">
+                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force"
+                            style="border-radius: 15px;background-color: var(--green) !important;">
+                            <div class="m-portlet__head m-portlet__head--fit">
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text m--font-light">
                                             Promotion
-
                                         </h3>
+                                        <div class="m-portlet__head-tools">
+                                            <ul class="m-portlet__nav">
+                                                <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                    m-dropdown-toggle="hover">
+                                                    <select id="selectPromotion" name="promotion" class="px-4">
+            
+                                                        <option value="toute promotion">Promotion</option>
+                                                        @foreach ($promotions as $promotion)
+                                                            <option value="{{ $promotion->annee }}">{{ $promotion->annee }}
+                                                            </option>
+                                                        @endforeach
+            
+                                                    </select>
+            
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="m-portlet__head-tools">
+                                            <ul class="m-portlet__nav">
+        
+                                                <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                                    m-dropdown-toggle="hover">
+                                                    <select id="selectFiliere" name="filiere" class="px-4">
+                                                        <!-- Options seront ajoutées dynamiquement par JavaScript -->
+                                                        <option value="toute filiere">Filiere</option>
+                                                        @foreach ($filieres as $filiere)
+                                                            <option value="{{ $filiere->filiere }}">{{ $filiere->filiere }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-                                        <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                            m-dropdown-toggle="hover">
-                                            <select id="selectPromotion" name="promotion" class="px-3">
-
-                                                <option value="toute promotion">toute promotion</option>
-                                                @foreach ($promotions as $promotion)
-                                                    <option value="{{ $promotion->annee }}">{{ $promotion->annee }}
-                                                    </option>
-                                                @endforeach
-
-                                            </select>
-
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-
-                                        <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                            m-dropdown-toggle="hover">
-                                            <select id="selectFiliere" name="filiere" class="px-4">
-                                                <!-- Options seront ajoutées dynamiquement par JavaScript -->
-                                                <option value="toute filiere">toute filiere</option>
-                                                @foreach ($filieres as $filiere)
-                                                    <option value="{{ $filiere->filiere }}">{{ $filiere->filiere }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </li>
-                                    </ul>
-                                </div>
-
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="m-widget27 m-portlet-fit--sides">
-                                    <div class="m-widget27__pic">
-                                        <img src="asset/app/media/img//bg/bg-4.jpg" alt="">
-                                        <h6 class="m-widget27__title m--font-light">
-                                            <span>
-                                                <span>Effectif
-                                                    <span>
-                                                        <span id="effectif">
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </h6>
-                                    </div>
+                           
+                            <div class="m-portlet__body"  >
+                                <div class="m-widget28" style="background-color: var(--green) !important;">
+                                    <div class="m-widget28__pic m-portlet-fit--sides"></div>
+                                    <div class="m-widget28__container">
 
+                                        <!-- begin::Nav pills -->
+                                        <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
+                                         
+                                            <li class="m-widget28__nav-item nav-item">
+                                                <a class="nav-link d-flex justify-content-center" data-toggle="pill" href="#menu21">
+                                                    <span class="h1">EFFECTIF:</span><h1 id="effectif"></h1>
+                                                </a>
+                                            </li>
+                                        
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!--end:: Widgets/Blog-->
                     </div>
-                    <div class="col-xl-4">
+
+                    <div class="col-xl-4 ">
 
                         <!--begin:: Widgets/Blog-->
-                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force"
+                        <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force test"
                             style="border-radius: 15px">
                             <div class="m-portlet__head m-portlet__head--fit">
                                 <div class="m-portlet__head-caption">
@@ -695,27 +697,27 @@
                                 </div>
 
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="m-widget28">
-                                    <div class="m-widget28__pic m-portlet-fit--sides"></div>
-                                    <div class="m-widget28__container">
+                            <div class="m-portlet__body mt-4 pt-1">
+                                <div class="m-widget27">
+                                    <div class="m-widget27__pic  m-portlet-fit--sides"></div>
+                                    <div class="m-widget27__container">
 
                                         <!-- begin::Nav pills -->
-                                        <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
-                                            <li class="m-widget28__nav-item nav-item ">
+                                        <ul class="m-widget27__nav-items nav nav-pills nav-fill" role="tablist">
+                                            <li class="m-widget27__nav-item nav-item ">
                                                 <a class="nav-link active" data-toggle="pill" href="#menu11">
                                                     <h1 id="effectif_emploi"></h1><span style="font-size: 16px">EMPLOYE</span>
                                                 </a>
                                             </li>
-                                            <li class="m-widget28__nav-item nav-item">
+                                            <li class="m-widget27__nav-item nav-item">
                                                 <a class="nav-link" data-toggle="pill" href="#menu21">
                                                     <h1 id="effectif_stage"></h1><span style="font-size: 16px">STAGE</span>
                                                 </a>
                                             </li>
-                                            <li class="m-widget28__nav-item nav-item">
+                                            <li class="m-widget27__nav-item nav-item">
 
                                                 <a class="nav-link" data-toggle="pill" href="#menu31">
-                                                    <h1 id="effectif_sans_emploi"></h1><span style="font-size: 14px">SANS EMPLOIE</span>
+                                                    <h1 id="effectif_sans_emploi"></h1><span style="font-size: 12px">SANS EMPLOIE</span>
                                                 </a>
 
                                             </li>
@@ -748,11 +750,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <br><br><br>
+                            <br><br>
                             <div class="m-portlet__body">
                                 <!--begin::Widget 29-->
                                 <div class="m-widget29">
-                                    <div class="m-widget_content" style="border-radius: 30px">
+                                    <div class="m-widget_content" style="border-radius: 15px">
                                         <div class="m-widget_content-items">
                                             <div class="m-widget_content-item">
                                                 <span>Effectif</span>
@@ -770,75 +772,45 @@
                         <!--end:: Packages-->
                     </div>
                 </div>
+                
                 <div class="row">
-                        <div class="col-xl-8">
+                        <div class="col-xl-8 col-sm-12 col-12 col-md-8">
                             <form action="{{ route('/message_to_promotion') }}" method="POST">
                                 @csrf
                                 <div class="m-portlet m-portlet--mobile ">
-                                    <div class="m-portlet__head">
-                                        <div class="m-portlet__head-caption">
+                                    <div class="row m-portlet__head">
+                                        <div class="m-portlet__head-caption col-3 col-md-3">
                                             <div class="m-portlet__head-title">
                                                 <h3 class="m-portlet__head-text">
-                                                    Envoyer message
+                                                    Publication
                                                 </h3>
                                             </div>
         
                                         </div>
         
                                         
-                                            <div class="m-portlet__head-tools">
-                                                <ul class="m-portlet__nav">
-                                                    <li class="m-portlet__nav-item">
-                                                        <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                            m-dropdown-toggle="hover" aria-expanded="true">
-                                                            <span>choisir promotion</span>
-            
-                                                        </div>
-                                                    </li>
-            
-            
-                                                    <li class="m-portlet__nav-item">
-                                                        <select name="promotion_message" required id="promotionId1" class="px-5">
-                                                            <option value=""></option>
-                                                            @foreach ($promotions as $promotion)
-                                                                <option value="{{ $promotion->id }}">{{ $promotion->annee }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </li>
-            
-                                                </ul>
+                                            <div class="m-portlet__head-tools col-5 col-md-3">
+                                                <select style="width: 100%!important" name="promotion_message" required id="promotionId1">
+                                                    <option value=""></option>
+                                                    @foreach ($promotions as $promotion)
+                                                        <option value="{{ $promotion->id }}">{{ $promotion->annee }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                            <div class="m-portlet__head-tools">
-                                                <ul class="m-portlet__nav">
-                                                    <li class="m-portlet__nav-item">
-                                                        <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                            m-dropdown-toggle="hover" aria-expanded="true">
-                                                            <span>Choisir Filières</span>
-                                                        </div>
-                                                    </li>
-            
-                                                    <li class="m-portlet__nav-item">
-                                                        <select name="filiere_message" required id="filiereId1" class="px-5">
-                                                            <option value=""></option>
-                                                            @foreach ($filieres as $filiere)
-                                                                <option value="{{ $filiere->id }}">{{ $filiere->filiere }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </li>
-                                                </ul>
+                                            <div class="m-portlet__head-tools col-4 col-md-3">
+                                           
+                                                <select style="width: 100%!important" name="filiere_message" required id="filiereId1" class="px-5">
+                                                    <option value=""></option>
+                                                    @foreach ($filieres as $filiere)
+                                                        <option value="{{ $filiere->id }}">{{ $filiere->filiere }}</option>
+                                                    @endforeach
+                                                </select>
+                                            
                                             </div>
                                             
-                                        <div class="m-portlet__head-tools">
-                                            <ul class="m-portlet__nav">
-                                                <li class="m-portlet__nav-item">
-                                                    <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                        m-dropdown-toggle="hover" aria-expanded="true">
-                                                        <button type="submit" class="p-2" style="border-radius:15px"
-                                                            ><span style="font-size: 17px">rédiger</span></button>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <button type="submit" class="m-portlet__head-tools col-12 col-md-3 text-white p-2 p-md-0 p-sm-2 mt-2 mt-md-0"  style="border-radius:8px;background-color: var(--green);width: 100%!important">
+                                           <span class="offset-5 offset-md-3 " style="font-size: 17px">Publier</span>
+                                        </button>
                                     
                                     </div>
                                 </div>
@@ -846,19 +818,19 @@
                         </div>
                  
 
-                    <div class="m-portlet__head-tools bg-white col-md-4">
-                        <div
-                            class="offset-md-1 m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push mt-4">
-                            <a href="/message_ifri" style="font-size: 17px"><span>Messages envoyés par les étudiants</span></a>
+                    <div class="bg-white col-12 col-md-4 col-xl-4 col-sm-12 text-center">
+                        <div class="text-center">
+                            <div class="h3">Messages envoyés par les étudiants</div>
+                            <a href="/message_ifri" style="font-size: 17px"><span>Consulter</span></a>
                            
-                        </div> <br>
-                        <span class="offset-md-6" style="font-size: 30px;color:brown">{{ $totalMessage }}</span>
+                        </div> 
+                        <span class="text-center" style="font-size: 30px;color:brown">{{ $totalMessage }}</span>
                     </div>
 
                 </div>
 
-                <div class="row">
-                    <div class="col-xl-8">
+                <div class="row mt-2 mt-md-0">
+                    <div class="col-xl-8 col-sm-12 col-md-8">
                         <div class="m-portlet m-portlet--mobile ">
                             <div class="m-portlet__head">
                                 <div class="m-portlet__head-caption">
@@ -867,21 +839,10 @@
                                             Publier dans toutes les promotions
                                         </h3>
                                     </div>
-
                                 </div>
-                              
-                               
-
-                                <div class="m-portlet__head-tools">
-                                    <ul class="m-portlet__nav">
-                                        <li class="m-portlet__nav-item">
-                                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                                m-dropdown-toggle="hover" aria-expanded="true">
-                                                <a href="/publication" style="font-size: 20px"><span>publier</span></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a href="/publication" class="m-portlet__head-tools col-4 col-md-3  px-md-0 offset-2 text-white" style="border-radius:8px;background-color: var(--green);width: 100%!important;font-size: 20px">
+                                   <span class="offset-0 offset-md-3">publier</span>
+                                </a>
                             </div>
                         </div>
                     </div>

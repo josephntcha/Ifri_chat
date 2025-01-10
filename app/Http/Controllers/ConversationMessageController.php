@@ -107,6 +107,12 @@ class ConversationMessageController extends Controller
         return view('profile', compact('user'));
     }
 
+    public function ProfileDashboard(User $user)
+    {
+        
+        return view('profileDashboard', compact('user'));
+    }
+
     public function Info($id, Request $request)
     {
             $fichier = $request->file('fichier_cv');

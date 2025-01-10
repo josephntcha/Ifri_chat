@@ -45,7 +45,7 @@ Echo.private('users.{{ Auth()->User()->id }}')
                 </div>
 
 
-                <h6 class="font-bold truncate"> {{ $selectedConversation->getReceiver()->email }} </h6>
+                <h6 class="font-bold truncate"> {{ $selectedConversation->getReceiver()->name }} </h6>
 
 
             </div>

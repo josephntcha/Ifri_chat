@@ -27,26 +27,27 @@
                                     <label class="col-form-label col-lg-3 col-sm-12">Entrez votre message</label>
                                     <div class="col-lg-9 col-md-9 col-sm-12">
                                         <textarea name="markdown" class="form-control" data-provide="markdown" rows="10"></textarea>
-                                        <span class="m-form__help">Enter some markdown content</span>
+                                        <span class="m-form__help"></span>
                                       
                                     </div>
                                 </div>
-                                <input class="form-control btn btn-control col-lg-8 col-md-9 col-sm-12 offset-4" type="file" name="fichier" id="file">
+                                <input class="form-control btn btn-control col-lg-8 col-md-9 col-sm-12 col-10 offset-1 offset-md-4" type="file" name="fichier" id="file">
                             </div>
 
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions m-form__actions">
-                                    <div class="row">
-                                        <div class="col-lg-9 ml-lg-auto">
-                                            <button type="button" id="submit_info" class="btn btn-success"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                    <div class="row col-lg-9 ml-lg-auto">
+                                      
+                                            <button type="button" id="submit_info" class="col-4 col-md-2 text-white mr-3" style="border-radius:8px;background-color: var(--green);width: 100%!important;font-size: 20px"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
                                                 aria-hidden="true"></span>
-                                                Envoyer</button>
+                                                Envoyer
+                                            </button>
                                             <button type="reset" class="btn btn-secondary text-dark">Supprimer</button>
-                                        </div>
+                                     
                                     </div>
                                 </div>
                             </div>
-                            <a href="/admin" class="" style="font-size: 18px;margin-left:15px">back</a>
+                            <a href="/admin" class="text-white p-3" style="font-size: 18px;margin-left:15px;background: #FFA446;border-radius:8px">Retour</a>
 
                         </form>
                      

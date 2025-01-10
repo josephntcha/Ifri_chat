@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0eef6;
+}
+
+/*------------ Login container ------------*/
+.box-area {
+    width: 930px;
+}
+
+/*------------ Right box ------------*/
+.right-box {
+    padding: 40px 30px 40px 40px;
+}
+
+/*------------ Custom Placeholder ------------*/
+::placeholder {
+    font-size: 16px;
+}
+
+.rounded-4 {
+    border-radius: 20px;
+}
+
+.rounded-5 {
+    border-radius: 30px;
+}
+
+/* forgot style */
+.forgot a{
+    text-decoration: none !important;
+    font-weight: 500;
+}
+
+
+
+/* =================== Popup ======================= */
+.c-popup{
+    background: #fff;
+    position: absolute;
+    width: 17rem;
+    /* height: 28vh; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 0;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    border-radius: 20px;
+    display: none;
+    z-index: 2;
+}
+
+.c-popup .container {
+    text-align: center;
+}
+
+.c-popup .container .head{
+    margin-bottom: 1rem;
+    padding: .5rem 0;
+    border-bottom: 2px solid rgb(223, 214, 214);
+}
+.c-popup .container .head h5{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.container p{
+    text-align: left;
+    color: rgb(156, 154, 154);
+}
+
+.container .click{
+    background-color: #005fbd;
+    border: none;
+    border-radius: .5rem;
+    /* font-weight: 500; */
+    color: #fff;
+    /* width: 200px; */
+    height: 2rem;
+}
+
+/*------------ For small screens------------*/
+@media only screen and (max-width: 768px) {
+    .box-area {
+        margin: 0 10px;
+    }
+
+    .left-box {
+        height: 100px;
+        overflow: hidden;
+    }
+
+    .right-box {
+        padding: 20px;
+    }
+}

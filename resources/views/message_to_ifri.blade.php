@@ -5,7 +5,7 @@
    <br><br>
  
  
-    <div class="m-grid m-grid--hor m-grid--root m-page">
+    <div class=" container m-grid m-grid--hor m-grid--root m-page">
         <div class="">
 
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -15,8 +15,8 @@
                         <div class="m-portlet__head">
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
-                                    <h3 class="m-portlet__head-text">
-                                        Laisser un message à l'administration IFRI
+                                    <h3 >
+                                        Envoyer un message à l'administration d'IFRI
                                     </h3>
                                     @foreach ($errors->all() as $error)
                                         <div class="text-red-500">
@@ -35,19 +35,20 @@
                                     <div class="col-lg-9 col-md-9 col-sm-12">
                                         <textarea name="markdown" class="form-control" data-provide="markdown" rows="10" required></textarea>
                                         <input type="hidden" name="" id="admin_id" value="{{ Auth::user()->id }}">
-                                        <span class="m-form__help">Enter some markdown content</span>
+                                        <span class="m-form__help"></span>
                                     </div>
                                 </div>
-                                <input class="form-control btn btn-control col-lg-8 col-md-9 col-sm-12 offset-4" type="file" name="fichier" id="file">
+                                <input class="form-control btn btn-control col-lg-8 col-md-9 col-10 col-sm-12 offset-md-4 offset-1" type="file" name="fichier" id="file">
                             </div>
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions m-form__actions">
                                     <div class="row">
                                         <div class="col-lg-9 ml-lg-auto">
-                                            <button type="button" id="submit_info" class="btn text-white" style="background:#005fbd"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                                            <button type="button" id="submit_info" class="p-2 col-4 col-md-2 text-white mr-3" style="border-radius:8px;background-color: var(--green);width: 100%!important;font-size: 20px" for="create-post"><span id="infoSpinner" class="spinner-border spinner-border-sm d-none" role="status"
                                                 aria-hidden="true"></span>
-                                                Envoyer</button>
-                                            <button type="reset" class="btn btn-secondary text-dark">Supprimer</button>
+                                                Envoyer
+                                            </button>
+                                            <button type="reset" class="btn btn-secondary text-dark px-4" style="border-radius: 1.5rem;font-size: 18px">Supprimer</button>
                                         </div>
                                     </div>
                                 </div>

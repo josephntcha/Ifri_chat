@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('content')
-<div class="container offset-md-2">
+<div class="container offset-md-2 mt-2 mt-md-0">
     <div class="row justify-content-between">
         <button class="bg-primary btn btn-success btn-sm mt-md-3" style="margin-left: 8px" data-toggle="modal"
             data-target="#filiereModal">
@@ -575,7 +575,7 @@
                                                     <th>Filière</th>
                                                     <th>Matricule</th>
                                                     <th>Email</th>
-                                                    <th>Numero de téléphone</th>
+                                                    <th>Téléphone</th>
                                                     <th>Désactivé</th>
                                                 </tr>
                                             </thead>

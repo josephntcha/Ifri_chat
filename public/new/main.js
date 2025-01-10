@@ -1,110 +1,52 @@
-//sidebar
-const menuItems = document.querySelectorAll('.menu-item');
+//======= Personnalisation du thème =========
 
-// Message
-const messagesNotification = document.querySelector('#message-notifications');
-const messages = document.querySelector('.messages');
-const message = messages.querySelectorAll('.message');
-const messageSearch = document.querySelector('#message-search');
-
-// theme
+// Sélectionnez les éléments du DOM liés au thème
 const theme = document.querySelector('#theme');
 const themeModal = document.querySelector('.customize-theme');
+
+// Sélectionnez les tailles de police
 const fontSizes = document.querySelectorAll('.choose-size span');
 var root = document.querySelector(':root');
 
-// Colors
+// Sélectionnez les couleurs du thème
 const colorPalette = document.querySelectorAll('.choose-color span');
 const Bg1 = document.querySelector('.bg-1');
 const Bg2 = document.querySelector('.bg-2');
 const Bg3 = document.querySelector('.bg-3');
 
-// ============= Side Bar =============
-
-//remove active class from all menu items
-const changeActiveItem = () => {
-    menuItems.forEach(item => {
-        item.classList.remove('active');
-    })
-}
-
-menuItems.forEach(item => {
-    item.addEventListener('click', () => {
-        changeActiveItem();
-        item.classList.add('active');
-        if (item.id != 'notifications') {
-            document.querySelector('.notification-popup').style.display = 'none';
-        }
-        else {
-            document.querySelector('.notification-popup').style.display = 'block';
-            document.querySelector('#notifications .notification-count').style.display = 'none';
-        }
-    }
-    )
-})
-
-// ============ Message ============
-// searches chats
-const searchMessage = () => {
-    const val = messageSearch.value.toLowerCase();
-    console.log(val);
-    message.forEach(chat => {
-        let name = chat.querySelectorAll('h5').textContent.toLowerCase();
-        if (name.indexOf(val) != -1) {
-            chat.style.display = 'flex';
-        }
-        else {
-            chat.style.display = 'none';
-        }
-    })
-}
-
-// search chat
-messageSearch.addEventListener('keyup', searchMessage);
-
-// hightlight messages card when messsages menu item is clicked
-messagesNotification.addEventListener('click', () => {
-    messages.style.boxShadow = '0 0 1rem var(--color-primary)';
-    messagesNotification.querySelector('.notification-count').style.display = 'none';
-    setTimeout(() => {
-        messages.style.boxShadow = 'none';
-    }, 100);
-})
-
-
-// Theme customization
-
-// open modal
+// Fonction pour ouvrir la modal de personnalisation du thème
 const openThemeModal = () => {
     themeModal.style.display = 'grid';
 }
 
-// close modal
+// Fonction pour fermer la modal de personnalisation du thème
 const closeThemeModal = (e) => {
     if (e.target.classList.contains('customize-theme')) {
         themeModal.style.display = 'none';
     }
 }
 
+// Ajoutez un écouteur d'événements pour fermer la modal lorsque l'utilisateur clique à l'extérieur
 themeModal.addEventListener('click', closeThemeModal);
 
+// Ajoutez un écouteur d'événements pour ouvrir la modal lorsqu'on clique sur l'élément de thème
 theme.addEventListener('click', openThemeModal);
 
-// ============ Fonts ============
-// remove active class from span or font size selectors
+// ============ Polices ============
+// Fonction pour supprimer la classe active des sélecteurs de taille de police
 const removeSizeSelector = () => {
     fontSizes.forEach(size => {
         size.classList.remove('active');
     })
 }
 
+// Ajoutez un écouteur d'événements à chaque sélecteur de taille de police
 fontSizes.forEach(size => {
-
     size.addEventListener('click', () => {
         removeSizeSelector();
         let fontSize;
-        size.classList.toggle('active');
 
+        // Appliquez la taille de police en fonction de la classe du sélecteur cliqué
         if (size.classList.contains('font-size-1')) {
             fontSize = '10px';
             root.style.setProperty('----sticky-top-left', '5.4rem');
@@ -119,19 +61,24 @@ fontSizes.forEach(size => {
             root.style.setProperty('----sticky-top-right', '-17rem');
         }
 
-        // change font size of the root html element
+        // Changez la taille de police de l'élément HTML racine
         document.querySelector('html').style.fontSize = fontSize;
     })
-
-
 })
 
+// Fonction pour supprimer la classe active des sélecteurs de couleur
+const changeActiveColorclass = () => {
+    colorPalette.forEach(colorPicker => {
+        colorPicker.classList.remove('active');
+    })
+}
 
-// change primary colors
+// Changez les couleurs primaires du thème
 colorPalette.forEach(color => {
     color.addEventListener('click', () => {
         let primaryHue;
 
+        // Appliquez la couleur primaire en fonction de la classe du sélecteur de couleur cliqué
         if (color.classList.contains('color-1')) {
             primaryHue = 214;
         } else if (color.classList.contains('color-2')) {
@@ -139,40 +86,47 @@ colorPalette.forEach(color => {
         } else if (color.classList.contains('color-3')) {
             primaryHue = 31;
         } 
+
+        // Ajoutez la classe active au sélecteur de couleur cliqué
+        color.classList.add('active');
+
+        // Changez la teinte de couleur primaire dans le CSS
         root.style.setProperty('--primary-color-hue', primaryHue);
     })
 })
 
-// background
+// Variables pour les couleurs de fond
 let lightColor;
 let whiteColor;
 let darkColor;
 
-// changes background color
+// Fonction pour changer la couleur de fond en fonction de l'option de couleur de fond sélectionnée
 const changeBG = () => {
+    if (Bg1.classList.contains('active')) {
+        // Si l'option d'origine est sélectionnée, réinitialisez les couleurs
+        lightColor = '95%';
+        whiteColor = '100%';
+        darkColor = '17%';
+    }
+
     root.style.setProperty('--light', lightColor);
     root.style.setProperty('--white', whiteColor);
     root.style.setProperty('--dark', darkColor);
 }
 
+// Ajoutez un écouteur d'événements pour l'option de revenir à la couleur d'origine
 Bg1.addEventListener('click', () => {
-    // add active class
-    B1.classList.add('active');
-    // remove active class from the others
+    Bg1.classList.add('active');
     Bg2.classList.remove('active');
     Bg3.classList.remove('active');
-    // remove customized 
-    window.location.reload();
+    changeBG();
 })
 
 Bg2.addEventListener('click', () => {
     darkColor = '95%';
     whiteColor = '20%';
     lightColor = '15%';
-
-    // add active class
     Bg2.classList.add('active');
-    // remove active class from the others
     Bg1.classList.remove('active');
     Bg3.classList.remove('active');
     changeBG();
@@ -182,11 +136,21 @@ Bg3.addEventListener('click', () => {
     darkColor = '95%';
     whiteColor = '10%';
     lightColor = '0%';
-
-    // add active class
     Bg3.classList.add('active');
-    // remove active class from the others
     Bg1.classList.remove('active');
     Bg2.classList.remove('active');
     changeBG();
 })
+
+
+// JavaScript pour la redirection vers "notification.html"
+document.addEventListener('DOMContentLoaded', function () {
+    var notificationItems = document.querySelectorAll('.notification-popup .notification-item');
+
+    notificationItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+            // Redirection vers "notification.html" lors du clic
+            window.location.href = 'notification.html';
+        });
+    });
+});
