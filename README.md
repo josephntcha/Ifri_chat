@@ -7,7 +7,7 @@ Ce projet est destiné aux alumni de l'Institut de Formation et de Recherche en 
 
 
 
-## Quick Start
+## Suivez ces instructions pour tester le projet.
 
 -   Clone or download this repo and place it into your server.
 -   `composer install `
@@ -17,6 +17,5 @@ Ce projet est destiné aux alumni de l'Institut de Formation et de Recherche en 
 -   `npm install && npm run dev`
 -   `php artisan serve`
   
-
-then choose a user from the database and login.
-If you like connect with profil Admin, go to database and change the attribut value "isAdmin" to "true"
+`php artisan migrate --seed`, cette commande permet de pré-remplir la base de données des users,promotion,filière et autre. Pour se connecter utilisez l'attribut "email" d'un user et par défaut le mot de passe c'est "password"
+Si vous souhaitez vous connecter avec le profil Admin, accédez à la base de données et modifiez la valeur de l'attribut "isAdmin" à "true"
